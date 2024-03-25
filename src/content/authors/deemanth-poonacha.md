@@ -1,4 +1,4 @@
 ---
 name: Dwight Schrute
-image: ../posts/images/bloggy-logo.jpg
+image: ../posts/images/bloggy-logo.png
 ---

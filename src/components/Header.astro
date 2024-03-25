@@ -1,0 +1,45 @@
+---
+import { Image } from "astro:assets";
+---
+
+<header class="flex justify-between items-center justify-self-center w-full">
+  <a href="/" class="flex gap-x-4 items-center align-middle">
+    <Image
+      src="/images/bloggy-logo.png"
+      alt="Bloggy logo"
+      width={64}
+      height={64}
+      format="webp"
+      class="w-16 rounded-xl dark:invert"
+    />
+
+    <p class="uppercase text-3xl text-zinc-900">Bloggy</p>
+  </a>
+
+  <ul class="flex gap-4">
+    <li class="bold text-xl">
+      <a href="#"> Home </a>
+    </li>
+    <li class="bold text-xl">
+      <a href="/about"> About </a>
+    </li>
+  </ul>
+
+  <!-- {
+        userEmail?.value ? (
+            <a
+                href="/logout"
+                class="bg-teal-900 text-white py-3 px-6 rounded-xl text-xl"
+            >
+                Logout
+            </a>
+        ) : (
+            <a
+                href="/login"
+                class="bg-teal-900 text-white py-3 px-6 rounded-xl text-xl"
+            >
+                Login
+            </a>
+        )
+    } -->
+</header>

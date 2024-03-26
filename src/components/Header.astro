@@ -1,5 +1,8 @@
 ---
 import { Image } from "astro:assets";
+import Navigation from "./Navigation.astro";
+import Hamburger from "./Hamburger.astro";
+import ThemeIcon from "./ThemeIcon.astro";
 ---
 
 <header class="flex justify-between items-center justify-self-center w-full">
@@ -15,18 +18,10 @@ import { Image } from "astro:assets";
 
     <p class="uppercase text-3xl text-zinc-900">Bloggy</p>
   </a>
-
-  <ul class="flex gap-4">
-    <li class="bold text-xl">
-      <a href="/"> Home </a>
-    </li>
-    <li class="bold text-xl">
-      <a href="/blog"> Blog </a>
-    </li>
-    <li class="bold text-xl">
-      <a href="/about"> About </a>
-    </li>
-  </ul>
+  <nav>
+    <Navigation />
+    <Hamburger />
+  </nav>
 
   <!-- {
         userEmail?.value ? (

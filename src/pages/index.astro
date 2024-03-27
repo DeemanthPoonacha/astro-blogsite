@@ -1,5 +1,6 @@
 ---
-import { Image } from "astro:assets";
+import Home from "../components/Home.astro";
+
 import Layout from "../layouts/Layout.astro";
 import Main from "../layouts/Main.astro";
 export const prerender = true;
@@ -7,24 +8,6 @@ export const prerender = true;
 
 <Layout title="Bloggy">
     <Main>
-        <div class="flex flex-col items-center justify-center w-full">
-            <Image
-                src="/images/bloggy-logo.png"
-                alt="Bloggy logo"
-                width={200}
-                height={200}
-                format="webp"
-                class="rounded-xl invert dark:invert-0 -z-10"
-            />
-
-            <p
-                class="uppercase prose text-6xl sm:text-9xl text-zinc-900 dark:text-zinc-100"
-            >
-                Bloggy
-            </p>
-            <p class="prose dark:prose-invert text-center text-3xl">
-                One stop destination for all blog posts.
-            </p>
-        </div>
+        <Home />
     </Main>
 </Layout>

@@ -55,7 +55,7 @@ export const HeroParallax = ({
   return (
     <div
       ref={ref}
-      className="min-h-[350vh] py-40 mb-80 overflow-hidden  antialiased relative flex flex-col self-auto l[perspective:1000px] l[transform-style:preserve-3d]"
+      className="min-h-[350svh] py-40 mb-80 overflow-hidden  antialiased relative flex flex-col self-auto l[perspective:1000px] l[transform-style:preserve-3d]"
     >
       <Header />
       <motion.div
@@ -126,11 +126,11 @@ export const Header = () => {
   );
 
   const scale = useSpring(
-    useTransform(scrollYProgress, [0.6, 1], [1, 3]),
+    useTransform(scrollYProgress, [0.6, 1], [1, 2.77]),
     springConfig,
   );
   const textWidth = useSpring(
-    useTransform(scrollYProgress, [0.6, 1], [350, 130]),
+    useTransform(scrollYProgress, [0.6, 1], [350, 140]),
     springConfig,
   );
 
@@ -189,7 +189,7 @@ export const Header = () => {
       >
         <motion.p
           style={{ scale }}
-          className="pb-20 drop-shadow-xl max-w-2xl text-xl max-md:text-2xl text-center py-2 mt-1/2 dark:text-neutral-200"
+          className="p-2 pb-20 drop-shadow-xl max-w-2xl text-xl max-md:text-2xl text-center py-2 mt-1/2 dark:text-neutral-200"
         >
           Your ultimate destination for insightful articles
         </motion.p>

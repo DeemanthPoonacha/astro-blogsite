@@ -120,10 +120,10 @@ export const Header = () => {
     // target: ref,
     // offset: ["0 center", "end center"],
   });
-  const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.1], [0.2, 1]),
-    springConfig,
-  );
+  // const opacity = useSpring(
+  //   useTransform(scrollYProgress, [0, 0.1], [0.2, 1]),
+  //   springConfig,
+  // );
   const scale = useSpring(
     useTransform(scrollYProgress, [0.6, 1], [1, 3]),
     springConfig,

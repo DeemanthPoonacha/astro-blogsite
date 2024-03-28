@@ -1,6 +1,7 @@
 # Astro Blog-site
 
 [Click here to open the deployed site](https://bloggy-ivory.vercel.app/)
+[With animations](https://bloggy-git-feat-beautify-deemanths-projects.vercel.app)
 
 ## 🧞 Commands
 

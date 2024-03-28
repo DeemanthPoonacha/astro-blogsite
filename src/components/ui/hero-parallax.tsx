@@ -55,7 +55,7 @@ export const HeroParallax = ({
   return (
     <div
       ref={ref}
-      className="h-[350vh] py-40 overflow-hidden  antialiased relative flex flex-col self-auto l[perspective:1000px] l[transform-style:preserve-3d]"
+      className="min-h-[350vh] py-40 mb-80 overflow-hidden  antialiased relative flex flex-col self-auto l[perspective:1000px] l[transform-style:preserve-3d]"
     >
       <Header />
       <motion.div
@@ -130,7 +130,7 @@ export const Header = () => {
     springConfig,
   );
   const textWidth = useSpring(
-    useTransform(scrollYProgress, [0.6, 1], [350, 110]),
+    useTransform(scrollYProgress, [0.6, 1], [350, 130]),
     springConfig,
   );
 
@@ -158,7 +158,7 @@ export const Header = () => {
     springConfig,
   );
   return (
-    <div className="pointer-events-none max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full flex flex-col items-center ">
+    <div className="h-96 pointer-events-none max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full flex flex-col items-center ">
       <motion.img
         id="mainLogo"
         style={{

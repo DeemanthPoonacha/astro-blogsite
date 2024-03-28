@@ -73,13 +73,13 @@ export default function Nav() {
           variants={navMotion}
           animate="visible"
           initial="hidden"
-          className="lg:hidden fixed shadow-2xl dark:shadow-slate-800 right-0 top-0  z-40 flex h-screen
+          className="lg:hidden fixed shadow-2xl dark:shadow-slate-800 right-0 top-0  z-50 flex h-screen
           w-96 flex-col items-center  justify-center gap-24 bg-gray-50 dark:bg-gray-950 text-2xl font-bold"
         >
           <NavLinks className="flex flex-col gap-24 text-lg" isMobile={true} />
         </motion.div>
       )}
-      <motion.div className="hidden lg:flex lg:items-center  lg:justify-center lg:gap-12 lg:text-lg">
+      <motion.div className="z-50 hidden lg:flex lg:items-center  lg:justify-center lg:gap-12 lg:text-lg">
         <NavLinks className="flex gap-12" isMobile={false} />
       </motion.div>
       {hamburger}

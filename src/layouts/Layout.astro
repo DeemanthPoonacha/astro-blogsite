@@ -28,12 +28,15 @@ const {
         <meta name="description" content={description} />
         <meta property="og:image" content={image} />
         <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/png" href="/images/bloggy-logo.png" />
+        <link rel="icon" type="image/png" href="/images/logo.png" />
         <meta name="generator" content={Astro.generator} />
         <title>{title}</title>
     </head>
     <body class="w-full justify-center">
-        <div class="flex flex-col items-center justify-between h-screen">
+        <div
+            id="content"
+            class="flex flex-col items-center justify-between h-screen"
+        >
             <Header />
             <slot />
             <Footer />

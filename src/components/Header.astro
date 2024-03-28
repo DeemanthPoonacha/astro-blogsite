@@ -2,16 +2,23 @@
 import { Image } from "astro:assets";
 import Nav from "../components/Nav";
 import ThemeIcon from "./ThemeIcon";
+
+type Props = {
+    showLogo?: boolean;
+};
+
+const { showLogo = true } = Astro.props;
 ---
 
 <header
-    class="z-50 bg-gray-50/95 dark:bg-gray-950/95 fixed top-0 w-full flex justify-center shadow-xl dark:shadow-gray-800"
+    class="z-40 bg-gray-50/95 dark:bg-gray-950/95 fixed top-0 w-full flex justify-center shadow-xl dark:shadow-gray-800"
 >
     <div
         class="flex justify-between items-center justify-self-center pageContainer"
     >
         <a href="/" class="flex gap-x-1 sm:gap-x-4 items-center align-middle">
             <Image
+                style={{ opacity: showLogo ? 1 : 0 }}
                 id="headerLogo"
                 src="/images/logo.png"
                 alt="Bloggy logo"
@@ -22,6 +29,7 @@ import ThemeIcon from "./ThemeIcon";
             />
 
             <p
+                style={{ opacity: showLogo ? 1 : 0 }}
                 class="uppercase prose font-blod text-3xl sm:text-6xl text-zinc-900 dark:text-zinc-100"
             >
                 Bloggy

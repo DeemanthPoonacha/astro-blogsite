@@ -73,8 +73,8 @@ export default function Nav() {
           variants={navMotion}
           animate="visible"
           initial="hidden"
-          className="lg:hidden fixed shadow-2xl dark:shadow-slate-800 right-0 top-0  z-50 flex h-screen
-          w-96 flex-col items-center  justify-center gap-24 bg-gray-50 dark:bg-gray-950 text-2xl font-bold"
+          className="z-50 lg:hidden fixed shadow-2xl dark:shadow-slate-800 right-0 top-0 flex h-screen
+          w-96 flex-col items-center  justify-center gap-24  bg-gray-50/95 dark:bg-gray-950/95  text-2xl font-bold"
         >
           <NavLinks className="flex flex-col gap-24 text-lg" isMobile={true} />
         </motion.div>

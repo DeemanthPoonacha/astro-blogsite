@@ -42,7 +42,7 @@ const ThemeIcon = () => {
     };
   }, []);
   return (
-    <button id="themeToggle">
+    <button id="themeToggle" style={{ zIndex: 60 }}>
       <svg width="30px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path
           className="sun dark:fill-transparent"

@@ -9,12 +9,14 @@ interface Props {
     title: string;
     description?: string;
     image?: string;
+    showLogo?: boolean;
 }
 
 const {
     title,
     description = "Blog site for cars",
     image = "/images/main.jpeg",
+    showLogo = true,
 } = Astro.props;
 ---
 
@@ -37,7 +39,7 @@ const {
             id="content"
             class="flex flex-col items-center justify-between h-screen"
         >
-            <Header />
+            <Header showLogo={showLogo} />
             <slot />
             <Footer />
         </div>

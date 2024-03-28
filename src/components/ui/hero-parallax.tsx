@@ -55,7 +55,7 @@ export const HeroParallax = ({
   return (
     <div
       ref={ref}
-      className="h-[230vh] py-40 overflow-hidden  antialiased relative flex flex-col self-auto l[perspective:1000px] l[transform-style:preserve-3d]"
+      className="h-[350vh] py-40 overflow-hidden  antialiased relative flex flex-col self-auto l[perspective:1000px] l[transform-style:preserve-3d]"
     >
       <Header />
       <motion.div
@@ -120,16 +120,17 @@ export const Header = () => {
     // target: ref,
     // offset: ["0 center", "end center"],
   });
-  // const opacity = useSpring(
-  //   useTransform(scrollYProgress, [0, 0.1], [0.2, 1]),
-  //   springConfig,
-  // );
+  const zIndex = useSpring(
+    useTransform(scrollYProgress, [0, 0.2], [10, 50]),
+    springConfig,
+  );
+
   const scale = useSpring(
     useTransform(scrollYProgress, [0.6, 1], [1, 3]),
     springConfig,
   );
   const textWidth = useSpring(
-    useTransform(scrollYProgress, [0.6, 1], [350, 100]),
+    useTransform(scrollYProgress, [0.6, 1], [350, 110]),
     springConfig,
   );
 
@@ -157,26 +158,28 @@ export const Header = () => {
     springConfig,
   );
   return (
-    <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full flex flex-col items-center ">
+    <div className="pointer-events-none max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full flex flex-col items-center ">
       <motion.img
         id="mainLogo"
         style={{
           width,
           translateX,
           translateY,
+          zIndex,
         }}
         src="/images/logo.png"
         alt="Bloggy logo"
         width={250}
         height={250}
-        className="fixed top-1/4 text-center z-40 rounded-xl invert dark:invert-0"
+        className="z-50 fixed top-1/4 text-center rounded-xl invert dark:invert-0"
       />
       <motion.p
         style={{
           translateX: translateXTitle,
           translateY: translateYTitle,
+          zIndex,
         }}
-        className="z-40 fixed top-[calc(25%+360px)] uppercase prose font-blod text-3xl sm:text-6xl text-zinc-900 dark:text-zinc-100"
+        className="z-50 fixed top-[calc(25%+360px)] uppercase prose font-blod text-3xl sm:text-6xl text-zinc-900 dark:text-zinc-100"
       >
         Bloggy
       </motion.p>
@@ -186,7 +189,7 @@ export const Header = () => {
       >
         <motion.p
           style={{ scale }}
-          className="drop-shadow-xl max-w-2xl text-xl max-md:text-2xl text-center py-2 mt-1/2 dark:text-neutral-200"
+          className="pb-20 drop-shadow-xl max-w-2xl text-xl max-md:text-2xl text-center py-2 mt-1/2 dark:text-neutral-200"
         >
           Your ultimate destination for insightful articles
         </motion.p>

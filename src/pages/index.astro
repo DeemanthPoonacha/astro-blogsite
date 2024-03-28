@@ -9,7 +9,7 @@ export const prerender = true;
 const posts = await getCollection("posts");
 ---
 
-<Layout title="Bloggy">
+<Layout title="Bloggy" showLogo={false}>
     <Main>
         <Home client:load posts={posts} />
     </Main>

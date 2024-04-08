@@ -11,17 +11,17 @@ import {
 const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
 
 export const HeroParallax = ({
-  products,
+  items,
 }: {
-  products: {
+  items: {
     title: string;
     link: string;
     thumbnail: string;
   }[];
 }) => {
-  const firstRow = products.slice(0, 5);
-  const secondRow = products.slice(5, 10);
-  const thirdRow = products.slice(10, 15);
+  const firstRow = items.slice(0, 5);
+  const secondRow = items.slice(5, 10);
+  const thirdRow = items.slice(10, 15);
   const ref = React.useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -68,30 +68,22 @@ export const HeroParallax = ({
         className=""
       >
         <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
-          {firstRow.map((product) => (
-            <ItemCard
-              item={product}
-              translate={translateX}
-              key={product.title}
-            />
+          {firstRow.map((item) => (
+            <ItemCard item={item} translate={translateX} key={item.title} />
           ))}
         </motion.div>
         <motion.div className="flex flex-row mb-20 space-x-20 ">
-          {secondRow.map((product) => (
+          {secondRow.map((item) => (
             <ItemCard
-              item={product}
+              item={item}
               translate={translateXReverse}
-              key={product.title}
+              key={item.title}
             />
           ))}
         </motion.div>
         <motion.div className="flex flex-row-reverse space-x-reverse space-x-20">
-          {thirdRow.map((product) => (
-            <ItemCard
-              item={product}
-              translate={translateX}
-              key={product.title}
-            />
+          {thirdRow.map((item) => (
+            <ItemCard item={item} translate={translateX} key={item.title} />
           ))}
         </motion.div>
       </motion.div>
@@ -219,9 +211,9 @@ export const ItemCard = ({
         y: -20,
       }}
       key={item.title}
-      className="group/product h-96 w-[30rem] relative flex-shrink-0"
+      className="group/item h-96 w-[30rem] relative flex-shrink-0"
     >
-      <a href={item.link} className="block group-hover/product:shadow-2xl ">
+      <a href={item.link} className="block group-hover/item:shadow-2xl ">
         <img
           src={item.thumbnail}
           height="600"
@@ -230,8 +222,8 @@ export const ItemCard = ({
           alt={item.title}
         />
       </a>
-      <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none"></div>
-      <h2 className="text-2xl uppercase absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white">
+      <div className="absolute inset-0 h-full w-full opacity-0 group-hover/item:opacity-80 bg-black pointer-events-none"></div>
+      <h2 className="text-2xl uppercase absolute bottom-4 left-4 opacity-0 group-hover/item:opacity-100 text-white">
         {item.title}
       </h2>
     </motion.div>

@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import type { Post } from "../content/config";
+import CategoryList from "./TagList.astro";
 
 type Props = {
     post: Post;
@@ -25,8 +26,8 @@ const { post } = Astro.props;
         />
     </a>
 
-    <div class="mb-4">
-        <!-- <CategoryList categories={post.data.categories} /> -->
+    <div class="">
+        <CategoryList tags={post.data.tags} />
     </div>
 
     <a

@@ -4,14 +4,61 @@ import Layout from "../../layouts/Layout.astro";
 import Main from "../../layouts/Main.astro";
 import PostList from "../../components/PostList.astro";
 import H1 from "../../components/H1.astro";
+import TagList from "../../components/TagList.astro";
+import Pagination from "../../components/Pagination.astro";
 
-export const prerender = true;
-const posts = await getCollection("posts");
+const page = Number(Astro.url.searchParams.get("page") ?? 1);
+const postsPerPage = Number(import.meta.env.POSTS_PER_PAGE);
+const start = postsPerPage * (page - 1);
+const end = start + postsPerPage;
+console.log(start, end, postsPerPage);
+
+const allPosts = await getCollection("posts");
+
+const tags = Astro.url.searchParams.get("tags")?.split(",") as string[];
+let posts;
+let noOfPosts;
+const allCategories: string[] = allPosts.reduce((acc, post) => {
+    post.data.tags.forEach(
+        (tag) => !acc.includes(tag as never) && acc.push(tag as never),
+    );
+    return acc;
+}, []);
+console.log(tags);
+
+if (!tags || tags?.length <= 0 || tags[0] === "") {
+    posts = allPosts.slice(start, end);
+    noOfPosts = allPosts.length;
+} else {
+    const postsByCategory = allPosts.filter((post) =>
+        post.data.tags.map((tag) => tags.includes(tag)).includes(true),
+    );
+    noOfPosts = postsByCategory.length;
+
+    posts = postsByCategory.slice(start, end);
+}
 ---
 
 <Layout title="Blog | Bloggy">
     <Main>
         <H1 text="Bloggy Blog" />
-        <PostList posts={posts} />
+        <TagList
+            tags={allCategories}
+            title="Tags:"
+            foundText={`${noOfPosts} post${noOfPosts > 1 ? "s" : ""} found`}
+        />
+
+        {
+            posts.length === 0 ? (
+                <p>No posts were found with that tag</p>
+            ) : (
+                <>
+                    <PostList posts={posts} />
+                    <div class="mb-36">
+                        <Pagination page={page} numberOfPosts={noOfPosts} />
+                    </div>
+                </>
+            )
+        }
     </Main>
 </Layout>

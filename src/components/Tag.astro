@@ -1,0 +1,16 @@
+---
+type Props = {
+    tag: string;
+    selected?: boolean;
+};
+
+const { tag, selected } = Astro.props;
+const queryParams = Astro.url.searchParams.get("tags")?.split(",") as string[];
+---
+
+<a
+    href={`/blog?tags=${queryParams?.includes(tag) ? "" : tag}`}
+    class=`prose ${selected?"text-white bg-cyan-600":"text-cyan-600 dark:border-cyan-400 dark:text-cyan-400"} border-2 border-cyan-600 rounded-3xl uppercase text-xl p-2 whitespace-nowrap`
+>
+    {tag}
+</a>

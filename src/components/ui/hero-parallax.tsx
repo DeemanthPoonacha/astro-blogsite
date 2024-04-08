@@ -69,17 +69,17 @@ export const HeroParallax = ({
       >
         <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
           {firstRow.map((product) => (
-            <ProductCard
-              product={product}
+            <ItemCard
+              item={product}
               translate={translateX}
               key={product.title}
             />
           ))}
         </motion.div>
-        <motion.div className="flex flex-row  mb-20 space-x-20 ">
+        <motion.div className="flex flex-row mb-20 space-x-20 ">
           {secondRow.map((product) => (
-            <ProductCard
-              product={product}
+            <ItemCard
+              item={product}
               translate={translateXReverse}
               key={product.title}
             />
@@ -87,14 +87,18 @@ export const HeroParallax = ({
         </motion.div>
         <motion.div className="flex flex-row-reverse space-x-reverse space-x-20">
           {thirdRow.map((product) => (
-            <ProductCard
-              product={product}
+            <ItemCard
+              item={product}
               translate={translateX}
               key={product.title}
             />
           ))}
         </motion.div>
       </motion.div>
+      {/* <img
+        className="fixed opacity-10 -bottom-96 w-full"
+        src="/images/about-bg.jpg"
+      /> */}
     </div>
   );
 };
@@ -116,10 +120,7 @@ export const Header = () => {
     console.log(posRef, posMain);
   }, []);
 
-  const { scrollYProgress } = useScroll({
-    // target: ref,
-    // offset: ["0 center", "end center"],
-  });
+  const { scrollYProgress } = useScroll({});
   const zIndex = useSpring(
     useTransform(scrollYProgress, [0, 0.2], [10, 50]),
     springConfig,
@@ -198,11 +199,11 @@ export const Header = () => {
   );
 };
 
-export const ProductCard = ({
-  product,
+export const ItemCard = ({
+  item,
   translate,
 }: {
-  product: {
+  item: {
     title: string;
     link: string;
     thumbnail: string;
@@ -217,21 +218,21 @@ export const ProductCard = ({
       whileHover={{
         y: -20,
       }}
-      key={product.title}
+      key={item.title}
       className="group/product h-96 w-[30rem] relative flex-shrink-0"
     >
-      <a href={product.link} className="block group-hover/product:shadow-2xl ">
+      <a href={item.link} className="block group-hover/product:shadow-2xl ">
         <img
-          src={product.thumbnail}
+          src={item.thumbnail}
           height="600"
           width="600"
           className="object-cover object-left-top absolute h-full w-full inset-0"
-          alt={product.title}
+          alt={item.title}
         />
       </a>
       <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none"></div>
-      <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white">
-        {product.title}
+      <h2 className="text-2xl uppercase absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white">
+        {item.title}
       </h2>
     </motion.div>
   );

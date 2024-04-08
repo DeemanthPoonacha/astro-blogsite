@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import H1 from "../components/H1.astro";
 import Layout from "../layouts/Layout.astro";
 import Main from "../layouts/Main.astro";
@@ -8,6 +9,14 @@ const BlogName = "Bloggy";
 ---
 
 <Layout title="About | Bloggy">
+    <Image
+        width={500}
+        height={500}
+        id="mainLogo"
+        src="/images/about-bg.jpg"
+        alt="Background"
+        class="-z-10 opacity-10 fixed min-h-full w-full mt-20 md:-top-[10vh] lg:-top-[20vw]"
+    />
     <Main>
         <H1 text="About" />
         <div class="my-16 flex flex-col prose dark:prose-invert text-xl">

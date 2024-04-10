@@ -32,9 +32,9 @@ const prevQueryString = updateQueryString(
         hasPreviousPosts ? (
             <a
                 href={`/blog?${prevQueryString}`}
-                class="bg-zinc-900 dark:bg-zinc-800 text-white py-3 px-6 rounded-xl text-xl"
+                class="text-xl font-bold outlineButton"
             >
-                Previous
+                {"< "}Previous
             </a>
         ) : (
             <div />
@@ -44,9 +44,9 @@ const prevQueryString = updateQueryString(
         hasNextPosts ? (
             <a
                 href={`/blog?${nextQueryString}`}
-                class="bg-zinc-900 dark:bg-zinc-800 text-white py-3 px-6 rounded-xl text-xl"
+                class="text-xl font-bold outlineButton"
             >
-                Next
+                Next{" >"}
             </a>
         ) : (
             <div />

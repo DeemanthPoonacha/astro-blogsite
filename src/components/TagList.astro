@@ -4,41 +4,20 @@ import Tag from "./Tag.astro";
 type Props = {
     tags: CollectionEntry<"posts">["data"]["tags"];
     title?: string;
-    foundText?: string;
+    field?: string;
 };
 
-const { tags, title, foundText } = Astro.props;
-const selectedTags = Astro.url.searchParams.get("tags") as string;
+const { tags, title,  field = "tags" } = Astro.props;
 ---
 
-<div class="flex max-lg:flex-col justify-between lg:gap-12 mb-12 sm:mb-16">
-    <div
-        class="grid grid-cols-[auto,1fr] gap-x-10 gap-y-3 mb-4 max-lg:grid-cols-1"
-    >
-        {
-            title && (
-                <h3 class="font-bold text-4xl prose dark:prose-invert">
-                    {title}
-                </h3>
-            )
-        }
-
-        <div class="flex gap-4 flex-wrap items-center">
-            {
-                tags?.map((tag) => (
-                    <Tag
-                        tag={tag}
-                        selected={selectedTags?.includes(tag) || false}
-                    />
-                ))
-            }
-        </div>
-    </div>
+<div class="grid grid-cols-[auto,1fr] gap-x-10 gap-y-3 mb-4 max-lg:grid-cols-1">
     {
-        foundText && (
-            <h3 class="font-bold text-4xl prose dark:prose-invert">
-                {foundText}
-            </h3>
+        title && (
+            <h4 class="font-bold text-3xl prose dark:prose-invert">{title}</h4>
         )
     }
+
+    <div class="flex gap-4 flex-wrap items-center">
+        {tags?.map((tag) => <Tag field={field} tag={tag} />)}
+    </div>
 </div>

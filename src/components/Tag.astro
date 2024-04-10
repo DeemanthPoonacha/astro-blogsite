@@ -1,16 +1,25 @@
 ---
+import { updateQueryString } from "../utils/helpers";
+
 type Props = {
     tag: string;
-    selected?: boolean;
+    field?: string;
 };
+const { tag, field = "tags" } = Astro.props;
+const selectedTags = Astro.url.searchParams
+    .get(field as string)
+    ?.split(",") as string[];
+const selected = selectedTags?.includes(tag);
 
-const { tag, selected } = Astro.props;
-const queryParams = Astro.url.searchParams.get("tags")?.split(",") as string[];
+const query = Astro.url.search;
+const newQueryString = updateQueryString(query, field, tag);
+
+const link = `/blog?${newQueryString}`;
 ---
 
 <a
-    href={`/blog?tags=${queryParams?.includes(tag) ? "" : tag}`}
-    class=`prose ${selected?"text-white bg-cyan-600":"text-cyan-600 dark:border-cyan-400 dark:text-cyan-400"} border-2 border-cyan-600 rounded-3xl uppercase text-xl p-2 whitespace-nowrap`
+    href={link}
+    class=`prose ${selected?"text-white bg-cyan-500 dark:bg-cyan-600":"text-cyan-500  dark:text-cyan-600"} border-2 border-cyan-500 dark:border-cyan-600 rounded-3xl uppercase text-lg p-2 whitespace-nowrap`
 >
     {tag}
 </a>

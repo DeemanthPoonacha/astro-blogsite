@@ -1,0 +1,32 @@
+---
+import TagList from "./TagList.astro";
+
+type Props = {
+    allTags: string[];
+    allAuthors: string[];
+    filtered: boolean;
+    noOfPosts: number;
+};
+const { allTags, allAuthors, filtered, noOfPosts } = Astro.props;
+---
+
+<div class="flex flex-col justify-between lg:gap-4 mb-12">
+    <TagList field="tags" tags={allTags} title="Tags:" />
+    <TagList field="authors" tags={allAuthors} title="Authors:" />
+    {
+        filtered && (
+            <div class="flex justify-between">
+                <h4 class="font-bold text-3xl prose dark:prose-invert">
+                    {`${noOfPosts} post${noOfPosts > 1 ? "s" : ""} found`}
+                </h4>
+                <a
+                    class="flex gap-1 items-center border-2 border-zinc-500 text-zinc-500 dark:invert font-bold prose dark:prose-invert rounded-xl p-2"
+                    href="/blog"
+                >
+                    &#10006;{" "}
+                    <span class="text-xl text-center"> Clear Filter </span>
+                </a>
+            </div>
+        )
+    }
+</div>

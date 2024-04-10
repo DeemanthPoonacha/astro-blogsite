@@ -1,22 +1,38 @@
 ---
-import {getCollection} from "astro:content"
+import { updateQueryString } from "../utils/helpers";
 type Props = {
-    page: number
-    numberOfPosts: number
-}
+    page: number;
+    numberOfPosts: number;
+};
 
-const {page, numberOfPosts} = Astro.props
-const postsPerPage = Number(import.meta.env.POSTS_PER_PAGE)
-const hasPreviousPosts = page > 1
-const hasNextPosts = numberOfPosts > page * postsPerPage
+const { page, numberOfPosts } = Astro.props;
+const postsPerPage = Number(import.meta.env.POSTS_PER_PAGE || 10);
+const hasPreviousPosts = page > 1;
+const hasNextPosts = numberOfPosts > page * postsPerPage;
+const query = Astro.url.search;
+console.log("🚀 ~  Astro.url:", Astro.url);
+const nextPage = page + 1;
+const nextQueryString = updateQueryString(
+    query,
+    "page",
+    nextPage.toString(),
+    true,
+);
+const prevPage = page - 1;
+const prevQueryString = updateQueryString(
+    query,
+    "page",
+    prevPage.toString(),
+    true,
+);
 ---
 
 <div class="flex justify-between">
     {
         hasPreviousPosts ? (
             <a
-                href={`?page=${page - 1}`}
-                class="bg-teal-900 text-white py-3 px-6 rounded-xl text-xl"
+                href={`/blog?${prevQueryString}`}
+                class="bg-zinc-900 dark:bg-zinc-800 text-white py-3 px-6 rounded-xl text-xl"
             >
                 Previous
             </a>
@@ -27,8 +43,8 @@ const hasNextPosts = numberOfPosts > page * postsPerPage
     {
         hasNextPosts ? (
             <a
-                href={`?page=${page + 1}`}
-                class="bg-teal-900 text-white py-3 px-6 rounded-xl text-xl"
+                href={`/blog?${nextQueryString}`}
+                class="bg-zinc-900 dark:bg-zinc-800 text-white py-3 px-6 rounded-xl text-xl"
             >
                 Next
             </a>

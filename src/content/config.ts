@@ -13,7 +13,7 @@ const postsCollection = defineCollection({
   schema: ({ image }) =>
     z.object({
       author: z.string(),
-      categories: z.array(z.string()),
+      tags: z.array(z.string()),
       date: z.string().transform((str) =>
         new Date(str).toLocaleDateString("en-GB", {
           weekday: "short",

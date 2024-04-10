@@ -1,12 +1,16 @@
 ---
 import { Image } from "astro:assets";
 import type { Post } from "../content/config";
+import CategoryList from "./TagList.astro";
+import { getEntryBySlug } from "astro:content";
 
 type Props = {
     post: Post;
 };
 
 const { post } = Astro.props;
+
+const author = await getEntryBySlug("authors", post.data.author);
 ---
 
 <article
@@ -30,7 +34,7 @@ const { post } = Astro.props;
 
     <div class="flex flex-col justify-between p-4">
         <div class="">
-            <!-- <CategoryList categories={post.data.categories} /> -->
+            <CategoryList tags={post.data.tags} />
         </div>
 
         <a
@@ -44,27 +48,22 @@ const { post } = Astro.props;
             {post.body}
         </p>
 
-        <!-- {
-      author ? (
-        <a
-          href={`/author/${author.slug}`}
-          class="text-zinc-900 text-2xl font-bold"
-        >
-          {author.data.name}
-        </a>
-      ) : null
-    } -->
-
-        <span
-            class="prose dark:prose-invert text-xl w-full flex justify-between"
-        >
-            {post.data.date}
-            <a
-                class="prose dark:prose-invert text-lg text-right"
-                href=`/authors/${post.data.author}`
+        <div class="flex justify-between items-center">
+            <span
+                class="prose dark:prose-invert text-xl w-full flex justify-between"
             >
-                {post.data.author}
-            </a>
-        </span>
+                {post.data.date}
+                {
+                    author ? (
+                        <a
+                            href={`/author/${author.slug}`}
+                            class="prose dark:prose-invert text-lg"
+                        >
+                            {author.data.name}
+                        </a>
+                    ) : null
+                }
+            </span>
+        </div>
     </div>
 </article>

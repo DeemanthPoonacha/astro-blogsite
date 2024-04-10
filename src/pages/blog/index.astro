@@ -4,14 +4,81 @@ import Layout from "../../layouts/Layout.astro";
 import Main from "../../layouts/Main.astro";
 import PostList from "../../components/PostList.astro";
 import H1 from "../../components/H1.astro";
+import Pagination from "../../components/Pagination.astro";
+import Filter from "../../components/Filter.astro";
 
-export const prerender = true;
-const posts = await getCollection("posts");
+const page = Number(Astro.url.searchParams.get("page") ?? 1);
+const postsPerPage = Number(import.meta.env.POSTS_PER_PAGE || 10);
+const start = postsPerPage * (page - 1);
+const end = start + postsPerPage;
+console.log(start, end, postsPerPage);
+
+const allPosts = await getCollection("posts");
+
+let noOfPosts;
+let posts;
+
+const tags = Astro.url.searchParams.get("tags")?.split(",") as string[];
+const allTags: string[] = allPosts.reduce((acc, post) => {
+    post.data.tags.forEach(
+        (tag) => !acc.includes(tag as never) && acc.push(tag as never),
+    );
+    return acc;
+}, []);
+console.log(tags);
+
+const authors = Astro.url.searchParams.get("authors")?.split(",") as string[];
+const allAuthors: string[] = allPosts.reduce((acc, post) => {
+    !acc.includes(post.data.author as never) &&
+        acc.push(post.data.author as never);
+    return acc;
+}, []);
+console.log(authors);
+let filtered = true;
+if (
+    (!authors || authors?.length <= 0 || authors[0] === "") &&
+    (!tags || tags?.length <= 0 || tags[0] === "")
+) {
+    posts = allPosts.slice(start, end);
+    noOfPosts = allPosts.length;
+    filtered = false;
+} else {
+    let filtered = allPosts;
+    if (tags && tags?.length > 0 && tags[0] !== "") {
+        filtered = filtered.filter((post) =>
+            post.data.tags.map((tag) => tags.includes(tag)).includes(true),
+        );
+    }
+    if (authors && authors?.length > 0 && authors[0] !== "") {
+        filtered = filtered.filter((post) =>
+            authors.includes(post.data.author),
+        );
+    }
+    noOfPosts = filtered.length;
+    posts = filtered.slice(start, end);
+}
 ---
 
 <Layout title="Blog | Bloggy">
     <Main>
         <H1 text="Bloggy Blog" />
-        <PostList posts={posts} />
+        <Filter
+            allAuthors={allAuthors}
+            allTags={allTags}
+            filtered={filtered}
+            noOfPosts={noOfPosts}
+        />
+        {
+            posts.length === 0 ? (
+                <p>No posts were found with that tag</p>
+            ) : (
+                <>
+                    <PostList posts={posts} />
+                    <div class="mb-36">
+                        <Pagination page={page} numberOfPosts={noOfPosts} />
+                    </div>
+                </>
+            )
+        }
     </Main>
 </Layout>

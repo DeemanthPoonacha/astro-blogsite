@@ -4,6 +4,8 @@ import { getCollection, getEntryBySlug } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import PostList from "../../components/PostList.astro";
 import Main from "../../layouts/Main.astro";
+import H1 from "../../components/H1.astro";
+import { Image } from "astro:assets";
 
 const { slug } = Astro.params;
 
@@ -13,9 +15,11 @@ console.log("🚀 ~ author:", author);
 if (!author) {
     return Astro.redirect("/404");
 }
+const userImg = author.data.image ?? "/images/icons/user.svg";
 
 const allPosts = await getCollection("posts");
 const posts = allPosts.filter((post) => post.data.author === author.slug);
+const { Content } = await author.render();
 ---
 
 <Layout title={author.data.name}>
@@ -24,8 +28,50 @@ const posts = allPosts.filter((post) => post.data.author === author.slug);
             ← <a href="/blog" class="underline">Back to all blogs</a>
         </div>
 
-        <p class="text-6xl text-teal-900 mb-16 font-bold">
-            Posts by {author.data.name}
+        <div class="mb-12 max-w-full prose prose-2xl dark:prose-invert">
+            <div class="flex justify-between items-center">
+                <div>
+                    <H1 text={author.data.name} />
+                    <p class="text-4xl mt-0 mb-6">{author.data.subtitle}</p>
+                    {
+                        author.data.social && (
+                            <div class="flex divide-x divide-black -ml-4">
+                                {author.data.social.map(
+                                    ({ platform, link }) => (
+                                        <a
+                                            class="px-4 text-xl flex items-center"
+                                            href={link}
+                                            target="_blank"
+                                        >
+                                            <Image
+                                                src={`/images/icons/${platform}.svg`}
+                                                alt={platform}
+                                                width={24}
+                                                height={24}
+                                                class="m-0 mr-1 dark:invert"
+                                            />
+                                            {platform}
+                                        </a>
+                                    ),
+                                )}
+                            </div>
+                        )
+                    }
+                </div>
+
+                <Image
+                    src={userImg as string}
+                    alt={author.data.name}
+                    width={240}
+                    height={240}
+                    class=`size-60 rounded-full ${author.data.image ? "border-4 border-black dark:border-white" : "dark:invert"}`
+                />
+            </div>
+
+            <Content />
+        </div>
+        <p class="text-6xl mb-16 font-bold">
+            {`Posts by ${author.data.name}`}
         </p>
 
         <div class="mb-60">

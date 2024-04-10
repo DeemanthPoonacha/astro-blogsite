@@ -5,7 +5,16 @@ const authorsCollection = defineCollection({
   schema: ({ image }) =>
     z.object({
       name: z.string(),
-      image: image(),
+      subtitle: z.string(),
+      image: image().optional(),
+      social: z
+        .array(
+          z.object({
+            platform: z.string(),
+            link: z.string(),
+          }),
+        )
+        .optional(),
     }),
 });
 

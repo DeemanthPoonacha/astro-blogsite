@@ -24,10 +24,6 @@ const { Content } = await author.render();
 
 <Layout title={author.data.name}>
     <Main>
-        <div class="text-zinc-500 text-2xl mb-16">
-            ← <a href="/blog" class="underline">Back to all blogs</a>
-        </div>
-
         <div class="mb-12 max-w-full prose prose-2xl dark:prose-invert">
             <div class="flex justify-between items-center">
                 <div>
@@ -71,7 +67,9 @@ const { Content } = await author.render();
             <Content />
         </div>
         <p class="text-6xl mb-16 font-bold">
-            {`Posts by ${author.data.name}`}
+            Posts by <span class="primaryColor">
+                {author.data.name}
+            </span>
         </p>
 
         <div class="mb-60">

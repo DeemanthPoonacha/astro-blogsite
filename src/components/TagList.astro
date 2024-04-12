@@ -10,7 +10,9 @@ type Props = {
 const { tags, title, field = "tags" } = Astro.props;
 ---
 
-<div class="grid grid-cols-[auto,1fr] gap-x-10 gap-y-3 mb-4 max-lg:grid-cols-1">
+<div
+    class="grid grid-cols-[auto,1fr] items-center gap-x-10 gap-y-3 max-lg:grid-cols-1"
+>
     {
         title && (
             <h4 class="font-bold text-3xl prose dark:prose-invert">{title}</h4>

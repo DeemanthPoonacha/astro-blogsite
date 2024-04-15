@@ -11,7 +11,6 @@ import SocialLinks from "../../components/SocialLinks.astro";
 const { slug } = Astro.params;
 
 const author = await getEntryBySlug("authors", slug as string);
-console.log("🚀 ~ author:", author);
 
 if (!author) {
     return Astro.redirect("/404");
@@ -25,6 +24,11 @@ const { Content } = await author.render();
 
 <Layout title={author.data.name}>
     <Main>
+        <a href={`/authors`} class="font-bold no-underline">
+            &#8701; <span class="prose dark:prose-invert prose-xl underline">
+                Back to all Authors
+            </span>
+        </a>
         <div class="mb-12 max-w-full prose prose-2xl dark:prose-invert">
             <div
                 class="flex max-md:flex-col-reverse space-y-1 justify-between items-center mb-16"

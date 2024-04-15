@@ -16,14 +16,12 @@ export function updateQueryString(
     // Get the existing values of the field
     const existing = params.get(field);
     const existingValues = existing?.split(",") || [];
-    console.log(existingValues, value);
 
     // Remove the value if it already exists
     const updatedValues = existingValues.includes(value)
       ? existingValues.filter((v) => v !== value)
       : [...existingValues, value];
 
-    console.log("🚀 ~ updatedValues:", updatedValues);
     // Set the field with the updated values
     if (updatedValues.length > 0) {
       params.set(field, updatedValues.join(","));

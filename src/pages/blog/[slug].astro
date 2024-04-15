@@ -15,6 +15,13 @@ const { Content } = await post.render();
 <Layout title={post.data.title}>
     <Main>
         <div class="max-w-full prose prose-2xl dark:prose-invert">
+            <a href={`/blog`} class="font-bold no-underline">
+                &#8701; <span
+                    class="prose dark:prose-invert prose-xl underline"
+                >
+                    Back to all Posts
+                </span>
+            </a>
             <H1 text={post.data.title} />
             <Image
                 src={post.data.image}

@@ -11,7 +11,6 @@ const page = Number(Astro.url.searchParams.get("page") ?? 1);
 const postsPerPage = Number(import.meta.env.POSTS_PER_PAGE || 10);
 const start = postsPerPage * (page - 1);
 const end = start + postsPerPage;
-console.log(start, end, postsPerPage);
 
 const allPosts = await getCollection("posts");
 
@@ -25,7 +24,6 @@ const allTags: string[] = allPosts.reduce((acc, post) => {
     );
     return acc;
 }, []);
-console.log(tags);
 
 const authors = Astro.url.searchParams.get("authors")?.split(",") as string[];
 const allAuthors: string[] = allPosts.reduce((acc, post) => {
@@ -33,7 +31,7 @@ const allAuthors: string[] = allPosts.reduce((acc, post) => {
         acc.push(post.data.author as never);
     return acc;
 }, []);
-console.log(authors);
+
 let filtered = true;
 if (
     (!authors || authors?.length <= 0 || authors[0] === "") &&

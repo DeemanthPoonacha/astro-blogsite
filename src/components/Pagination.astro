@@ -10,7 +10,6 @@ const postsPerPage = Number(import.meta.env.POSTS_PER_PAGE || 10);
 const hasPreviousPosts = page > 1;
 const hasNextPosts = numberOfPosts > page * postsPerPage;
 const query = Astro.url.search;
-console.log("🚀 ~  Astro.url:", Astro.url);
 const nextPage = page + 1;
 const nextQueryString = updateQueryString(
     query,
@@ -34,7 +33,7 @@ const prevQueryString = updateQueryString(
                 href={`/blog?${prevQueryString}`}
                 class="text-xl font-bold outlineButton"
             >
-                {"< "}Previous
+                <span class="text-xl">&#8701</span> Previous
             </a>
         ) : (
             <div />
@@ -46,7 +45,7 @@ const prevQueryString = updateQueryString(
                 href={`/blog?${nextQueryString}`}
                 class="text-xl font-bold outlineButton"
             >
-                Next{" >"}
+                Next <span class="text-xl">&#8702</span>
             </a>
         ) : (
             <div />

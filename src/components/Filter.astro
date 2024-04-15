@@ -14,14 +14,15 @@ const { allTags, allAuthors, filtered, noOfPosts } = Astro.props;
     <TagList field="tags" tags={allTags} title="Tags:" />
     <TagList field="authors" tags={allAuthors} title="Authors:" />
     {
-        filtered && (
-            <div class="flex justify-between">
+        (
+            <div class="flex justify-between items-center">
                 <h4 class="font-bold text-3xl max-w-full prose dark:prose-invert">
-                    {`${noOfPosts} post${noOfPosts > 1 ? "s" : ""} found`}
+                    {`${noOfPosts} post${noOfPosts !== 1 ? "s" : ""} found`}
                 </h4>
                 <a
-                    class="flex gap-1 items-center font-bold outlineButton"
-                    href="/blog"
+                    aria-disabled={!filtered}
+                    class={`${!filtered ? "cursor-not-allowed text-zinc-300 border-zinc-300" : "text-cyan-500 border-cyan-500 "} flex gap-1 items-center font-bold border-2  max-w-full prose dark:prose-invert rounded-xl p-2`}
+                    href={filtered ? "/blog" : ""}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

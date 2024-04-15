@@ -35,7 +35,13 @@ const NavLinks = ({
   <div className={className}>
     {navLinks.map(({ name, href, id }) => (
       <motion.a
-        className={currentPath === href ? "text-cyan-500" : ""}
+        className={
+          currentPath === "/" && href === "/"
+            ? "text-cyan-500"
+            : currentPath.includes(href) && href !== "/"
+              ? "text-cyan-500"
+              : ""
+        }
         key={id}
         variants={isMobile ? itemMotion : {}}
         href={href}

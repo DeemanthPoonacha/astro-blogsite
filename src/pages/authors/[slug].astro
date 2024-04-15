@@ -27,7 +27,7 @@ const { Content } = await author.render();
     <Main>
         <div class="mb-12 max-w-full prose prose-2xl dark:prose-invert">
             <div
-                class="flex max-md:flex-col-reverse space-y-1 justify-between items-center"
+                class="flex max-md:flex-col-reverse space-y-1 justify-between items-center mb-16"
             >
                 <div>
                     <H1
@@ -39,7 +39,10 @@ const { Content } = await author.render();
                     </p>
                     {
                         author.data.social && (
-                            <SocialLinks social={author.data.social} />
+                            <SocialLinks
+                                className="md:-ml-4 md:justify-start justify-center"
+                                social={author.data.social}
+                            />
                         )
                     }
                 </div>

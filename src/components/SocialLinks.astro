@@ -10,7 +10,9 @@ type Props = {
 const { social } = Astro.props;
 ---
 
-<div class="flex divide-x divide-zinc-950 dark:divide-zinc-50 -ml-4">
+<div
+    class="flex md:justify-start justify-center divide-x divide-zinc-950 dark:divide-zinc-50 -ml-4"
+>
     {
         social?.map(({ platform, link }) => (
             <a
@@ -25,7 +27,9 @@ const { social } = Astro.props;
                     height={24}
                     class="m-0 mr-1 dark:invert"
                 />
-                {platform}
+                <span class="hidden min-[460px]:max-[768px]:block xl:block">
+                    {platform}
+                </span>
             </a>
         ))
     }

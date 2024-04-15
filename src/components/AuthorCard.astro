@@ -34,7 +34,7 @@ const { author } = Astro.props;
         {author.data.name}
     </a>
 
-    <p class="prose text-center dark:prose-invert mb-6 text-2xl line-clamp-2">
+    <p class="prose dark:prose-invert mb-6 text-center text-2xl line-clamp-2">
         {author.data.subtitle}
     </p>
     <SocialLinks social={author.data.social} />

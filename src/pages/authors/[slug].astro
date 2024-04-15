@@ -6,6 +6,7 @@ import PostList from "../../components/PostList.astro";
 import Main from "../../layouts/Main.astro";
 import H1 from "../../components/H1.astro";
 import { Image } from "astro:assets";
+import SocialLinks from "../../components/SocialLinks.astro";
 
 const { slug } = Astro.params;
 
@@ -25,32 +26,20 @@ const { Content } = await author.render();
 <Layout title={author.data.name}>
     <Main>
         <div class="mb-12 max-w-full prose prose-2xl dark:prose-invert">
-            <div class="flex justify-between items-center">
+            <div
+                class="flex max-md:flex-col-reverse space-y-1 justify-between items-center"
+            >
                 <div>
-                    <H1 text={author.data.name} />
-                    <p class="text-4xl mt-0 mb-6">{author.data.subtitle}</p>
+                    <H1
+                        className="max-md:text-center"
+                        text={author.data.name}
+                    />
+                    <p class="max-md:text-center text-4xl mt-0 mb-6">
+                        {author.data.subtitle}
+                    </p>
                     {
                         author.data.social && (
-                            <div class="flex divide-x divide-zinc-950 dark:divide-zinc-50 -ml-4">
-                                {author.data.social.map(
-                                    ({ platform, link }) => (
-                                        <a
-                                            class="px-4 text-xl flex items-center"
-                                            href={link}
-                                            target="_blank"
-                                        >
-                                            <Image
-                                                src={`/images/icons/${platform}.svg`}
-                                                alt={platform}
-                                                width={24}
-                                                height={24}
-                                                class="m-0 mr-1 dark:invert"
-                                            />
-                                            {platform}
-                                        </a>
-                                    ),
-                                )}
-                            </div>
+                            <SocialLinks social={author.data.social} />
                         )
                     }
                 </div>
@@ -66,7 +55,7 @@ const { Content } = await author.render();
 
             <Content />
         </div>
-        <p class="text-6xl mb-16 font-bold">
+        <p class="sm:text-6xl text-4xl mb-16 font-bold">
             Posts by <span class="primaryColor">
                 {author.data.name}
             </span>

@@ -6,15 +6,16 @@ type Props = {
         platform: string;
         link: string;
     }[];
+    className?: string;
 };
-const { social } = Astro.props;
+const { social, className } = Astro.props;
 ---
 
 <div
-    class="flex md:justify-start justify-center divide-x divide-zinc-950 dark:divide-zinc-50 -ml-4"
+    class={`${className} flex flex-wrap divide-x divide-zinc-950 dark:divide-zinc-50`}
 >
     {
-        social?.map(({ platform, link }) => (
+        social?.map(({ platform, link }, _index, all) => (
             <a
                 class="px-4 text-xl flex items-center"
                 href={link}
@@ -27,7 +28,13 @@ const { social } = Astro.props;
                     height={24}
                     class="m-0 mr-1 dark:invert"
                 />
-                <span class="hidden min-[460px]:max-[768px]:block xl:block">
+                <span
+                    class={
+                        all.length > 3
+                            ? "hidden"
+                            : "hidden min-[460px]:max-[768px]:block xl:block"
+                    }
+                >
                     {platform}
                 </span>
             </a>

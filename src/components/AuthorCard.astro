@@ -8,12 +8,14 @@ type Props = {
 const { author } = Astro.props;
 ---
 
-<article class="border-2 flex flex-col items-center p-10 rounded-lg">
+<article
+    class="flex flex-col justify-between items-center p-10 overflow-hidden rounded-lg border border-cyan-500/20 bg-white dark:bg-zinc-900 shadow shadow-cyan-500 hover:shadow-xl hover:shadow-cyan-500 dark:shadow hover:dark:shadow-xl hover:dark:shadow-cyan-500 dark:shadow-cyan-300"
+>
     <a
-    href={`/authors/${author.slug}`}
-    aria-label={`Read more about ${author.data.name}`}
+        href={`/authors/${author.slug}`}
+        aria-label={`Read more about ${author.data.name}`}
     >
-    {/* @ts-ignore */}
+        {/* @ts-ignore */}
         <Image
             loading={"lazy"}
             src={author.data.image ?? "/images/icons/user.svg"}
@@ -21,18 +23,18 @@ const { author } = Astro.props;
             width={200}
             height={200}
             format="webp"
-            class="size-40 rounded-full shadow-xl mb-6 object-cover"
+            class=`size-40 mb-6 border-2 border-black rounded-full object-cover ${author.data.image ? "dark:border-white" : "dark:invert"}`
         />
     </a>
 
     <a
         href={`/authors/${author.slug}`}
-        class="text-4xl prose dark:prose-invert mb-2 font-semibold inline-block"
+        class="text-4xl text-center prose dark:prose-invert mb-2 font-semibold inline-block"
     >
         {author.data.name}
     </a>
 
-    <p class="prose dark:prose-invert mb-6 text-2xl line-clamp-2">
+    <p class="prose text-center dark:prose-invert mb-6 text-2xl line-clamp-2">
         {author.data.subtitle}
     </p>
     <SocialLinks social={author.data.social} />

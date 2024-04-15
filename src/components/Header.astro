@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import Nav from "../components/Nav";
 import ThemeIcon from "./ThemeIcon";
+const currentPath = Astro.url.pathname
 ---
 
 <header
@@ -29,7 +30,7 @@ import ThemeIcon from "./ThemeIcon";
 
         <div class="flex gap-4 sm:gap-12">
             <ThemeIcon client:load />
-            <Nav client:load />
+            <Nav client:load currentPath={currentPath} />
         </div>
 
         <!-- {

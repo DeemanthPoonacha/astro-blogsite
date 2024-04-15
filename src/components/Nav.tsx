@@ -17,29 +17,36 @@ const itemMotion = {
   hidden: { opacity: 0, x: 100 },
 };
 const navLinks = [
-  { name: "Home", href: "/", id: 1 },
-  { name: "Blog", href: "/blog", id: 2 },
-  { name: "Authors", href: "/authors", id: 2 },
-  { name: "About", href: "/about", id: 3 },
+  { name: "Home", href: "/", id: "home" },
+  { name: "Blog", href: "/blog", id: "blog" },
+  { name: "Authors", href: "/authors", id: "authors" },
+  { name: "About", href: "/about", id: "about" },
 ];
 
 const NavLinks = ({
   isMobile,
   className,
+  currentPath = "home",
 }: {
   isMobile: boolean;
   className: string;
+  currentPath: string;
 }) => (
   <div className={className}>
     {navLinks.map(({ name, href, id }) => (
-      <motion.a key={id} variants={isMobile ? itemMotion : {}} href={href}>
+      <motion.a
+        className={currentPath === href ? "text-cyan-500" : ""}
+        key={id}
+        variants={isMobile ? itemMotion : {}}
+        href={href}
+      >
         {name}
       </motion.a>
     ))}
   </div>
 );
 
-export default function Nav() {
+export default function Nav({ currentPath }: { currentPath: string }) {
   const [toggled, setToggled] = useState(false);
   const hamburger = (
     <motion.div
@@ -77,11 +84,19 @@ export default function Nav() {
           className="lg:hidden fixed shadow-2xl dark:shadow-slate-800 right-0 top-0  z-40 flex h-screen
           w-96 flex-col items-center  justify-center gap-24 bg-gray-50 dark:bg-gray-950 text-2xl font-bold"
         >
-          <NavLinks className="flex flex-col gap-24 text-lg" isMobile={true} />
+          <NavLinks
+            currentPath={currentPath}
+            className="flex flex-col gap-24 text-lg"
+            isMobile={true}
+          />
         </motion.div>
       )}
       <motion.div className="hidden lg:flex lg:items-center  lg:justify-center lg:gap-12 lg:text-lg">
-        <NavLinks className="flex gap-12" isMobile={false} />
+        <NavLinks
+          currentPath={currentPath}
+          className="flex gap-12"
+          isMobile={false}
+        />
       </motion.div>
       {hamburger}
     </nav>

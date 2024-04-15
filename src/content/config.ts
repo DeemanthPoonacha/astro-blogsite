@@ -43,3 +43,5 @@ export const collections = {
 };
 
 export type Post = CollectionEntry<"posts">;
+
+export type Author = CollectionEntry<"authors">;

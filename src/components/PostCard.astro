@@ -52,7 +52,7 @@ const author = await getEntryBySlug("authors", post.data.author);
             {
                 author ? (
                     <a
-                        href={`/author/${author.slug}`}
+                        href={`/authors/${author.slug}`}
                         class="prose dark:prose-invert text-lg"
                     >
                         {author.data.name}

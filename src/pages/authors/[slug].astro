@@ -24,10 +24,6 @@ const { Content } = await author.render();
 
 <Layout title={author.data.name}>
     <Main>
-        <div class="text-zinc-500 text-2xl mb-16">
-            ← <a href="/blog" class="underline">Back to all blogs</a>
-        </div>
-
         <div class="mb-12 max-w-full prose prose-2xl dark:prose-invert">
             <div class="flex justify-between items-center">
                 <div>
@@ -35,7 +31,7 @@ const { Content } = await author.render();
                     <p class="text-4xl mt-0 mb-6">{author.data.subtitle}</p>
                     {
                         author.data.social && (
-                            <div class="flex divide-x divide-black -ml-4">
+                            <div class="flex divide-x divide-zinc-950 dark:divide-zinc-50 -ml-4">
                                 {author.data.social.map(
                                     ({ platform, link }) => (
                                         <a

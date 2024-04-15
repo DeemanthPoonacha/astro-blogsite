@@ -1,0 +1,18 @@
+---
+import { getCollection } from "astro:content";
+import H1 from "../../components/H1.astro";
+import Layout from "../../layouts/Layout.astro";
+import Main from "../../layouts/Main.astro";
+import AuthorCard from "../../components/AuthorCard.astro";
+
+const authors = await getCollection("authors");
+---
+
+<Layout title="Authors | Bloggy">
+    <Main>
+        <H1 text="Authors" />
+        <div class="grid grid-cols-2 gap-x-16 gap-y-14 max-md:grid-cols-1 mb-24">
+            {authors.map((author) => <AuthorCard author={author} />)}
+        </div>
+    </Main>
+</Layout>

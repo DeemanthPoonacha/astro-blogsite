@@ -1,0 +1,32 @@
+---
+import { Image } from "astro:assets";
+
+type Props = {
+    social?: {
+        platform: string;
+        link: string;
+    }[];
+};
+const { social } = Astro.props;
+---
+
+<div class="flex divide-x divide-zinc-950 dark:divide-zinc-50 -ml-4">
+    {
+        social?.map(({ platform, link }) => (
+            <a
+                class="px-4 text-xl flex items-center"
+                href={link}
+                target="_blank"
+            >
+                <Image
+                    src={`/images/icons/${platform}.svg`}
+                    alt={platform}
+                    width={24}
+                    height={24}
+                    class="m-0 mr-1 dark:invert"
+                />
+                {platform}
+            </a>
+        ))
+    }
+</div>

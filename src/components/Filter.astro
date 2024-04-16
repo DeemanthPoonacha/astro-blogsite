@@ -21,7 +21,7 @@ const { allTags, allAuthors, filtered, noOfPosts } = Astro.props;
                 </h4>
                 <a
                     aria-disabled={!filtered}
-                    class={`${!filtered ? "cursor-not-allowed text-zinc-300 border-zinc-300" : "text-cyan-500 border-cyan-500 "} flex gap-1 items-center font-bold border-2  max-w-full prose dark:prose-invert rounded-xl p-2`}
+                    class={`${!filtered ? "cursor-not-allowed text-zinc-300 border-zinc-300 dark:text-zinc-700 dark:border-zinc-700" : "text-cyan-500 border-cyan-500 dark:text-cyan-600 dark:border-cyan-600"} flex gap-1 items-center font-bold border-2  max-w-full prose dark:prose-invert rounded-xl p-2`}
                     href={filtered ? "/blog" : ""}
                 >
                     <svg

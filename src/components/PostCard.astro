@@ -13,36 +13,41 @@ const { post } = Astro.props;
 const author = await getEntryBySlug("authors", post.data.author);
 ---
 
-<article class="">
+<article
+    title={post.data.title}
+    class="flex flex-col justify-between overflow-hidden rounded-lg bg-white dark:bg-zinc-900 shadow shadow-cyan-500 hover:shadow-xl hover:shadow-cyan-500 dark:shadow hover:dark:shadow-xl hover:dark:shadow-cyan-500 dark:shadow-cyan-300"
+>
     <a
         href={`/blog/${post.slug}`}
         aria-label={`Read more about ${post.data.title}`}
+        class="overflow-hidden"
     >
         <Image
             loading={"lazy"}
             src={post.data.image}
             alt={post.data.title}
             width={600}
-            height={600 / 1.5}
+            height={350}
             format="webp"
-            class="rounded-2xl shadow-xl mb-6 aspect-thumbnail object-cover"
+            class="aspect-[600/350] rounded-t-rounded-lg duration-300 hover:scale-110"
         />
     </a>
 
-    <div class="">
-        <CategoryList tags={post.data.tags} />
-    </div>
+    <div class="flex flex-col justify-between p-4 gap-2">
+        <div class="">
+            <CategoryList tags={post.data.tags} />
+        </div>
 
-    <a
-        href={`/blog/${post.slug}`}
-        class="text-4xl prose dark:prose-invert mb-4 font-semibold inline-block"
-    >
-        {post.data.title}
-    </a>
+        <a
+            href={`/blog/${post.slug}`}
+            class="text-4xl prose dark:prose-invert mb-4 font-semibold line-clamp-2"
+        >
+            {post.data.title}
+        </a>
 
-    <p class="prose dark:prose-invert text-2xl mb-9 line-clamp-2">
-        {post.body}
-    </p>
+        <p class="prose dark:prose-invert text-2xl mb-5 line-clamp-2">
+            {post.body}
+        </p>
 
         <div class="flex justify-between items-center">
             <span

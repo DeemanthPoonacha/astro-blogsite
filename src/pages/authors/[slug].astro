@@ -4,9 +4,7 @@ import { getCollection, getEntryBySlug } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import PostList from "../../components/PostList.astro";
 import Main from "../../layouts/Main.astro";
-import H1 from "../../components/H1.astro";
-import { Image } from "astro:assets";
-import SocialLinks from "../../components/SocialLinks.astro";
+import AuthorData from "../../components/AuthorData.astro";
 
 const { slug } = Astro.params;
 
@@ -15,7 +13,6 @@ const author = await getEntryBySlug("authors", slug as string);
 if (!author) {
     return Astro.redirect("/404");
 }
-const userImg = author.data.image ?? "/images/icons/user.svg";
 
 const allPosts = await getCollection("posts");
 const posts = allPosts.filter((post) => post.data.author === author.slug);
@@ -30,35 +27,7 @@ const { Content } = await author.render();
             </span>
         </a>
         <div class="mb-12 max-w-full prose prose-2xl dark:prose-invert">
-            <div
-                class="flex max-md:flex-col-reverse space-y-1 justify-between items-center mb-16"
-            >
-                <div>
-                    <H1
-                        className="max-md:text-center"
-                        text={author.data.name}
-                    />
-                    <p class="max-md:text-center text-4xl mt-0 mb-6">
-                        {author.data.subtitle}
-                    </p>
-                    {
-                        author.data.social && (
-                            <SocialLinks
-                                className="md:-ml-4 md:justify-start justify-center"
-                                social={author.data.social}
-                            />
-                        )
-                    }
-                </div>
-
-                <Image
-                    src={userImg as string}
-                    alt={author.data.name}
-                    width={240}
-                    height={240}
-                    class=`size-60 rounded-full ${author.data.image ? "border-4 border-black dark:border-white" : "dark:invert"}`
-                />
-            </div>
+            <AuthorData authorData={author.data} />
 
             <Content />
         </div>

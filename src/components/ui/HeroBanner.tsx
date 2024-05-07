@@ -13,10 +13,15 @@ const HeroBanner = () => {
     const posMain = document
       .getElementById("mainLogo")
       ?.getBoundingClientRect();
+
     if (posMain && posRef) {
       setDiff([posMain.x - posRef.x, posMain.y - posRef.y, posRef.width]);
     }
-    console.log(posRef, posMain);
+
+    const posTags = document
+      .getElementById("mainTags")
+      ?.getBoundingClientRect().top;
+    console.log(posRef, posMain, posTags);
   }, []);
 
   const { scrollYProgress } = useScroll({});
@@ -26,11 +31,20 @@ const HeroBanner = () => {
   );
 
   const scale = useSpring(
-    useTransform(scrollYProgress, [0.6, 1], [1, 2.77]),
+    useTransform(scrollYProgress, [0.3, 0.6], [1, 2.77]),
     springConfig,
   );
+
   const textWidth = useSpring(
-    useTransform(scrollYProgress, [0.6, 1], [350, 140]),
+    useTransform(scrollYProgress, [0.3, 0.6], [350, 140]),
+    springConfig,
+  );
+  const translateYSubTitle = useSpring(
+    useTransform(
+      scrollYProgress,
+      [0, 0.2, 0.6, 0.7],
+      [0, -diff[1], -diff[1], -6 * diff[1]],
+    ),
     springConfig,
   );
 
@@ -57,6 +71,7 @@ const HeroBanner = () => {
     useTransform(scrollYProgress, [0, 0.2], [0, -diff[1] - 360 + yOffset]),
     springConfig,
   );
+
   return (
     <div className="h-96 pointer-events-none max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full flex flex-col items-center ">
       <motion.img
@@ -85,7 +100,7 @@ const HeroBanner = () => {
       </motion.p>
       <motion.div
         className="fixed top-[calc(25%+420px)] -z-10"
-        style={{ width: textWidth, translateY }}
+        style={{ width: textWidth, translateY: translateYSubTitle }}
       >
         <motion.p
           style={{ scale }}

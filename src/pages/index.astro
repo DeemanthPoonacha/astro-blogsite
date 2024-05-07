@@ -1,16 +1,13 @@
 ---
-import { getCollection } from "astro:content";
-import Home from "../components/Home.tsx";
+import Home from "../components/Home.astro";
 
 import Layout from "../layouts/Layout.astro";
 import Main from "../layouts/Main.astro";
-
 export const prerender = true;
-const posts = await getCollection("posts");
 ---
 
 <Layout title="Bloggy" showLogo={false}>
     <Main>
-        <Home client:load posts={posts} />
+        <Home />
     </Main>
 </Layout>

@@ -5,13 +5,14 @@ type Props = {
     tags: CollectionEntry<"posts">["data"]["tags"];
     title?: string;
     field?: string;
+    justifyCenter?: boolean;
 };
 
-const { tags, title, field = "tags" } = Astro.props;
+const { tags, title, field = "tags", justifyCenter } = Astro.props;
 ---
 
 <div
-    class="grid grid-cols-[auto,1fr] items-center gap-x-10 gap-y-3 max-lg:grid-cols-1"
+    class={`${title ? "gap-x-10" : ""} grid grid-cols-[auto,1fr] items-center gap-y-3 mb-4 max-lg:grid-cols-1`}
 >
     {
         title && (
@@ -19,7 +20,9 @@ const { tags, title, field = "tags" } = Astro.props;
         )
     }
 
-    <div class="flex gap-4 flex-wrap items-center">
+    <div
+        class={`flex gap-4 flex-wrap items-center ${!justifyCenter ? "justify-start" : "justify-center"}`}
+    >
         {tags?.map((tag) => <Tag field={field} tag={tag} />)}
     </div>
 </div>

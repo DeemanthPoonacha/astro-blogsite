@@ -1,5 +1,17 @@
 ---
 import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import PostList from "./PostList.astro";
+import TagList from "./TagList.astro";
+import H1 from "./H1.astro";
+const allPosts = await getCollection("posts");
+const allTags: string[] = allPosts.reduce((acc, post) => {
+    post.data.tags.forEach(
+        (tag) => !acc.includes(tag as never) && acc.push(tag as never),
+    );
+    return acc;
+}, []);
+const featuredposts = allPosts.filter((post) => post.data.featured);
 ---
 
 <div class="flex flex-col items-center justify-center w-full">
@@ -20,4 +32,16 @@ import { Image } from "astro:assets";
     <p class="max-w-full prose dark:prose-invert text-center text-3xl">
         your ultimate destination for insightful articles.
     </p>
+</div>
+
+<div class="my-20 md:m-20 lg:m-40 flex flex-col items-center gap-4">
+    <H1
+        className="text-center"
+        text="Find posts from wide range of categories"
+    />
+    <TagList tags={[...allTags, ...allTags, ...allTags]} justifyCenter />
+</div>
+<div class="">
+    <H1 text="Featured Posts:" />
+    <PostList posts={featuredposts} />
 </div>

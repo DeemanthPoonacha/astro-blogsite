@@ -1,4 +1,4 @@
-# **Bloggy** Astro Blog-site 
+# **Bloggy** - An Astro Blog-site 
 **Bloggy** is a sleek, modern blog site built with Astro JS, TypeScript, and styled with Tailwind CSS. It offers readers a seamless experience across various categories, bringing organized, engaging content to one platform.
 
 [Click here to open the deployed site](https://bloggy-ivory.vercel.app/)

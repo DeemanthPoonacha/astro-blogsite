@@ -18,3 +18,7 @@ html.dark {
 .primaryColor {
   @apply text-cyan-500 dark:text-cyan-600;
 }
+
+.primaryButton {
+  @apply text-lg font-bold bg-cyan-500 dark:bg-cyan-600 max-w-full text-white prose dark:prose-invert rounded-xl p-2;
+}

@@ -10,6 +10,8 @@ interface Props {
     description?: string;
     image?: string;
     showLogo?: boolean;
+    showHeader?: boolean;
+    showFooter?: boolean;
 }
 
 const {
@@ -17,6 +19,8 @@ const {
     description = "Blog site for cars",
     image = "/images/main.jpeg",
     showLogo = true,
+    showHeader = true,
+    showFooter = true,
 } = Astro.props;
 ---
 
@@ -25,7 +29,6 @@ const {
     <head>
         <ViewTransitions />
         <SpeedInsights />
-
         <meta charset="UTF-8" />
         <meta name="description" content={description} />
         <meta property="og:image" content={image} />
@@ -39,9 +42,9 @@ const {
             id="content"
             class="flex flex-col items-center justify-between h-screen"
         >
-            <Header showLogo={showLogo} />
+            {showHeader && <Header showLogo={showLogo} />}
             <slot />
-            <Footer />
+            {showFooter && <Footer />}
         </div>
     </body>
 </html>

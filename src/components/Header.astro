@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import Nav from "../components/Nav";
 import ThemeIcon from "./ThemeIcon";
+import AuthButton from "./AuthButton.astro";
 
 type Props = {
     showLogo?: boolean;
@@ -36,27 +37,10 @@ const currentPath = Astro.url.pathname;
             </p>
         </a>
 
-        <div class="flex gap-4 sm:gap-12">
+        <div class="flex items-center gap-4 sm:gap-12">
             <ThemeIcon client:load />
-            <Nav client:load currentPath={currentPath} />
+            <Nav currentPath={currentPath} client:load />
+            <AuthButton />
         </div>
-
-        <!-- {
-        userEmail?.value ? (
-            <a
-                href="/logout"
-                class="bg-teal-900 text-white py-3 px-6 rounded-xl text-xl"
-            >
-                Logout
-            </a>
-        ) : (
-            <a
-                href="/login"
-                class="bg-teal-900 text-white py-3 px-6 rounded-xl text-xl"
-            >
-                Login
-            </a>
-        )
-    } -->
     </div>
 </header>

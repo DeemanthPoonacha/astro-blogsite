@@ -1,0 +1,17 @@
+---
+import {
+    SignedIn,
+    SignedOut,
+    SignInButton,
+    UserButton,
+} from "@clerk/astro/components";
+---
+
+<div class="z-50 flex items-center">
+    <SignedOut>
+        <SignInButton class="primaryButton" mode="modal" />
+    </SignedOut>
+    <SignedIn>
+        <UserButton />
+    </SignedIn>
+</div>

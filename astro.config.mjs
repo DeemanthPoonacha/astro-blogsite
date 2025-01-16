@@ -19,10 +19,8 @@ export default defineConfig({
     }),
   ],
   output: "server",
-  adapter: [
-    vercel(),
-    node({
-      mode: "standalone",
-    }),
-  ],
+  // adapter: vercel(),
+  adapter: node({
+    mode: "standalone",
+  }),
 });

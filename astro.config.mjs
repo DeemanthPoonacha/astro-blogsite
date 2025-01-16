@@ -8,7 +8,16 @@ import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind(), mdx(), react(), clerk()],
+  integrations: [
+    tailwind(),
+    mdx(),
+    react(),
+    clerk({
+      appearance: {
+        variables: { colorPrimary: "#06b6d4" },
+      },
+    }),
+  ],
   output: "server",
   // adapter: vercel(),
   adapter: node({

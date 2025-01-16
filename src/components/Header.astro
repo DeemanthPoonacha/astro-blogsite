@@ -10,6 +10,7 @@ type Props = {
 
 const { showLogo = true } = Astro.props;
 const currentPath = Astro.url.pathname;
+const user = await Astro.locals.currentUser();
 ---
 
 <header
@@ -39,8 +40,8 @@ const currentPath = Astro.url.pathname;
 
         <div class="flex items-center gap-4 sm:gap-12">
             <ThemeIcon client:load />
-            <Nav currentPath={currentPath} client:load />
-            <AuthButton />
+            <AuthButton className="lg:order-last" />
+            <Nav isAuthorized={!!user} currentPath={currentPath} client:load />
         </div>
     </div>
 </header>

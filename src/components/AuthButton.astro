@@ -5,9 +5,14 @@ import {
     SignInButton,
     UserButton,
 } from "@clerk/astro/components";
+import { cn } from "../utils/cn";
+type Props = {
+    className: string;
+};
+const { className } = Astro.props;
 ---
 
-<div class="z-50 flex items-center">
+<div class={cn("z-[60] flex items-center", className)}>
     <SignedOut>
         <SignInButton class="primaryButton" mode="modal" />
     </SignedOut>

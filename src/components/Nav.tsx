@@ -17,42 +17,53 @@ const itemMotion = {
   hidden: { opacity: 0, x: 100 },
 };
 const navLinks = [
-  { name: "Home", href: "/", id: "home" },
-  { name: "Blog", href: "/blog", id: "blog" },
-  { name: "Authors", href: "/authors", id: "authors" },
-  { name: "About", href: "/about", id: "about" },
+  { name: "Home", href: "/", isPublic: true, id: "home" },
+  { name: "Blog", href: "/blog", isPublic: true, id: "blog" },
+  { name: "Authors", href: "/authors", isPublic: true, id: "authors" },
+  { name: "About", href: "/about", isPublic: true, id: "about" },
+  { name: "Dashboard", href: "/dashboard", isPublic: false, id: "dashboard" },
 ];
 
 const NavLinks = ({
   isMobile,
   className,
   currentPath = "home",
+  isAuthorized,
 }: {
+  isAuthorized: boolean;
   isMobile: boolean;
   className: string;
   currentPath: string;
 }) => (
   <div className={className}>
-    {navLinks.map(({ name, href, id }) => (
-      <motion.a
-        className={
-          currentPath === "/" && href === "/"
-            ? "text-cyan-500"
-            : currentPath.includes(href) && href !== "/"
+    {navLinks.map(({ name, href, id, isPublic }) =>
+      isAuthorized || isPublic ? (
+        <motion.a
+          className={
+            currentPath === "/" && href === "/"
               ? "text-cyan-500"
-              : ""
-        }
-        key={id}
-        variants={isMobile ? itemMotion : {}}
-        href={href}
-      >
-        {name}
-      </motion.a>
-    ))}
+              : currentPath.includes(href) && href !== "/"
+                ? "text-cyan-500"
+                : ""
+          }
+          key={id}
+          variants={isMobile ? itemMotion : {}}
+          href={href}
+        >
+          {name}
+        </motion.a>
+      ) : null,
+    )}
   </div>
 );
 
-export default function Nav({ currentPath }: { currentPath: string }) {
+export default function Nav({
+  currentPath,
+  isAuthorized,
+}: {
+  currentPath: string;
+  isAuthorized: boolean;
+}) {
   const [toggled, setToggled] = useState(false);
   const hamburger = (
     <motion.div
@@ -91,6 +102,7 @@ export default function Nav({ currentPath }: { currentPath: string }) {
           w-96 flex-col items-center  justify-center gap-24  bg-gray-50/95 dark:bg-gray-950/95  text-2xl font-bold"
         >
           <NavLinks
+            isAuthorized={isAuthorized}
             currentPath={currentPath}
             className="flex flex-col gap-24 text-lg"
             isMobile={true}
@@ -99,6 +111,7 @@ export default function Nav({ currentPath }: { currentPath: string }) {
       )}
       <motion.div className="z-50 hidden lg:flex lg:items-center  lg:justify-center lg:gap-12 lg:text-lg">
         <NavLinks
+          isAuthorized={isAuthorized}
           currentPath={currentPath}
           className="flex gap-12"
           isMobile={false}

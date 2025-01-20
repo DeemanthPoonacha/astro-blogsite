@@ -1,16 +1,126 @@
 ---
-
+import { Image } from "astro:assets";
 ---
 
 <footer
-    class="w-full flex justify-center py-14 bg-cyan-600 dark:bg-cyan-700 shadow-[rgba(0,0,15,0.5)_0_1px_102px_10px] shadow-cyan-50 dark:shadow-cyan-950"
+    class="bg-zinc-50/95 dark:bg-zinc-950/95 w-full flex justify-center shadow-xl dark:shadow-zinc-800 z-0"
 >
-    <div class="pageContainer flex justify-between text-white">
-        <div class="flex flex-col">
-            <a href="/">Home</a>
-            <a href="/about">About</a>
-            <a href="/blog">Blog</a>
+    <div class="pageContainer relative py-16 lg:pt-24">
+        <div
+            title="Back to top"
+            class="absolute end-5 top-5 sm:end-10 sm:top-10 lg:end-24 lg:top-24"
+        >
+            <a
+                class="inline-block rounded-full bg-cyan-600 p-2 text-white shadow transition hover:bg-cyan-500 sm:p-3 lg:p-4 dark:bg-zinc-700 dark:text-cyan-300 dark:hover:bg-zinc-600"
+                href="#content"
+            >
+                <span class="sr-only">Back to top</span>
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="size-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                >
+                    <path
+                        fill-rule="evenodd"
+                        d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
+                        clip-rule="evenodd"></path>
+                </svg>
+            </a>
         </div>
-        <a href="#content">go to top</a>
+
+        <div class="lg:flex lg:items-end lg:justify-between">
+            <div>
+                <a
+                    href="/"
+                    class="flex flex-col lg:flex-row gap-x-1 sm:gap-x-4 items-center align-middle justify-center lg:justify-start"
+                >
+                    <Image
+                        src="/images/logo.png"
+                        alt="Bloggy logo"
+                        width={50}
+                        height={50}
+                        format="webp"
+                        class="w-14 sm:w-16 rounded-xl invert dark:invert-0"
+                    />
+
+                    <p
+                        class="uppercase max-w-full prose text-3xl sm:text-6xl text-zinc-900 dark:text-zinc-100"
+                    >
+                        Bloggy
+                    </p>
+                </a>
+
+                <p
+                    class="mx-auto mt-6 max-w-md text-center prose leading-relaxed text-zinc-500 lg:text-left dark:text-zinc-400"
+                >
+                    The go-to place to discover and enjoy blogs on any topic
+                    that interests you!
+                </p>
+            </div>
+
+            <ul
+                class="mt-12 flex flex-wrap justify-center gap-6 md:gap-8 lg:mt-0 lg:justify-end lg:gap-12"
+            >
+                <li>
+                    <a
+                        class="text-zinc-700 transition prose hover:text-zinc-700/75 dark:text-white dark:hover:text-white/75"
+                        href="/about"
+                    >
+                        About
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        class="text-zinc-700 transition prose hover:text-zinc-700/75 dark:text-white dark:hover:text-white/75"
+                        href="/blog"
+                    >
+                        Blog
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        class="text-zinc-700 transition prose hover:text-zinc-700/75 dark:text-white dark:hover:text-white/75"
+                        href="/authors"
+                    >
+                        Authors
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-12 border-t border-gray-100 pt-6 dark:border-gray-800">
+            <div class="text-center sm:flex sm:justify-between sm:text-left">
+                <p class="text-sm text-gray-500 dark:text-gray-400">
+                    <span class="block sm:inline">All rights reserved.</span>
+                    <div class="hidden">
+                        <a
+                            class="inline-block text-cyan-600 underline transition hover:text-cyan-600/75 dark:text-cyan-500 dark:hover:text-cyan-500/75"
+                            href="/terms-and-conditions"
+                        >
+                            Terms & Conditions
+                        </a>
+
+                        <span>&middot;</span>
+
+                        <a
+                            class="inline-block text-cyan-600 underline transition hover:text-cyan-600/75 dark:text-cyan-500 dark:hover:text-cyan-500/75"
+                            href="/privacy-policy"
+                        >
+                            Privacy Policy
+                        </a>
+                    </div>
+                </p>
+
+                <p
+                    class="mt-4 text-sm text-gray-500 sm:order-first sm:mt-0 dark:text-gray-400"
+                >
+                    &copy; 2024 Bloggy
+                </p>
+            </div>
+        </div>
     </div>
 </footer>

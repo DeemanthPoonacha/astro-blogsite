@@ -37,10 +37,10 @@ const NavLinks = ({
       <motion.a
         className={
           currentPath === "/" && href === "/"
-            ? "text-cyan-500"
+            ? "text-cyan-500 dark:text-cyan-600"
             : currentPath.includes(href) && href !== "/"
-              ? "text-cyan-500"
-              : ""
+              ? "text-cyan-500 dark:text-cyan-600"
+              : "hover:text-cyan-500 hover:dark:text-cyan-600"
         }
         key={id}
         variants={isMobile ? itemMotion : {}}

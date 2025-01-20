@@ -1,9 +1,8 @@
 ---
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
-import SpeedInsights from "@vercel/speed-insights/astro";
 
 interface Props {
     title: string;
@@ -21,9 +20,6 @@ const {
 <!doctype html>
 <html lang="en">
     <head>
-        <ViewTransitions />
-        <SpeedInsights />
-
         <meta charset="UTF-8" />
         <meta name="description" content={description} />
         <meta property="og:image" content={image} />
@@ -31,6 +27,7 @@ const {
         <link rel="icon" type="image/png" href="/images/logo.png" />
         <meta name="generator" content={Astro.generator} />
         <title>{title}</title>
+        <ClientRouter />
     </head>
     <body class="w-full justify-center">
         <div class="flex flex-col items-center justify-between h-screen">

@@ -1,7 +1,15 @@
-import { z, defineCollection, type CollectionEntry } from "astro:content";
+import {
+  z,
+  defineCollection,
+  type CollectionEntry,
+  reference,
+} from "astro:content";
 // import {format} from "date-fns"
+import { glob } from "astro/loaders"; // Not available with legacy API
 
-const authorsCollection = defineCollection({
+const authors = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/authors" }),
+
   schema: ({ image }) =>
     z.object({
       name: z.string(),
@@ -18,11 +26,15 @@ const authorsCollection = defineCollection({
     }),
 });
 
-const postsCollection = defineCollection({
+const posts = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/posts" }),
   schema: ({ image }) =>
     z.object({
-      author: z.string(),
+      author: reference("authors"),
       tags: z.array(z.string()),
+      relatedPosts: z.array(reference("posts")).default([]),
+      isDraft: z.boolean().default(true),
+
       date: z.string().transform((str) =>
         new Date(str).toLocaleDateString("en-GB", {
           weekday: "short",
@@ -38,8 +50,8 @@ const postsCollection = defineCollection({
 });
 
 export const collections = {
-  authors: authorsCollection,
-  posts: postsCollection,
+  authors,
+  posts,
 };
 
 export type Post = CollectionEntry<"posts">;

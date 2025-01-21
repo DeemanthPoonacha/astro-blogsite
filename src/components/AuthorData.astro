@@ -17,7 +17,7 @@ const userImg = authorData.image ?? "/images/icons/user.svg";
 >
     <div>
         {
-            slug ? (
+            !!slug ? (
                 <a
                     class="text-cyan-500 dark:text-cyan"
                     href={`/authors/${slug}`}

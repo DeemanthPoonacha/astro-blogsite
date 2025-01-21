@@ -3,12 +3,12 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import {
-  CheckIcon,
-  XCircle,
-  ChevronDown,
-  XIcon,
-  WandSparkles,
-} from "lucide-react";
+  RiCheckLine,
+  RiCloseCircleLine,
+  RiArrowDownSLine,
+  RiCloseLine,
+  RiSparkling2Line,
+} from "react-icons/ri";
 
 import { Separator } from "./separator";
 import { Button } from "./button";
@@ -221,7 +221,7 @@ export const MultiSelect = React.forwardRef<
                           <IconComponent className="h-4 w-4 mr-2" />
                         )}
                         {option?.label}
-                        <XCircle
+                        <RiCloseCircleLine
                           className="ml-2 h-4 w-4 cursor-pointer"
                           onClick={(event) => {
                             event.stopPropagation();
@@ -241,7 +241,7 @@ export const MultiSelect = React.forwardRef<
                       style={{ animationDuration: `${animation}s` }}
                     >
                       {`+ ${selectedValues.length - maxCount} more`}
-                      <XCircle
+                      <RiCloseCircleLine
                         className="ml-2 h-4 w-4 cursor-pointer"
                         onClick={(event) => {
                           event.stopPropagation();
@@ -252,7 +252,7 @@ export const MultiSelect = React.forwardRef<
                   )}
                 </div>
                 <div className="flex items-center justify-between">
-                  <XIcon
+                  <RiCloseLine
                     className="h-4 mx-2 cursor-pointer text-muted-foreground"
                     onClick={(event) => {
                       event.stopPropagation();
@@ -263,7 +263,7 @@ export const MultiSelect = React.forwardRef<
                     orientation="vertical"
                     className="flex min-h-6 h-full"
                   />
-                  <ChevronDown className="h-4 mx-2 cursor-pointer text-muted-foreground" />
+                  <RiArrowDownSLine className="h-4 mx-2 cursor-pointer text-muted-foreground" />
                 </div>
               </div>
             ) : (
@@ -271,7 +271,7 @@ export const MultiSelect = React.forwardRef<
                 <span className="text-sm text-muted-foreground mx-3">
                   {placeholder}
                 </span>
-                <ChevronDown className="h-4 cursor-pointer text-muted-foreground mx-2" />
+                <RiArrowDownSLine className="h-4 cursor-pointer text-muted-foreground mx-2" />
               </div>
             )}
           </Button>
@@ -302,7 +302,7 @@ export const MultiSelect = React.forwardRef<
                         : "opacity-50 [&_svg]:invisible",
                     )}
                   >
-                    <CheckIcon className="h-4 w-4" />
+                    <RiCheckLine className="h-4 w-4" />
                   </div>
                   <span>(Select All)</span>
                 </CommandItem>
@@ -322,7 +322,7 @@ export const MultiSelect = React.forwardRef<
                             : "opacity-50 [&_svg]:invisible",
                         )}
                       >
-                        <CheckIcon className="h-4 w-4" />
+                        <RiCheckLine className="h-4 w-4" />
                       </div>
                       {option.icon && (
                         <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />
@@ -361,7 +361,7 @@ export const MultiSelect = React.forwardRef<
           </Command>
         </PopoverContent>
         {animation > 0 && selectedValues.length > 0 && (
-          <WandSparkles
+          <RiSparkling2Line
             className={cn(
               "cursor-pointer my-2 text-foreground bg-background w-3 h-3",
               isAnimating ? "" : "text-muted-foreground",

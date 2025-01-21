@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
-import { Save, RotateCcw } from "lucide-react";
+import { RiResetLeftFill, RiSave3Fill } from "react-icons/ri";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
@@ -208,11 +208,11 @@ const AboutEditor = () => {
           type="button"
           onClick={() => setShowResetDialog(true)}
         >
-          <RotateCcw className="mr-2" size={18} />
+          <RiResetLeftFill size={18} />
           Reset
         </Button>
         <Button type="submit">
-          <Save className="mr-2" size={18} />
+          <RiSave3Fill size={18} />
           Save Changes
         </Button>
       </div>

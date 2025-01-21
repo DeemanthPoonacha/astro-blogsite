@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { FileText, User, Settings, Plus, Edit, Trash2 } from "lucide-react";
+import {
+  RiAddFill,
+  RiDeleteBinFill,
+  RiEditFill,
+  RiFileTextFill,
+  RiSettings3Fill,
+  RiUser3Fill,
+} from "react-icons/ri";
 import {
   Card,
   CardContent,
@@ -68,9 +75,9 @@ const DashboardLayout = ({
   const [editingPost, setEditingPost] = useState<Post | null>(null);
 
   const navItems = [
-    { id: "posts", label: "My Posts", icon: FileText },
-    { id: "about", label: "About Me", icon: User },
-    { id: "settings", label: "Settings", icon: Settings },
+    { id: "posts", label: "My Posts", icon: RiFileTextFill },
+    { id: "about", label: "About Me", icon: RiUser3Fill },
+    { id: "settings", label: "Settings", icon: RiSettings3Fill },
   ];
 
   return (
@@ -114,7 +121,7 @@ const DashboardLayout = ({
                   }}
                   className="flex items-center gap-2"
                 >
-                  <Plus size={20} />
+                  <RiAddFill size={20} />
                   Create New Post
                 </Button>
               </div>
@@ -156,14 +163,14 @@ const DashboardLayout = ({
                             setShowCreateEdit(true);
                           }}
                         >
-                          <Edit size={18} />
+                          <RiEditFill size={18} />
                         </Button>
                         <Button
                           variant="ghost"
                           size="icon"
                           onClick={() => setShowDeleteDialog(true)}
                         >
-                          <Trash2 size={18} />
+                          <RiDeleteBinFill size={18} />
                         </Button>
                       </div>
                     </CardFooter>

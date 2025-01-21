@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { ChevronRight, Eye, Save } from "lucide-react";
+import {
+  RiArrowRightSLine,
+  RiEyeLine,
+  RiSave3Fill,
+  RiUpload2Fill,
+} from "react-icons/ri";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
@@ -70,7 +75,7 @@ const PostEditor = ({
       {/* Breadcrumb */}
       <div className="mb-6 flex items-center gap-2 text-gray-400">
         <button onClick={onClose}>My Posts</button>
-        <ChevronRight size={16} />
+        <RiArrowRightSLine size={16} />
         <span className="text-white">
           {watch("title") || "Create New Post"}
         </span>
@@ -180,20 +185,23 @@ const PostEditor = ({
               variant="outline"
               onClick={() => setIsPreview((prev) => !prev)}
             >
-              <Eye className="mr-2" size={18} />
+              <RiEyeLine size={18} />
               {isPreview ? "Close Preview" : "Preview"}
             </Button>
             <Button
               variant="secondary"
               onClick={handleSubmit(handleSaveToDraft)}
             >
-              <Save className="mr-2" size={18} />
+              <RiSave3Fill size={18} />
               Save to Draft
             </Button>
           </div>
 
           {/* Publish Button */}
-          <Button type="submit">Save & Publish</Button>
+          <Button type="submit">
+            <RiUpload2Fill size={18} />
+            Save & Publish
+          </Button>
         </div>
       </form>
     </div>

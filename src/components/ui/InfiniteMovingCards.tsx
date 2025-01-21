@@ -86,7 +86,7 @@ const InfiniteMovingCards = ({
         )}
       >
         {items.map((item, idx) => (
-          <ItemCard item={item} />
+          <ItemCard key={idx} item={item} />
         ))}
       </ul>
     </div>

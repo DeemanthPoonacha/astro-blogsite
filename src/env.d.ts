@@ -1,6 +1,6 @@
 /// <reference path="../.astro/types.d.ts" />
 /// <reference types="astro/client" />
-/// <reference types="astro-clerk-auth/env" />
+/// <reference types="@clerk/astro/env" />
 
 interface ImportMetaEnv {
   readonly POSTS_PER_PAGE: number;

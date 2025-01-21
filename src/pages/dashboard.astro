@@ -5,6 +5,7 @@ import Main from "../layouts/Main.astro";
 import BlogDashboard from "../components/BlogDahboard";
 
 const user = await Astro.locals.currentUser();
+console.log("🚀 ~ user:", user)
 ---
 
 <Layout title="Dashboard | Bloggy">

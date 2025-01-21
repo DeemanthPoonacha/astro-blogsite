@@ -1,15 +1,5 @@
-import React, { useState } from "react";
-import {
-  Layout,
-  FileText,
-  User,
-  Settings,
-  Plus,
-  Edit,
-  Trash2,
-  AlertCircle,
-  ChevronRight,
-} from "lucide-react";
+import { useState } from "react";
+import { FileText, User, Settings, Plus, Edit, Trash2 } from "lucide-react";
 import {
   Card,
   CardContent,

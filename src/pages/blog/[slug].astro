@@ -1,17 +1,24 @@
 ---
 import AuthorData from "../../components/AuthorData.astro";
 import H1 from "../../components/H1.astro";
+// import PostList from "../../components/PostList.astro";
+import { Author } from "../../content/config";
 
 import Layout from "../../layouts/Layout.astro";
 import Main from "../../layouts/Main.astro";
 import { Image } from "astro:assets";
-import { getEntryBySlug } from "astro:content";
+import { getEntries, getEntry, render } from "astro:content";
 
 const { slug } = Astro.params;
-const post = await getEntryBySlug("posts", slug as string);
+if (slug === undefined) return Astro.redirect("/404");
+
+const post = await getEntry("posts", slug);
 if (!post) return Astro.redirect("/404");
-const { Content } = await post.render();
-const author = await getEntryBySlug("authors", post.data.author);
+
+const { Content } = await render(post);
+const author = (await getEntry(post.data.author)) as unknown as Author;
+const relatedPosts = await getEntries(post.data.relatedPosts);
+console.log("🚀 ~ relatedPosts:", relatedPosts);
 ---
 
 <Layout title={post.data.title}>
@@ -21,7 +28,7 @@ const author = await getEntryBySlug("authors", post.data.author);
                 &#8701; <span
                     class="prose dark:prose-invert prose-xl underline"
                 >
-                    Back to all Posts
+                    All Posts
                 </span>
             </a>
             <H1 text={post.data.title} />
@@ -31,17 +38,29 @@ const author = await getEntryBySlug("authors", post.data.author);
                 format="webp"
                 class="w-full rounded-2xl shadow-xl mb-6 object-top"
             />
-            <Content />{
-                author && (
+            <Content />
+            {
+                !!author && (
                     <div class="mt-24">
                         <span class="text-4xl"> Author: </span>
-                        <AuthorData
-                            authorData={author.data}
-                            slug={author.slug}
-                        />
+                        <AuthorData authorData={author.data} slug={author.id} />
+                        {/* <span class="text-4xl">More Posts by Author: </span>
+                        <PostList
+                            posts={author.data.posts.filter(
+                                (p) => p.slug !== post.slug,
+                            )}
+                        /> */}
                     </div>
                 )
             }
+            <!-- {
+                relatedPosts.length > 0 && (
+                    <div class="mt-24">
+                        <span class="text-4xl"> Related Posts: </span>
+                        <PostList posts={relatedPosts} />
+                    </div>
+                )
+            } -->
         </div>
     </Main>
 </Layout>

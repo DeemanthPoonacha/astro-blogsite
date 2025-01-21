@@ -1,8 +1,8 @@
 ---
 import { Image } from "astro:assets";
-import type { Post } from "../content/config";
+import type { Author, Post } from "../content/config";
 import CategoryList from "./TagList.astro";
-import { getEntryBySlug } from "astro:content";
+import { getEntry } from "astro:content";
 
 type Props = {
     post: Post;
@@ -10,7 +10,7 @@ type Props = {
 
 const { post } = Astro.props;
 
-const author = await getEntryBySlug("authors", post.data.author);
+const author = (await getEntry(post.data.author)) as unknown as Author;
 ---
 
 <article
@@ -18,7 +18,7 @@ const author = await getEntryBySlug("authors", post.data.author);
     class="flex flex-col justify-between overflow-hidden rounded-lg bg-white dark:bg-zinc-900 shadow shadow-cyan-500 hover:shadow-xl hover:shadow-cyan-500 dark:shadow hover:dark:shadow-xl hover:dark:shadow-cyan-500 dark:shadow-cyan-300"
 >
     <a
-        href={`/blog/${post.slug}`}
+        href={`/blog/${post.id}`}
         aria-label={`Read more about ${post.data.title}`}
         class="overflow-hidden"
     >
@@ -39,7 +39,7 @@ const author = await getEntryBySlug("authors", post.data.author);
         </div>
 
         <a
-            href={`/blog/${post.slug}`}
+            href={`/blog/${post.id}`}
             class="text-4xl prose dark:prose-invert mb-4 font-semibold line-clamp-2"
         >
             {post.data.title}
@@ -55,9 +55,9 @@ const author = await getEntryBySlug("authors", post.data.author);
             >
                 {post.data.date}
                 {
-                    author ? (
+                    !!author ? (
                         <a
-                            href={`/authors/${author.slug}`}
+                            href={`/authors/${author.id}`}
                             class="prose text-right dark:prose-invert text-lg primaryColor"
                         >
                             {author.data.name}

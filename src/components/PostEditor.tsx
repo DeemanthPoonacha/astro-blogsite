@@ -4,7 +4,7 @@ import {
   RiArrowRightSLine,
   RiEyeLine,
   RiSave3Fill,
-  RiUpload2Fill,
+  RiSendPlaneFill,
 } from "react-icons/ri";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
@@ -76,7 +76,7 @@ const PostEditor = ({
       <div className="mb-6 flex items-center gap-2 text-gray-400">
         <button onClick={onClose}>My Posts</button>
         <RiArrowRightSLine size={16} />
-        <span className="text-white">
+        <span className="primaryColor">
           {watch("title") || "Create New Post"}
         </span>
       </div>
@@ -186,21 +186,23 @@ const PostEditor = ({
               onClick={() => setIsPreview((prev) => !prev)}
             >
               <RiEyeLine size={18} />
-              {isPreview ? "Close Preview" : "Preview"}
+              <span className="hidden sm:block">Preview</span>
             </Button>
             <Button
               variant="secondary"
               onClick={handleSubmit(handleSaveToDraft)}
             >
               <RiSave3Fill size={18} />
-              Save to Draft
+              <span className="flex items-center gap-1">
+                <span className="hidden sm:block">Save to</span>Draft
+              </span>
             </Button>
           </div>
 
           {/* Publish Button */}
           <Button type="submit">
-            <RiUpload2Fill size={18} />
-            Save & Publish
+            <RiSendPlaneFill size={18} />
+            Submit
           </Button>
         </div>
       </form>

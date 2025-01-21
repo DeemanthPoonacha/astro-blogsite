@@ -5,17 +5,12 @@ import Main from "../layouts/Main.astro";
 import BlogDashboard from "../components/BlogDahboard";
 
 const user = await Astro.locals.currentUser();
-console.log("🚀 ~ user:", user)
+console.log("🚀 ~ user:", user);
 ---
 
 <Layout title="Dashboard | Bloggy">
     <Main className="w-full">
-        <div class="w-full my-16 flex flex-col">
-            <div class="w-full flex items-center justify-between">
-                <H1 text="Dashboard" />
-                <!-- <p class="text-xl">Welcome, {user?.fullName}</p> -->
-            </div>
-            <BlogDashboard client:load user={user} />
-        </div>
+        <H1 text="Dashboard" />
+        <BlogDashboard client:load user={user} />
     </Main>
 </Layout>

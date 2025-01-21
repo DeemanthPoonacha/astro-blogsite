@@ -186,7 +186,7 @@ const AboutEditor = () => {
         </div>
 
         <div>
-          <Label>About Me Content</Label>
+          <Label>My Bio</Label>
           <Controller
             name="content"
             control={control}

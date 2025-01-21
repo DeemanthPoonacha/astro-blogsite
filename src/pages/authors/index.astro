@@ -6,6 +6,7 @@ import Main from "../../layouts/Main.astro";
 import AuthorCard from "../../components/AuthorCard.astro";
 
 const authors = await getCollection("authors");
+console.log("🚀 ~ authors:", authors);
 ---
 
 <Layout title="Authors | Bloggy">

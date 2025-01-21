@@ -1,5 +1,5 @@
 ---
-import { getCollection, getEntryBySlug } from "astro:content";
+import { getCollection, getEntry, render } from "astro:content";
 
 import Layout from "../../layouts/Layout.astro";
 import PostList from "../../components/PostList.astro";
@@ -7,23 +7,23 @@ import Main from "../../layouts/Main.astro";
 import AuthorData from "../../components/AuthorData.astro";
 
 const { slug } = Astro.params;
+if (slug === undefined) return Astro.redirect("/404");
 
-const author = await getEntryBySlug("authors", slug as string);
+const author = await getEntry("authors", slug);
+if (!author) return Astro.redirect("/404");
 
-if (!author) {
-    return Astro.redirect("/404");
-}
-
-const allPosts = await getCollection("posts");
-const posts = allPosts.filter((post) => post.data.author === author.slug);
-const { Content } = await author.render();
+const posts = await getCollection(
+    "posts",
+    (post) => post.data.author.id === author.id,
+);
+const { Content } = await render(author);
 ---
 
 <Layout title={author.data.name}>
     <Main>
         <a href={`/authors`} class="font-bold no-underline">
             &#8701; <span class="prose dark:prose-invert prose-xl underline">
-                Back to all Authors
+                All Authors
             </span>
         </a>
         <div class="mb-12 max-w-full prose prose-2xl dark:prose-invert">

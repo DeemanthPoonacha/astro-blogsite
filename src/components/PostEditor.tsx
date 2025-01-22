@@ -3,15 +3,17 @@ import { useForm, Controller } from "react-hook-form";
 import {
   RiArrowRightSLine,
   RiEyeLine,
+  RiResetLeftFill,
   RiSave3Fill,
   RiSendPlaneFill,
 } from "react-icons/ri";
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
-import { Textarea } from "../components/ui/textarea";
-import { Label } from "../components/ui/label";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
+import { Label } from "./ui/label";
 import { MultiSelect } from "./ui/multi-select";
 import type { Post } from "./BlogDahboard";
+import { ResetDialog } from "./ui/ResetDialog";
 
 const tagList = [
   { value: "lifestyle", label: "Lifestyle" },
@@ -48,7 +50,7 @@ const PostEditor = ({
     control,
     handleSubmit,
     watch,
-    setValue,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: post || {
@@ -60,7 +62,9 @@ const PostEditor = ({
     },
   });
 
-  const [isPreview, setIsPreview] = useState(false);
+  const [showResetDialog, setShowResetDialog] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
+  const handleReset = () => reset();
 
   const onSubmit = (data: any) => {
     console.log("Form Submitted:", data);
@@ -70,6 +74,8 @@ const PostEditor = ({
     console.log("Draft Saved:", data);
   };
 
+  const errorTextClass = "absolute text-red-500 text-sm mt-0";
+  const errorborderClass = "border-red-500";
   return (
     <div className="h-full">
       {/* Breadcrumb */}
@@ -95,14 +101,12 @@ const PostEditor = ({
                 <Input
                   {...field}
                   placeholder="Enter post title"
-                  className={errors.title && "border-red-500"}
+                  className={errors.title && errorborderClass}
                 />
               )}
             />
             {errors.title && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.title.message}
-              </p>
+              <p className={errorTextClass}>{errors.title.message}</p>
             )}
           </div>
 
@@ -118,14 +122,12 @@ const PostEditor = ({
                   {...field}
                   placeholder="Enter post description"
                   rows={3}
-                  className={errors.description && "border-red-500"}
+                  className={errors.description && errorborderClass}
                 />
               )}
             />
             {errors.description && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.description.message}
-              </p>
+              <p className={errorTextClass}>{errors.description.message}</p>
             )}
           </div>
 
@@ -165,14 +167,12 @@ const PostEditor = ({
                   {...field}
                   placeholder="Write your post content in Markdown..."
                   rows={15}
-                  className={`font-mono ${errors.content && "border-red-500"}`}
+                  className={`font-mono ${errors.content && errorborderClass}`}
                 />
               )}
             />
             {errors.content && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.content.message}
-              </p>
+              <p className={errorTextClass}>{errors.content.message}</p>
             )}
           </div>
         </div>
@@ -181,12 +181,15 @@ const PostEditor = ({
         <div className="flex justify-between">
           {/* Left Buttons */}
           <div className="flex gap-2">
-            <Button
-              variant="outline"
-              onClick={() => setIsPreview((prev) => !prev)}
-            >
-              <RiEyeLine size={18} />
-              <span className="hidden sm:block">Preview</span>
+            {/* Publish Button */}
+            {/* <Button type="submit">
+              <RiSendPlaneFill size={18} />
+              Submit
+            </Button> */}
+
+            <Button variant="outline" onClick={() => setShowResetDialog(true)}>
+              <RiResetLeftFill size={18} />
+              Reset
             </Button>
             <Button
               variant="secondary"
@@ -199,13 +202,20 @@ const PostEditor = ({
             </Button>
           </div>
 
-          {/* Publish Button */}
-          <Button type="submit">
-            <RiSendPlaneFill size={18} />
-            Submit
+          <Button
+            // variant="outline"
+            onClick={() => {
+              return setShowPreview((prev) => !prev);
+            }}
+          >
+            <a href={`?previewId=${post?.id}`}>
+              <RiEyeLine size={18} />
+            </a>
+            <span className="hidden sm:block">Preview</span>
           </Button>
         </div>
       </form>
+      <ResetDialog {...{ showResetDialog, setShowResetDialog, handleReset }} />
     </div>
   );
 };

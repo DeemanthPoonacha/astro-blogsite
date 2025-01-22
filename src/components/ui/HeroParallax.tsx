@@ -41,7 +41,7 @@ const HeroParallax = ({
   return (
     <div
       ref={ref}
-      className="min-h-[350svh]  overflow-hidden  antialiased relative flex flex-col self-auto l[perspective:1000px] l[transform-style:preserve-3d]"
+      className="min-h-[350svh] -mt-4 overflow-hidden  antialiased relative flex flex-col self-auto l[perspective:1000px] l[transform-style:preserve-3d]"
     >
       <HeroBanner />
       <motion.div
@@ -51,7 +51,7 @@ const HeroParallax = ({
           translateY,
           opacity,
         }}
-        className="mt-24"
+        className="mt-40"
       >
         <motion.div className="flex flex-row-reverse space-x-reverse space-x-20">
           <InfiniteMovingCards items={firstRow} speed="slow" />

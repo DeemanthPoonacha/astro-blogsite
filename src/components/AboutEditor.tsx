@@ -6,16 +6,6 @@ import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
 import { Label } from "../components/ui/label";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "../components/ui/alert-dialog";
-import {
   Select,
   SelectContent,
   SelectGroup,
@@ -23,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../components/ui/select";
+import { ResetDialog } from "./ui/ResetDialog";
 
 const platforms = [
   {
@@ -218,21 +209,7 @@ const AboutEditor = () => {
       </div>
 
       {/* Reset Confirmation Dialog */}
-      <AlertDialog open={showResetDialog} onOpenChange={setShowResetDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Reset Changes</AlertDialogTitle>
-            <AlertDialogDescription>
-              Are you sure you want to reset all changes? This will revert
-              everything back to the last saved state.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleReset}>Reset</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <ResetDialog {...{ showResetDialog, setShowResetDialog, handleReset }} />
     </form>
   );
 };

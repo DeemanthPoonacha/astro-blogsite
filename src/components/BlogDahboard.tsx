@@ -34,26 +34,26 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // Sample blog posts data
 const allPosts = [
   {
-    id: 1,
+    id: "1",
     title: "Getting Started with Astro",
     description: "Learn how to build modern websites with Astro",
     status: "published",
-    tags: ["astro", "webdev", "tutorial"],
+    tags: ["travel", "lifestyle", "food"],
     date: "2025-01-17",
     content: "",
   },
   {
-    id: 2,
+    id: "2",
     title: "React Best Practices",
     description: "Essential tips for React development",
     status: "draft",
-    tags: ["react", "javascript", "frontend"],
+    tags: ["fitness", "health", "guide"],
     date: "2025-01-16",
     content: "",
   },
 ];
 export type Post = {
-  id: number;
+  id: string;
   title: string;
   description: string;
   status: string;
@@ -63,17 +63,22 @@ export type Post = {
 };
 
 const DashboardLayout = ({
-  posts = allPosts,
   user,
+  defaultEditingId,
 }: {
-  posts?: Post[];
   user: any;
+  defaultEditingId: string | null;
 }) => {
+  const posts = allPosts;
   const [activeSection, setActiveSection] = useState("posts");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [showCreateEdit, setShowCreateEdit] = useState(false);
+  const [showCreateEdit, setShowCreateEdit] = useState(!!defaultEditingId);
 
-  const [editingPost, setEditingPost] = useState<Post | null>(null);
+  const [editingPost, setEditingPost] = useState<Post | null>(
+    defaultEditingId
+      ? posts?.find((post) => post.id === defaultEditingId) || null
+      : null,
+  );
 
   const postsContent = !showCreateEdit ? (
     <>
@@ -232,11 +237,9 @@ const DashboardLayout = ({
       >
         <TabsList className="rounded-b-none">
           {navItems.map((item) => (
-            <>
-              <TabsTrigger key={item.id} value={item.id}>
-                {item.label}
-              </TabsTrigger>
-            </>
+            <TabsTrigger key={item.id} value={item.id}>
+              {item.label}
+            </TabsTrigger>
           ))}
         </TabsList>
 

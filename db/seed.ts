@@ -2,6 +2,8 @@ import { Author, db, Post } from "astro:db";
 
 // https://astro.build/db/seed
 export default async function seed() {
+  await db.delete(Author);
+
   await db.insert(Author).values([
     {
       id: "1",
@@ -29,7 +31,7 @@ Follow along on my automotive adventures on <a href="https://www.twitter.com/" t
         { platform: "twitter", link: "https://twitter.com" },
         { platform: "instagram", link: "https://instagram.com" },
       ],
-      email: "",
+      email: "author-1@example.com",
       createdAt: new Date("2025-01-01"),
     },
     {
@@ -70,6 +72,8 @@ Connect with me on <a href="https://www.linkedin.com/in/deemanth-poonacha" targe
       createdAt: new Date("2025-01-01"),
     },
   ]);
+
+  await db.delete(Post);
 
   await db.insert(Post).values([
     {
@@ -192,7 +196,100 @@ In conclusion, regular car maintenance is not just a chore; it's a responsibilit
       createdAt: new Date("2025-01-05"),
       updatedAt: new Date("2025-01-07"),
       content: `
-# Things to Consider Before Buying a Car`,
+Embark on an exciting journey through detailed buying guides, crafted to equip you with the knowledge needed to make savvy car purchasing decisions! Delve into expert tips and must-have checklists tailored for both new and seasoned buyers alike. Whether you're eyeing the latest models or considering the allure of pre-owned vehicles, this blog post unravels the complexities of car buying with clarity and insight. Get ready to navigate the automotive landscape with confidence and make your dream car a reality!
+
+## Tips for Buying a New Car
+
+Buying a new car can be an exciting yet overwhelming experience. With numerous options available, it's essential to approach the process with careful consideration and research. Here are some tips to guide you through the process of buying a new car:
+
+1. **Set a Budget**: Determine your budget range before starting your search. Consider factors like monthly payments, insurance costs, and ongoing expenses like fuel and maintenance.
+
+2. **Research Models**: Research different car models that fit your budget and requirements. Consider factors like fuel efficiency, safety features, reliability, and resale value.
+
+3. **Test Drive**: Schedule test drives for the cars you're interested in to evaluate their performance, comfort, and handling. Pay attention to features like acceleration, braking, and maneuverability.
+
+4. **Compare Prices**: Compare prices from multiple dealerships to ensure you're getting the best deal. Don't forget to negotiate for discounts, incentives, and financing options.
+
+5. **Check Reviews**: Read reviews from automotive experts and real customers to gain insights into the pros and cons of each car model. Look for common issues and complaints to make an informed decision.
+
+6. **Inspect Warranty and Service Plans**: Review warranty coverage and service plans offered by the manufacturer. Understand what's included and consider purchasing extended warranties for added peace of mind.
+
+## Used Car Buying Guide and Checklist
+
+Buying a used car can offer significant cost savings, but it's essential to proceed with caution to avoid potential pitfalls. Here's a comprehensive checklist to help you navigate the process of buying a used car:
+
+1. **Set Criteria**: Determine your criteria for a used car, including budget, make, model, mileage, and desired features.
+
+2. **Vehicle History Check**: Obtain the vehicle identification number (VIN) and run a comprehensive vehicle history report to check for accidents, title issues, and odometer discrepancies.
+
+3. **Mechanical Inspection**: Hire a qualified mechanic to conduct a thorough inspection of the used car. Inspect the engine, transmission, brakes, suspension, and other critical components for signs of wear and damage.
+
+4. **Test Drive**: Take the used car for a test drive to assess its overall condition and performance. Pay attention to unusual noises, vibrations, and warning lights.
+
+5. **Negotiate Price**: Research the fair market value of the used car and negotiate the price with the seller based on its condition, mileage, and market demand.
+
+6. **Review Documentation**: Review all documentation related to the used car, including title, registration, service records, and warranty information. Ensure everything is in order before finalizing the purchase.
+
+## Factors to Consider When Purchasing a Specific Type of Vehicle
+
+Choosing the right type of vehicle requires careful consideration of your lifestyle, preferences, and specific needs. Here are some factors to consider when purchasing a specific type of vehicle:
+
+## Compact or Subcompact Car:
+
+- **Affordability**: Compact and subcompact cars are often priced competitively, making them an economical choice for budget-conscious buyers. Compare prices across different models to find the best deal within your budget.
+
+- **Fuel Efficiency**: Look for compact or subcompact cars with excellent fuel economy ratings. These vehicles are typically designed for efficient city driving, helping you save money on fuel costs over time.
+
+- **Reliability**: Research the reliability ratings and customer reviews for different compact and subcompact car models. Choose a vehicle with a reputation for durability and longevity to minimize the risk of unexpected repairs.
+
+- **Practicality**: Consider the practicality of the compact or subcompact car for your daily needs. Evaluate factors like seating capacity, cargo space, and interior amenities to ensure it meets your lifestyle requirements.
+
+- **Safety Features**: Look for compact or subcompact cars equipped with advanced safety features like airbags, stability control, and collision avoidance systems. Prioritize vehicles with high safety ratings to protect yourself and your passengers on the road.
+
+- **Maintenance Costs**: Estimate the long-term maintenance costs associated with owning a compact or subcompact car. Consider factors like routine maintenance, repairs, and insurance premiums to budget accordingly.
+
+- **Resale Value**: Research the resale value of different compact and subcompact car models to assess their depreciation rates over time. Choose a vehicle with strong resale value to maximize your return on investment when it's time to sell or trade-in.
+
+## SUV:
+
+- **Size and Space**: Consider the size of the SUV based on your passenger and cargo needs. Evaluate seating capacity, legroom, and cargo space to ensure it meets your requirements.
+
+- **Fuel Efficiency**: Compare fuel efficiency ratings of different SUV models to find one that offers a balance between performance and fuel economy.
+
+- **Safety Features**: Look for advanced safety features like adaptive cruise control, lane departure warning, and automatic emergency braking to enhance safety on the road.
+
+### Sports Car:
+
+- **Performance**: Assess the performance metrics of the sports car, including horsepower, acceleration, and handling. Consider your driving habits and preferences for spirited driving experiences.
+
+- **Design and Style**: Evaluate the design and style of the sports car, including exterior aesthetics and interior features. Choose a sports car that resonates with your personal taste and reflects your lifestyle.
+
+- **Cost and Maintenance**: Consider the cost of ownership for a sports car, including insurance premiums, maintenance expenses, and potential repairs. Research the reliability and longevity of the sports car model to make an informed decision.
+
+### Hybrid Car:
+
+- **Fuel Efficiency**: Evaluate the fuel efficiency of the hybrid car, considering factors like city and highway mpg ratings. Compare different hybrid models to find one that offers optimal fuel savings for your driving needs.
+- **Battery Technology**: Research the battery technology used in the hybrid car, including battery capacity, lifespan, and warranty coverage. Understand the implications of battery replacement costs and maintenance requirements.
+- **Driving Experience**: Test drive the hybrid car to assess its driving dynamics, including acceleration, braking, and handling. Consider how the hybrid system integrates with the vehicle's powertrain to deliver a smooth and responsive driving experience.
+
+- **Charging Options**: Determine the charging options available for the hybrid car, including plug-in charging capabilities and regenerative braking systems. Evaluate the convenience and accessibility of charging stations in your area.
+
+- **Cost of Ownership**: Calculate the total cost of ownership for the hybrid car, including purchase price, fuel costs, maintenance expenses, and potential tax incentives or rebates. Consider the long-term savings potential of owning a hybrid car compared to a traditional gasoline-powered vehicle.
+
+- **Environmental Impact**: Assess the environmental benefits of owning a hybrid car, including reduced greenhouse gas emissions and lower reliance on fossil fuels. Consider the environmental footprint of the hybrid car throughout its lifecycle, from manufacturing to disposal.
+
+### Electric Car:
+
+- **Range and Charging Infrastructure**: Evaluate the range of the electric car and assess whether it meets your daily commuting needs. Consider the availability of charging stations in your area and the convenience of charging at home or work.
+
+- **Battery Life and Warranty**: Review the battery life and warranty coverage offered by the manufacturer. Understand the terms and conditions of the battery warranty to ensure peace of mind.
+
+- **Cost of Ownership**: Calculate the total cost of ownership, including purchase price, charging costs, and potential savings on fuel and maintenance. Consider available incentives and tax credits for electric vehicles to offset upfront costs.
+
+## Conclusion
+
+Navigating the process of buying a new or used car can be daunting, but with the right knowledge and preparation, you can make a confident and informed decision. Whether you're in the market for a brand-new vehicle or considering a specific type of vehicle like an SUV or an electric car, our comprehensive buying guides and checklists provide the tools you need to find the perfect car for your needs and budget. Happy car shopping!
+`,
       description:
         "Detailed buying guide tailored for both new and used cars to equip you with the knowledge needed to make savvy car purchasing decisions!",
       status: "published",
@@ -234,7 +331,7 @@ In conclusion, regular car maintenance is not just a chore; it's a responsibilit
       content: `
 # Crafting a Winning Resume: Your Ticket to Career Success`,
       description:
-        "Unlock the potential of modern technology to enhance safety in cars, from advanced sensors to advanced safety features.",
+        "Explore the essential elements of crafting a winning resume, offering valuable tips and strategies to help you create a resume that gets noticed and gets results.",
       status: "published",
       featured: true,
       image: {

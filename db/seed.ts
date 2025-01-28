@@ -2,6 +2,7 @@ import { Author, db, Post } from "astro:db";
 
 // https://astro.build/db/seed
 export default async function seed() {
+  await db.delete(Post);
   await db.delete(Author);
 
   await db.insert(Author).values([
@@ -22,7 +23,7 @@ Follow along on my automotive adventures on <a href="https://www.twitter.com/" t
 `,
       title: "Automobile Enthusiast",
       image: {
-        src: "/@fs/home/deemanth/repos/personal/astro-blog/src/content/posts/images/logo.png?origWidth=159&origHeight=224&origFormat=png",
+        src: "/images/logo.png",
         width: 159,
         height: 224,
         format: "png",
@@ -49,7 +50,7 @@ Connect with me on <a href="https://www.linkedin.com/in/deemanth-poonacha" targe
 `,
       title: "Software Engineer",
       //   image: {
-      //     src: "/@fs/home/deemanth/repos/personal/astro-blog/src/content/posts/images/logo.png?origWidth=159&origHeight=224&origFormat=png",
+      //     src: "/images/logo.png",
       //     width: 159,
       //     height: 224,
       //     format: "png",
@@ -72,9 +73,6 @@ Connect with me on <a href="https://www.linkedin.com/in/deemanth-poonacha" targe
       createdAt: new Date("2025-01-01"),
     },
   ]);
-
-  await db.delete(Post);
-
   await db.insert(Post).values([
     {
       id: "1",
@@ -182,7 +180,7 @@ In conclusion, regular car maintenance is not just a chore; it's a responsibilit
       status: "published",
       featured: true,
       image: {
-        src: "/@fs/home/deemanth/repos/personal/astro-blog/src/content/posts/images/car-maintenance.jpg",
+        src: "/images/blog_cover/car-maintenance.jpg",
         format: "jpg",
       },
     },
@@ -295,7 +293,7 @@ Navigating the process of buying a new or used car can be daunting, but with the
       status: "published",
       featured: true,
       image: {
-        src: "/@fs/home/deemanth/repos/personal/astro-blog/src/content/posts/images/new-car.jpg",
+        src: "/images/blog_cover/new-car.jpg",
         format: "jpg",
       },
     },
@@ -315,7 +313,7 @@ Navigating the process of buying a new or used car can be daunting, but with the
       status: "published",
       featured: true,
       image: {
-        src: "/@fs/home/deemanth/repos/personal/astro-blog/src/content/posts/images/car-tech.jpg",
+        src: "/images/blog_cover/car-tech.jpg",
         format: "jpg",
       },
     },
@@ -335,7 +333,7 @@ Navigating the process of buying a new or used car can be daunting, but with the
       status: "published",
       featured: true,
       image: {
-        src: "/@fs/home/deemanth/repos/personal/astro-blog/src/content/posts/images/resume.jpg",
+        src: "/images/blog_cover/resume.jpg",
         format: "jpg",
       },
     },

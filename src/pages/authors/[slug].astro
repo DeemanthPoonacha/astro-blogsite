@@ -1,25 +1,38 @@
 ---
-import { getCollection, getEntry, render } from "astro:content";
+import { marked } from "marked";
+import { db, Author, eq, Post } from "astro:db";
 
 import Layout from "../../layouts/Layout.astro";
 import PostList from "../../components/PostList.astro";
 import Main from "../../layouts/Main.astro";
 import AuthorData from "../../components/AuthorData.astro";
+import type { AuthorType, PostType } from "../../types";
 
 const { slug } = Astro.params;
 if (slug === undefined) return Astro.redirect("/404");
 
-const author = await getEntry("authors", slug);
-if (!author) return Astro.redirect("/404");
+const authorsWithPosts = await db
+    .select()
+    .from(Author)
+    .where(eq(Author.username, slug))
+    .leftJoin(Post, eq(Author.id, Post.authorId));
 
-const posts = await getCollection(
-    "posts",
-    (post) => post.data.author.id === author.id,
-);
-const { Content } = await render(author);
+if (authorsWithPosts.length === 0) return Astro.redirect("/404");
+
+console.log("🚀 ~ authorsWithPosts:", authorsWithPosts);
+const author = {
+    ...authorsWithPosts[0].Author, // Take author details from the first row
+    posts: authorsWithPosts
+        .map((row) => row.Post) // Extract posts
+        .filter(Boolean), // Remove null entries (in case there are no posts)
+};
+
+const content = await marked.parse(author.bio);
+
+if (!author) return Astro.redirect("/404");
 ---
 
-<Layout title={author.data.name}>
+<Layout title={author.name}>
     <Main>
         <a href={`/authors`} class="font-bold no-underline">
             &#8701; <span class="prose dark:prose-invert prose-xl underline">
@@ -27,16 +40,20 @@ const { Content } = await render(author);
             </span>
         </a>
         <div class="mb-12 max-w-full prose prose-2xl dark:prose-invert">
-            <AuthorData authorData={author.data} />
-
-            <Content />
-        </div>
-        <p class="sm:text-6xl text-4xl mb-16 font-bold">
-            {`Posts by ${author.data.name}`}
-        </p>
-
-        <div class="mb-60">
-            <PostList posts={posts} />
-        </div>
+            <AuthorData authorData={author as AuthorType} />
+            <p></p>
+            <article set:html={content} />
+        </div>{
+            author.posts && (
+                <>
+                    <p class="sm:text-6xl text-4xl mb-16 font-bold">
+                        {`Posts by ${author.name}`}
+                    </p>
+                    <div class="mb-60">
+                        <PostList posts={author.posts as PostType[]} />
+                    </div>
+                </>
+            )
+        }
     </Main>
 </Layout>

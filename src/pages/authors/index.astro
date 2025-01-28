@@ -1,12 +1,12 @@
 ---
-import { getCollection } from "astro:content";
+import { db, Author } from "astro:db";
 import H1 from "../../components/H1.astro";
 import Layout from "../../layouts/Layout.astro";
 import Main from "../../layouts/Main.astro";
 import AuthorCard from "../../components/AuthorCard.astro";
+import type { AuthorType } from "../../types";
 
-const authors = await getCollection("authors");
-console.log("🚀 ~ authors:", authors);
+const authors = await db.select().from(Author);
 ---
 
 <Layout title="Authors | Bloggy">
@@ -15,7 +15,11 @@ console.log("🚀 ~ authors:", authors);
         <div
             class="grid grid-cols-2 gap-x-16 gap-y-14 max-md:grid-cols-1 mb-24"
         >
-            {authors.map((author) => <AuthorCard author={author} />)}
+            {
+                authors.map((author) => (
+                    <AuthorCard author={author as AuthorType} />
+                ))
+            }
         </div>
     </Main>
 </Layout>

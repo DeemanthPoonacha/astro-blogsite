@@ -35,3 +35,12 @@ export function updateQueryString(
   // Convert the updated parameters object back to a query string
   return params.toString();
 }
+
+export function getDateString(date: Date) {
+  return new Date(date).toLocaleDateString("en-GB", {
+    weekday: "short",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}

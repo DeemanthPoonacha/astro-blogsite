@@ -32,23 +32,5 @@ const currentPath = Astro.url.pathname;
             <ThemeIcon client:load />
             <Nav client:load currentPath={currentPath} />
         </div>
-
-        <!-- {
-        userEmail?.value ? (
-            <a
-                href="/logout"
-                class="bg-teal-900 text-white py-3 px-6 rounded-xl text-xl"
-            >
-                Logout
-            </a>
-        ) : (
-            <a
-                href="/login"
-                class="bg-teal-900 text-white py-3 px-6 rounded-xl text-xl"
-            >
-                Login
-            </a>
-        )
-    } -->
     </div>
 </header>

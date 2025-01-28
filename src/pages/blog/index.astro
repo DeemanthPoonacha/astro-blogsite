@@ -1,79 +1,134 @@
 ---
-import { getCollection } from "astro:content";
+import { and, db, desc, eq, Post, Author, sql, inArray } from "astro:db";
 import Layout from "../../layouts/Layout.astro";
 import Main from "../../layouts/Main.astro";
 import PostList from "../../components/PostList.astro";
 import H1 from "../../components/H1.astro";
 import Pagination from "../../components/Pagination.astro";
 import Filter from "../../components/Filter.astro";
+import type { PostType } from "../../types";
 
+// Constants and URL parameters
+const POSTS_PER_PAGE = Number(import.meta.env.POSTS_PER_PAGE || 10);
 const page = Number(Astro.url.searchParams.get("page") ?? 1);
-const postsPerPage = Number(import.meta.env.POSTS_PER_PAGE || 10);
-const start = postsPerPage * (page - 1);
-const end = start + postsPerPage;
+const tags =
+    Astro.url.searchParams.get("tags")?.split(",").filter(Boolean) || [];
+console.log("🚀 ~ tags:", tags);
+const authors =
+    Astro.url.searchParams.get("authors")?.split(",").filter(Boolean) || [];
 
-const allPosts = await getCollection("posts");
+// Build the where clause dynamically
+const whereConditions = [eq(Post.status, "published")];
 
-let noOfPosts;
-let posts;
-
-const tags = Astro.url.searchParams.get("tags")?.split(",") as string[];
-const allTags: string[] = allPosts.reduce((acc, post) => {
-    post.data.tags.forEach(
-        (tag) => !acc.includes(tag as never) && acc.push(tag as never),
+if (tags.length > 0) {
+    whereConditions.push(
+        sql`EXISTS (
+            SELECT * FROM json_each(${Post.tags}) 
+            WHERE json_each.value IN ${tags}
+        )`,
     );
-    return acc;
-}, []);
-
-const authors = Astro.url.searchParams.get("authors")?.split(",") as string[];
-const allAuthors: string[] = allPosts.reduce((acc, post) => {
-    !acc.includes(post.data.author.id as never) &&
-        acc.push(post.data.author.id as never);
-    return acc;
-}, []);
-
-let filtered = true;
-if (
-    (!authors || authors?.length <= 0 || authors[0] === "") &&
-    (!tags || tags?.length <= 0 || tags[0] === "")
-) {
-    posts = allPosts.slice(start, end);
-    noOfPosts = allPosts.length;
-    filtered = false;
-} else {
-    let filtered = allPosts;
-    if (tags && tags?.length > 0 && tags[0] !== "") {
-        filtered = filtered.filter((post) =>
-            post.data.tags.map((tag) => tags.includes(tag)).includes(true),
-        );
-    }
-    if (authors && authors?.length > 0 && authors[0] !== "") {
-        filtered = filtered.filter((post) =>
-            authors.includes(post.data.author.id),
-        );
-    }
-    noOfPosts = filtered.length;
-    posts = filtered.slice(start, end);
 }
+
+if (authors.length > 0) {
+    whereConditions.push(inArray(Post.authorId, authors));
+}
+
+const [allPosts, filteredPosts] = await Promise.all([
+    // Query 1: Get all published posts (for tags and authors)
+    db
+        .select({
+            tags: Post.tags,
+            author: {
+                id: Author.id,
+                username: Author.username,
+                name: Author.name,
+            },
+        })
+        .from(Post)
+        .where(eq(Post.status, "published"))
+        .leftJoin(Author, eq(Author.id, Post.authorId)),
+
+    // Query 2: Get filtered posts for current page
+    db
+        .select({
+            id: Post.id,
+            title: Post.title,
+            slug: Post.slug,
+            description: Post.description,
+            image: Post.image,
+            status: Post.status,
+            tags: Post.tags,
+            publishedAt: Post.publishedAt,
+            createdAt: Post.createdAt,
+            updatedAt: Post.updatedAt,
+            author: {
+                id: Author.id,
+                name: Author.name,
+                username: Author.username,
+            },
+        })
+        .from(Post)
+        .where(and(...whereConditions))
+        .orderBy(desc(Post.createdAt))
+        .leftJoin(Author, eq(Author.id, Post.authorId)),
+]);
+console.log("🚀 ~ allPosts:", allPosts);
+console.log("🚀 ~ filteredPosts:", filteredPosts);
+
+const isFiltered = authors.length > 0 || tags.length > 0;
+const filteredCount = filteredPosts.length;
+
+const start = POSTS_PER_PAGE * (page - 1);
+const end = start + POSTS_PER_PAGE;
+
+const posts = filteredPosts.slice(start, end);
+
+// Extract filtered options from allPosts
+const allTags = [
+    ...new Set(
+        allPosts
+            .flatMap((post) =>
+                typeof post.tags === "string"
+                    ? JSON.parse(post.tags)
+                    : post.tags,
+            )
+            .filter(Boolean),
+    ),
+].map((tag) => ({ value: tag, label: tag }));
+
+const allAuthors = Array.from(
+    allPosts
+        .reduce((uniqueAuthors, post) => {
+            if (post.author?.id && post.author?.name) {
+                if (uniqueAuthors.has(post.author.id)) return uniqueAuthors;
+                uniqueAuthors.set(post.author.id, {
+                    value: post.author.id,
+                    label: post.author.name,
+                });
+            }
+            return uniqueAuthors;
+        }, new Map())
+        .values(),
+);
 ---
 
 <Layout title="Blog | Bloggy">
     <Main>
         <H1 text="Bloggy Blog" />
         <Filter
+            filtered={isFiltered}
             allAuthors={allAuthors}
             allTags={allTags}
-            filtered={filtered}
-            noOfPosts={noOfPosts}
+            noOfPosts={filteredCount}
         />
         {
-            posts.length === 0 ? (
-                <p>No posts were found with that tag</p>
+            filteredPosts.length === 0 ? (
+                <p>No posts were found matching your criteria</p>
             ) : (
                 <>
-                    <PostList posts={posts} />
+                    <PostList posts={posts as PostType[]} />
                     <div class="mb-36">
-                        <Pagination page={page} numberOfPosts={noOfPosts} />
+                        <Pagination page={page} numberOfPosts={filteredCount} />
                     </div>
                 </>
             )

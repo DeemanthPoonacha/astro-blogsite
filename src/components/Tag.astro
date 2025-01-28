@@ -2,25 +2,32 @@
 import { updateQueryString } from "../utils/helpers";
 
 type Props = {
-    tag: string;
+    tag: {
+        value: string;
+        label: string;
+    };
     field?: string;
 };
-const { tag, field = "tags" } = Astro.props;
+const {
+    tag: { value, label },
+    field = "tags",
+} = Astro.props;
 const selectedTags = Astro.url.searchParams
     .get(field as string)
     ?.split(",") as string[];
-const selected = selectedTags?.includes(tag);
+const selected = selectedTags?.includes(value);
 
 const query = Astro.url.search.replace(/page=\d+/, "page=1"); // Fallback to page1
 
-const newQueryString = updateQueryString(query, field, tag);
+const newQueryString = updateQueryString(query, field, value);
 
 const link = `/blog?${newQueryString}`;
 ---
 
 <a
+    title={label}
     href={link}
     class=`prose ${selected?"text-white bg-cyan-500 dark:bg-cyan-600":"text-cyan-500  dark:text-cyan-600"} border-2 border-cyan-500 dark:border-cyan-600 rounded-3xl uppercase text-lg p-2 whitespace-nowrap`
 >
-    {tag}
+    {label}
 </a>

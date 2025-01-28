@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import H1 from "../components/H1.astro";
 import Layout from "../layouts/Layout.astro";
 import Main from "../layouts/Main.astro";
+import About_BG from "../../public/images/about-bg.jpg";
 export const prerender = true;
 const BlogName = "Bloggy";
 // const topic = "Automobiles";
@@ -10,10 +11,8 @@ const BlogName = "Bloggy";
 
 <Layout title="About | Bloggy">
     <Image
-        width={500}
-        height={500}
-        id="mainLogo"
-        src="/images/about-bg.jpg"
+        id="ABOUT_BG"
+        src={About_BG}
         alt="Background"
         class="-z-10 opacity-10 fixed min-h-full w-full mt-20 md:-top-[10vh] lg:-top-[20vw]"
     />

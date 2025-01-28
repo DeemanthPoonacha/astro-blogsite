@@ -1,4 +1,3 @@
-// src/db/schema.ts
 import { defineDb, defineTable, column } from "astro:db";
 
 const Post = defineTable({
@@ -10,7 +9,7 @@ const Post = defineTable({
     content: column.text(),
     status: column.text(),
     featured: column.boolean({ optional: true }),
-    image: column.json({ optional: true }),
+    image: column.text({ optional: true }),
     tags: column.json(), // Store as JSON array
     authorId: column.text({ references: () => Author.columns.id }),
     publishedAt: column.date(),
@@ -22,11 +21,11 @@ const Post = defineTable({
 const Author = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
-    username: column.text(),
+    username: column.text({ unique: true }),
     name: column.text(),
     title: column.text(),
     email: column.text({ unique: true }),
-    image: column.json({ optional: true }),
+    image: column.text({ optional: true }),
     bio: column.text(),
     socialLinks: column.json(), // Store as JSON array
     createdAt: column.date(),

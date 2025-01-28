@@ -13,7 +13,6 @@ const POSTS_PER_PAGE = Number(import.meta.env.POSTS_PER_PAGE || 10);
 const page = Number(Astro.url.searchParams.get("page") ?? 1);
 const tags =
     Astro.url.searchParams.get("tags")?.split(",").filter(Boolean) || [];
-console.log("🚀 ~ tags:", tags);
 const authors =
     Astro.url.searchParams.get("authors")?.split(",").filter(Boolean) || [];
 
@@ -73,8 +72,6 @@ const [allPosts, filteredPosts] = await Promise.all([
         .orderBy(desc(Post.createdAt))
         .leftJoin(Author, eq(Author.id, Post.authorId)),
 ]);
-console.log("🚀 ~ allPosts:", allPosts);
-console.log("🚀 ~ filteredPosts:", filteredPosts);
 
 const isFiltered = authors.length > 0 || tags.length > 0;
 const filteredCount = filteredPosts.length;

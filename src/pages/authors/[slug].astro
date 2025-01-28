@@ -44,11 +44,11 @@ if (!author) return Astro.redirect("/404");
             <hr />
 
             <article set:html={content} />
-            <hr />
         </div>
         {
-            author.posts && (
+            author.posts?.length > 0 && (
                 <>
+                    <hr />
                     <p class="sm:text-6xl text-4xl mb-16 font-bold">
                         {`Posts by ${author.name}`}
                     </p>

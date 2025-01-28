@@ -1,27 +1,56 @@
 ---
+import { marked } from "marked";
+import { and, Author, db, desc, eq, Post } from "astro:db";
+import { Image } from "astro:assets";
+
 import AuthorData from "../../components/AuthorData.astro";
 import H1 from "../../components/H1.astro";
-// import PostList from "../../components/PostList.astro";
-import { Author } from "../../content/config";
-
 import Layout from "../../layouts/Layout.astro";
 import Main from "../../layouts/Main.astro";
-import { Image } from "astro:assets";
-import { getEntries, getEntry, render } from "astro:content";
+import type { AuthorType, PostType } from "../../types";
+import { getDateString } from "../../utils/helpers";
+import CategoryList from "../../components/TagList.astro";
 
 const { slug } = Astro.params;
 if (slug === undefined) return Astro.redirect("/404");
 
-const post = await getEntry("posts", slug);
+const [post] = await db
+    .select({
+        id: Post.id,
+        title: Post.title,
+        slug: Post.slug,
+        description: Post.description,
+        image: Post.image,
+        content: Post.content,
+        status: Post.status,
+        tags: Post.tags,
+        publishedAt: Post.publishedAt,
+        createdAt: Post.createdAt,
+        updatedAt: Post.updatedAt,
+        author: {
+            id: Author.id,
+            name: Author.name,
+            username: Author.username,
+            title: Author.title,
+            image: Author.image,
+            socialLinks: Author.socialLinks,
+        },
+    })
+    .from(Post)
+    .where(and(eq(Post.slug, slug), eq(Post.status, "published")))
+    .orderBy(desc(Post.createdAt))
+    .leftJoin(Author, eq(Author.id, Post.authorId));
 if (!post) return Astro.redirect("/404");
+console.log("🚀 ~ post:", post);
 
-const { Content } = await render(post);
-const author = (await getEntry(post.data.author)) as unknown as Author;
-const relatedPosts = await getEntries(post.data.relatedPosts);
-console.log("🚀 ~ relatedPosts:", relatedPosts);
+const content = marked.parse(post.content);
+const author = post.author;
+
+// const relatedPosts = await getEntries(post.data.relatedPosts);
+// console.log("🚀 ~ relatedPosts:", relatedPosts);
 ---
 
-<Layout title={post.data.title}>
+<Layout title={post.title}>
     <Main>
         <div class="max-w-full prose prose-2xl dark:prose-invert">
             <a href={`/blog`} class="font-bold no-underline">
@@ -31,25 +60,58 @@ console.log("🚀 ~ relatedPosts:", relatedPosts);
                     All Posts
                 </span>
             </a>
-            <H1 text={post.data.title} />
-            <Image
-                src={post.data.image}
-                alt={post.data.title}
-                format="webp"
-                class="w-full rounded-2xl shadow-xl mb-6 object-top"
-            />
-            <Content />
+            <H1 text={post.title} />
+            {
+                post.image && (
+                    <Image
+                        src={post.image as string}
+                        inferSize={true}
+                        width={1024}
+                        height={683}
+                        alt={"Post image"}
+                        format="webp"
+                        class="w-full rounded-2xl shadow-xl mb-6 object-top"
+                    />
+                )
+            }
+            <p>{post.description}</p>
+            <span
+                class="flex justify-between max-w-full prose dark:prose-invert"
+            >
+                <span>
+                    Last updated: {getDateString(post.updatedAt)}
+                </span>
+                <span>
+                    Published: {getDateString(post.publishedAt)}
+                </span>
+            </span>
+            <hr />
+            <article set:html={content} />
+            <hr />
+            <span class="text-4xl flex flex-col gap-4">
+                Tags:
+                <CategoryList
+                    tags={(post.tags as string[]).map((tag) => ({
+                        value: tag,
+                        label: tag,
+                    }))}
+                />
+            </span>
             {
                 !!author && (
                     <div class="mt-24">
                         <span class="text-4xl"> Author: </span>
-                        <AuthorData authorData={author.data} slug={author.id} />
+                        <AuthorData
+                            authorData={author as AuthorType}
+                            slug={author.username}
+                        />
                         {/* <span class="text-4xl">More Posts by Author: </span>
                         <PostList
-                            posts={author.data.posts.filter(
+                            posts={author.posts.filter(
                                 (p) => p.slug !== post.slug,
                             )}
                         /> */}
+                        <hr />
                     </div>
                 )
             }

@@ -1,11 +1,11 @@
+import type { PostType } from "@/types";
 import HeroParallax from "./ui/HeroParallax";
-import type { Post } from "../content/config";
 
-export default function Home({ posts }: { posts: Post[] }) {
+export default function Home({ posts }: { posts: PostType[] }) {
   const blogs = posts.map((post) => ({
-    title: post.data.title,
-    link: `/blog/${post.id}`,
-    thumbnail: post.data.image.src,
+    title: post.title,
+    link: `/blog/${post.slug}`,
+    thumbnail: post.image as string,
   }));
   return <HeroParallax items={[...blogs, ...blogs, ...blogs, ...blogs]} />;
 }

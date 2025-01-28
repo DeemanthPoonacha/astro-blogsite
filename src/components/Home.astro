@@ -1,21 +1,50 @@
 ---
-import { Image } from "astro:assets";
-import { getCollection } from "astro:content";
 import PostList from "./PostList.astro";
 import TagList from "./TagList.astro";
 import H1 from "./H1.astro";
 import HomeParallax from "./HomeParallax";
-const allPosts = await getCollection("posts");
-const allTags: string[] = allPosts.reduce((acc, post) => {
-    post.data.tags.forEach(
-        (tag) => !acc.includes(tag as never) && acc.push(tag as never),
-    );
-    return acc;
-}, []);
-const featuredposts = allPosts.filter((post) => post.data.featured);
+import { Author, db, eq, Post } from "astro:db";
+import type { PostType } from "../types";
+
+const allPosts = await db
+    .select({
+        featured: Post.featured,
+        id: Post.id,
+        title: Post.title,
+        slug: Post.slug,
+        description: Post.description,
+        image: Post.image,
+        status: Post.status,
+        tags: Post.tags,
+        publishedAt: Post.publishedAt,
+        createdAt: Post.createdAt,
+        updatedAt: Post.updatedAt,
+        author: {
+            id: Author.id,
+            name: Author.name,
+            username: Author.username,
+        },
+    })
+    .from(Post)
+    .where(eq(Post.status, "published"))
+    .leftJoin(Author, eq(Author.id, Post.authorId));
+
+const allTags = [
+    ...new Set(
+        allPosts
+            .flatMap((post) =>
+                typeof post.tags === "string"
+                    ? JSON.parse(post.tags)
+                    : post.tags,
+            )
+            .filter(Boolean),
+    ),
+].map((tag) => ({ value: tag, label: tag }));
+
+const featuredposts = allPosts.filter((post) => post.featured);
 ---
 
-<HomeParallax client:load posts={allPosts} />
+<HomeParallax client:load posts={allPosts as PostType[]} />
 
 <div
     id="mainTags"
@@ -29,5 +58,5 @@ const featuredposts = allPosts.filter((post) => post.data.featured);
 </div>
 <div class="relative">
     <H1 text="Featured Posts:" />
-    <PostList posts={featuredposts} />
+    <PostList posts={featuredposts as PostType[]} />
 </div>

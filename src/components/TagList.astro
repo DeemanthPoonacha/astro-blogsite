@@ -2,7 +2,10 @@
 import type { CollectionEntry } from "astro:content";
 import Tag from "./Tag.astro";
 type Props = {
-    tags: CollectionEntry<"posts">["data"]["tags"];
+    tags: {
+        value: string;
+        label: string;
+    }[];
     title?: string;
     field?: string;
     justifyCenter?: boolean;

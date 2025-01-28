@@ -1,8 +1,16 @@
 ---
+import { Image } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
 import About from "../../components/About.astro";
+import About_BG from "../../../public/images/about-bg.jpg";
 ---
 
 <Layout title="About | Bloggy">
+    <Image
+        id="ABOUT_BG"
+        src={About_BG}
+        alt="Background"
+        class="z-10 opacity-10 fixed min-h-full w-full mt-20 md:-top-[10vh] lg:-top-[20vw]"
+    />
     <About />
 </Layout>

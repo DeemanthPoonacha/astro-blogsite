@@ -2,8 +2,14 @@
 import TagList from "./TagList.astro";
 
 type Props = {
-    allTags: string[];
-    allAuthors: string[];
+    allTags: {
+        value: string;
+        label: string;
+    }[];
+    allAuthors: {
+        value: string;
+        label: string;
+    }[];
     filtered: boolean;
     noOfPosts: number;
 };

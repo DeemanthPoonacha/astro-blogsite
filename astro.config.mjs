@@ -2,9 +2,12 @@ import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
-import node from "@astrojs/node";
 import clerk from "@clerk/astro";
 import vercel from "@astrojs/vercel";
+
+import vercel from "@astrojs/vercel";
+
+import db from "@astrojs/db";
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,6 +17,7 @@ export default defineConfig({
     }),
     mdx(),
     react(),
+    db(),
     clerk({
       appearance: {
         variables: { colorPrimary: "#06b6d4" },
@@ -22,7 +26,4 @@ export default defineConfig({
   ],
   output: "server",
   adapter: vercel(),
-  // adapter: node({
-  //   mode: "standalone",
-  // }),
 });

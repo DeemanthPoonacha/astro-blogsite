@@ -1,11 +1,12 @@
 ---
 import { Image } from "astro:assets";
-import type { Author } from "../content/config";
 import H1 from "./H1.astro";
 import SocialLinks from "./SocialLinks.astro";
+import type { AuthorType } from "../types";
+import Avatar from "./Avatar.astro";
 
 type Props = {
-    authorData: Author["data"];
+    authorData: AuthorType;
     slug?: string;
 };
 const { authorData, slug } = Astro.props;
@@ -15,7 +16,7 @@ const userImg = authorData.image ?? "/images/icons/user.svg";
 <div
     class="flex max-md:flex-col-reverse space-y-1 justify-between items-center mb-16"
 >
-    <div>
+    <div class="order">
         {
             !!slug ? (
                 <a
@@ -34,22 +35,19 @@ const userImg = authorData.image ?? "/images/icons/user.svg";
         }
 
         <p class="max-md:text-center text-4xl max-md:text-3xl mt-0 mb-6">
-            {authorData.subtitle}
+            {authorData.title}
         </p>
         {
-            authorData.social && (
+            authorData.socialLinks && (
                 <SocialLinks
                     className="md:-ml-4 md:justify-start justify-center"
-                    social={authorData.social}
+                    social={authorData.socialLinks}
                 />
             )
         }
     </div>
-    <Image
-        src={userImg as string}
-        alt={authorData.name}
-        width={240}
-        height={240}
-        class={`size-60 rounded-full ${authorData.image ? "border-4 border-black dark:border-white" : "dark:invert"}`}
+    <Avatar
+        author={authorData}
+        className={`order-1 size-48 rounded-full ${authorData.image ? "border-4 border-black dark:border-white" : "dark:invert"}`}
     />
 </div>

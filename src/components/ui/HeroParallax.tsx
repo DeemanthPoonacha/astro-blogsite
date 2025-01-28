@@ -41,7 +41,7 @@ const HeroParallax = ({
   return (
     <div
       ref={ref}
-      className="min-h-[350svh] -mt-4 overflow-hidden  antialiased relative flex flex-col self-auto l[perspective:1000px] l[transform-style:preserve-3d]"
+      className="min-h-[350svh] -mt-5 overflow-hidden  antialiased relative flex flex-col self-auto l[perspective:1000px] l[transform-style:preserve-3d]"
     >
       <HeroBanner />
       <motion.div

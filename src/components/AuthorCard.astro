@@ -1,9 +1,10 @@
 ---
 import { Image } from "astro:assets";
-import type { Author } from "../content/config";
 import SocialLinks from "./SocialLinks.astro";
+import type { AuthorType } from "../types";
+import Avatar from "./Avatar.astro";
 type Props = {
-    author: Author;
+    author: AuthorType;
 };
 const { author } = Astro.props;
 ---
@@ -12,30 +13,21 @@ const { author } = Astro.props;
     class="flex flex-col justify-between items-center p-10 overflow-hidden rounded-lg border border-cyan-500/20 bg-white dark:bg-zinc-900 shadow shadow-cyan-500 hover:shadow-xl hover:shadow-cyan-500 dark:shadow hover:dark:shadow-xl hover:dark:shadow-cyan-500 dark:shadow-cyan-300"
 >
     <a
-        href={`/authors/${author.id}`}
-        aria-label={`Read more about ${author.data.name}`}
+        href={`/authors/${author.username}`}
+        aria-label={`Read more about ${author.name}`}
     >
-        {/* @ts-ignore */}
-        <Image
-            loading={"lazy"}
-            src={author.data.image ?? "/images/icons/user.svg"}
-            alt={author.data.name}
-            width={200}
-            height={200}
-            format="webp"
-            class=`size-40 mb-6 border-2 border-cyan-500 rounded-full object-cover ${author.data.image ? "dark:border-cyan-500" : "dark:invert dark:border-[#f9492b]"}`
-        />
+        <Avatar author={author} />
     </a>
 
     <a
-        href={`/authors/${author.id}`}
+        href={`/authors/${author.username}`}
         class="text-4xl text-center prose dark:prose-invert mb-2 font-semibold inline-block"
     >
-        {author.data.name}
+        {author.name}
     </a>
 
     <p class="prose dark:prose-invert mb-6 text-center text-2xl line-clamp-2">
-        {author.data.subtitle}
+        {author.title}
     </p>
-    <SocialLinks social={author.data.social} />
+    <SocialLinks social={author.socialLinks} />
 </article>

@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import H1 from "./H1.astro";
 import SocialLinks from "./SocialLinks.astro";
 import type { AuthorType } from "../types";
+import Avatar from "./Avatar.astro";
 
 type Props = {
     authorData: AuthorType;
@@ -15,7 +16,7 @@ const userImg = authorData.image ?? "/images/icons/user.svg";
 <div
     class="flex max-md:flex-col-reverse space-y-1 justify-between items-center mb-16"
 >
-    <div>
+    <div class="order">
         {
             !!slug ? (
                 <a
@@ -45,11 +46,8 @@ const userImg = authorData.image ?? "/images/icons/user.svg";
             )
         }
     </div>
-    <Image
-        src={userImg as string}
-        alt={authorData.name}
-        width={240}
-        height={240}
-        class={`size-60 rounded-full ${authorData.image ? "border-4 border-black dark:border-white" : "dark:invert"}`}
+    <Avatar
+        author={authorData}
+        className={`order-1 size-48 rounded-full ${authorData.image ? "border-4 border-black dark:border-white" : "dark:invert"}`}
     />
 </div>

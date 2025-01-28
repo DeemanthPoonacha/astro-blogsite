@@ -7,7 +7,7 @@ export type PostType = {
   featured?: boolean;
   content: string;
   status: string;
-  image?: ImageMetadata | string; // Adjust type as needed (e.g., `string | null`)
+  image?: string; // Adjust type as needed (e.g., `string | null`)
   tags: string[]; // Adjust type if your JSON array has a specific shape
   author?: {
     id: string;
@@ -25,7 +25,7 @@ export type AuthorType = {
   name: string;
   title: string;
   email: string;
-  image?: ImageMetadata | string; // Adjust type as needed (e.g., `string | null`)
+  image?: string; // Adjust type as needed (e.g., `string | null`)
   bio: string;
   socialLinks: SocialLink[]; // Adjust type if your JSON array has a specific shape
   createdAt: Date;

@@ -1,0 +1,20 @@
+---
+import { Image } from "astro:assets";
+import type { AuthorType } from "../types";
+
+type Props = {
+    author: AuthorType;
+    className?: string;
+};
+const { author, className } = Astro.props;
+---
+
+<Image
+    loading={"lazy"}
+    src={author.image ?? "/images/icons/user.svg"}
+    alt={author.name ?? "Author Image"}
+    width={200}
+    height={200}
+    format="webp"
+    class=`size-40 mb-6 border-2 border-black rounded-full object-cover ${!!author.image ? "dark:border-white" : "dark:invert"} ${className}`
+/>

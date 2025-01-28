@@ -22,7 +22,7 @@ const { post } = Astro.props;
     >
         <Image
             loading={"lazy"}
-            src={(post.image as ImageMetadata) || "/images/logo.png"}
+            src={post.image || "/images/logo.png"}
             alt={post.title || "Post image"}
             width={600}
             height={350}

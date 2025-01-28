@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import SocialLinks from "./SocialLinks.astro";
 import type { AuthorType } from "../types";
+import Avatar from "./Avatar.astro";
 type Props = {
     author: AuthorType;
 };
@@ -15,16 +16,7 @@ const { author } = Astro.props;
         href={`/authors/${author.username}`}
         aria-label={`Read more about ${author.name}`}
     >
-        {/* @ts-ignore */}
-        <Image
-            loading={"lazy"}
-            src={author.image ?? "/images/icons/user.svg"}
-            alt={author.name ?? "Author Image"}
-            width={200}
-            height={200}
-            format="webp"
-            class=`size-40 mb-6 border-2 border-black rounded-full object-cover ${!!author.image ? "dark:border-white" : "dark:invert"}`
-        />
+        <Avatar author={author} />
     </a>
 
     <a

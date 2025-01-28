@@ -22,12 +22,7 @@ When I'm not behind the wheel or elbow-deep in grease, you can find me at car sh
 Follow along on my automotive adventures on <a href="https://www.twitter.com/" target="_blank">twitter</a> and <a href="https://instagram.com/" target="_blank">Instagram</a>. Let's hit the road together!
 `,
       title: "Automobile Enthusiast",
-      image: {
-        src: "/images/logo.png",
-        width: 159,
-        height: 224,
-        format: "png",
-      },
+      image: "/images/logo.png",
       socialLinks: [
         { platform: "twitter", link: "https://twitter.com" },
         { platform: "instagram", link: "https://instagram.com" },
@@ -49,12 +44,7 @@ When I'm not immersed in coding or writing, you'll often find me exploring the g
 Connect with me on <a href="https://www.linkedin.com/in/deemanth-poonacha" target="_blank">LinkedIn</a> and follow me on <a href="https://instagram.com/deemanth_poonacha" target="_blank">Instagram</a>. Let's embrace the endless possibilities and celebrate the magic of innovation and creativity.
 `,
       title: "Software Engineer",
-      //   image: {
-      //     src: "/images/logo.png",
-      //     width: 159,
-      //     height: 224,
-      //     format: "png",
-      //   },
+      //   image:     src: "/images/logo.png",
       socialLinks: [
         {
           platform: "linkedin",
@@ -179,10 +169,7 @@ In conclusion, regular car maintenance is not just a chore; it's a responsibilit
         "Discover a handy checklist, seasonal tips, and easy DIY tutorials to tackle basic maintenance tasks and ensure smooth driving year-round!",
       status: "published",
       featured: true,
-      image: {
-        src: "/images/blog_cover/car-maintenance.jpg",
-        format: "jpg",
-      },
+      image: "/images/blog_cover/car-maintenance.jpg",
     },
     {
       id: "2",
@@ -292,10 +279,7 @@ Navigating the process of buying a new or used car can be daunting, but with the
         "Detailed buying guide tailored for both new and used cars to equip you with the knowledge needed to make savvy car purchasing decisions!",
       status: "published",
       featured: true,
-      image: {
-        src: "/images/blog_cover/new-car.jpg",
-        format: "jpg",
-      },
+      image: "/images/blog_cover/new-car.jpg",
     },
     {
       id: "3",
@@ -312,10 +296,7 @@ Navigating the process of buying a new or used car can be daunting, but with the
         "Unlock the potential of modern technology to enhance safety in cars, from advanced sensors to advanced safety features.",
       status: "published",
       featured: true,
-      image: {
-        src: "/images/blog_cover/car-tech.jpg",
-        format: "jpg",
-      },
+      image: "/images/blog_cover/car-tech.jpg",
     },
     {
       id: "4",
@@ -332,10 +313,7 @@ Navigating the process of buying a new or used car can be daunting, but with the
         "Explore the essential elements of crafting a winning resume, offering valuable tips and strategies to help you create a resume that gets noticed and gets results.",
       status: "published",
       featured: true,
-      image: {
-        src: "/images/blog_cover/resume.jpg",
-        format: "jpg",
-      },
+      image: "/images/blog_cover/resume.jpg",
     },
   ]);
 }

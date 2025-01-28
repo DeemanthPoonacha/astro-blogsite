@@ -41,9 +41,12 @@ if (!author) return Astro.redirect("/404");
         </a>
         <div class="mb-12 max-w-full prose prose-2xl dark:prose-invert">
             <AuthorData authorData={author as AuthorType} />
-            <p></p>
+            <hr />
+
             <article set:html={content} />
-        </div>{
+            <hr />
+        </div>
+        {
             author.posts && (
                 <>
                     <p class="sm:text-6xl text-4xl mb-16 font-bold">

@@ -44,7 +44,7 @@ const allTags = [
 const featuredposts = allPosts.filter((post) => post.featured);
 ---
 
-<HomeParallax client:load posts={allPosts as PostType[]} />
+<HomeParallax client:load posts={featuredposts as PostType[]} />
 
 <div
     id="mainTags"

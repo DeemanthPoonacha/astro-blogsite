@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import CategoryList from "./TagList.astro";
 import type { PostType } from "../types";
 import { getDateString } from "../utils/helpers";
+import { RiSparkling2Fill } from "react-icons/ri";
 
 type Props = {
     post: PostType;
@@ -13,8 +14,16 @@ const { post } = Astro.props;
 
 <article
     title={post.title}
-    class="flex flex-col justify-between overflow-hidden rounded-lg bg-white dark:bg-zinc-900 shadow shadow-cyan-500 hover:shadow-xl hover:shadow-cyan-500 dark:shadow hover:dark:shadow-xl hover:dark:shadow-cyan-500 dark:shadow-cyan-300"
+    class="relative flex flex-col justify-between overflow-hidden rounded-lg bg-white dark:bg-zinc-900 shadow shadow-cyan-500 hover:shadow-xl hover:shadow-cyan-500 dark:shadow hover:dark:shadow-xl hover:dark:shadow-cyan-500 dark:shadow-cyan-300"
 >
+    {
+        post.featured && (
+            <span class="absolute top-4 right-0 rounded-s-lg p-2 z-20 bg-cyan-400 dark:bg-cyan-600 flex gap-1 items-center">
+                <RiSparkling2Fill client:load />
+                Featured
+            </span>
+        )
+    }
     <a
         href={`/blog/${post.slug}`}
         aria-label={`Read more about ${post.title}`}

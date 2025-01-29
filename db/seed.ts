@@ -20,12 +20,12 @@ Through my blog, I aim to share my love for automobiles with fellow enthusiasts 
 
 When I'm not behind the wheel or elbow-deep in grease, you can find me at car shows, swapping stories with fellow gearheads, or planning my next road trip adventure. Cars aren't just a hobby for me – they're a way of life, and I'm excited to share that journey with you.
 
-Follow along on my automotive adventures on <a href="https://www.twitter.com/" target="_blank">twitter</a> and <a href="https://instagram.com/" target="_blank">Instagram</a>. Let's hit the road together!
+Follow along on my automotive adventures on <a href="https://www.x.com/" target="_blank">x</a> and <a href="https://instagram.com/" target="_blank">Instagram</a>. Let's hit the road together!
 `,
       title: "Automobile Enthusiast",
       image: "/images/logo.png",
       socialLinks: [
-        { platform: "twitter", link: "https://twitter.com" },
+        { platform: "x", link: "https://x.com" },
         { platform: "instagram", link: "https://instagram.com" },
       ],
       email: "author-1@example.com",
@@ -53,8 +53,8 @@ Connect with me on <a href="https://www.linkedin.com/in/deemanth-poonacha" targe
           link: "https://www.linkedin.com/in/deemanth-poonacha",
         },
         {
-          platform: "twitter",
-          link: "https://www.twitter.com/deemanthpoonach",
+          platform: "x",
+          link: "https://www.x.com/deemanthpoonach",
         },
         {
           platform: "instagram",

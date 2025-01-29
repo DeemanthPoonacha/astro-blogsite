@@ -4,7 +4,7 @@ import Layout from "@/layouts/Layout.astro";
 import Main from "@/layouts/Main.astro";
 import BlogDashboard from "@/components/AuthorDahboard";
 import { Author, Post, db, eq } from "astro:db";
-import type { AuthorType } from "@/types";
+import type { AuthorType, AuthorWithPosts } from "@/types";
 
 const user = await Astro.locals.currentUser();
 if (!user) return Astro.redirect("/404");
@@ -65,7 +65,7 @@ console.log("🚀 ~ previewId:", previewId);
             !previewId ? (
                 <BlogDashboard
                     client:load
-                    author={authorWithPosts}
+                    author={authorWithPosts as AuthorWithPosts}
                     defaultEditingId={editingId}
                 />
             ) : (

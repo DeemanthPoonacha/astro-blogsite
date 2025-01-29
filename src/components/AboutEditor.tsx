@@ -5,6 +5,8 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
 import { Label } from "../components/ui/label";
+import { useToast } from "@/hooks/use-toast";
+
 import {
   Select,
   SelectContent,
@@ -18,13 +20,15 @@ import type { DBAuthor } from "@/types";
 import { SOCIAL_LINKS } from "./SocialIcon";
 
 const AboutEditor = ({ author }: { author: DBAuthor }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [showResetDialog, setShowResetDialog] = useState(false);
+  const { toast } = useToast();
+
   const {
     control,
     handleSubmit,
     reset,
     setValue,
-    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -42,8 +46,43 @@ const AboutEditor = ({ author }: { author: DBAuthor }) => {
 
   const handleReset = () => reset();
 
-  const onSubmit = (data: any) => {
-    console.log("Saved Data:", data);
+  const onSubmit = async (data: any) => {
+    console.log("🚀 ~ onSubmit ~ data:", data);
+    try {
+      setIsSubmitting(true);
+
+      const response = await fetch(`/api/authors/${author.id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: author.id,
+          ...data,
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to update profile");
+      }
+
+      toast({
+        fbType: "success",
+        title: "Success",
+        description: "Your profile has been updated.",
+        variant: "default",
+      });
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      toast({
+        fbType: "error",
+        title: "Error",
+        description: "Failed to update profile. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -72,11 +111,6 @@ const AboutEditor = ({ author }: { author: DBAuthor }) => {
             )}
           />
         </div>
-
-        {/* <div>
-          <Label>Profile Image</Label>
-          <Input type="file" accept="image/*" />
-        </div> */}
 
         <div>
           <Label>Social Links</Label>
@@ -128,6 +162,7 @@ const AboutEditor = ({ author }: { author: DBAuthor }) => {
                 variant="outline"
                 onClick={() => remove(index)}
                 className="px-3"
+                type="button"
               >
                 Delete
               </Button>
@@ -138,6 +173,7 @@ const AboutEditor = ({ author }: { author: DBAuthor }) => {
               variant="outline"
               onClick={() => append({ platform: "", link: "" })}
               className="mt-2"
+              type="button"
             >
               Add Social Link
             </Button>
@@ -166,17 +202,17 @@ const AboutEditor = ({ author }: { author: DBAuthor }) => {
           variant="outline"
           type="button"
           onClick={() => setShowResetDialog(true)}
+          disabled={isSubmitting}
         >
-          <RiResetLeftFill size={18} />
+          <RiResetLeftFill size={18} className="mr-2" />
           Reset
         </Button>
-        <Button type="submit">
-          <RiSave3Fill size={18} />
-          Save Changes
+        <Button type="submit" disabled={isSubmitting}>
+          <RiSave3Fill size={18} className="mr-2" />
+          {isSubmitting ? "Saving..." : "Save Changes"}
         </Button>
       </div>
 
-      {/* Reset Confirmation Dialog */}
       <ResetDialog {...{ showResetDialog, setShowResetDialog, handleReset }} />
     </form>
   );

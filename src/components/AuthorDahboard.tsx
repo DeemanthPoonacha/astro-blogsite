@@ -3,6 +3,7 @@ import {
   RiAddFill,
   RiDeleteBinFill,
   RiEditFill,
+  RiExternalLinkFill,
   RiFileTextFill,
   RiSettings3Fill,
   RiUser3Fill,
@@ -33,6 +34,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { AuthorWithPosts, DBPost, PostType } from "@/types";
 import { getDateString } from "@/utils/helpers";
 import { Toaster } from "@/components/ui/toaster";
+
 const DashboardLayout = ({
   author,
   defaultEditingId,
@@ -58,11 +60,20 @@ const DashboardLayout = ({
           className="@container relative flex flex-col overflow-hidden rounded-lg bg-white dark:bg-zinc-900 shadow shadow-cyan-500 hover:shadow-xl hover:shadow-cyan-500 dark:shadow hover:dark:shadow-xl hover:dark:shadow-cyan-500 dark:shadow-cyan-300"
           key={post.id}
         >
-          {/* <a
-              href={`/blog/${post.slug}`}
-              aria-label={`Read more about ${post.title}`}
-              className="overflow-hidden"
-            > */}
+          <Badge
+            className="absolute z-10 m-4 p-1.5"
+            variant={post.status === "published" ? "default" : "secondary"}
+          >
+            {post.status.toUpperCase()}
+          </Badge>
+          <a
+            className="absolute right-0 z-10 m-4 bg-primary p-1.5 rounded-md"
+            href={`/blog/${post.slug}`}
+            target="_blank"
+            aria-label={`Read more about ${post.title}`}
+          >
+            <RiExternalLinkFill />
+          </a>
           <img
             loading={"lazy"}
             src={post.image || "/images/logo.png"}
@@ -71,17 +82,9 @@ const DashboardLayout = ({
             height={350}
             className="aspect-[600/350] rounded-t-rounded-lg duration-300 hover:scale-110 m-0"
           />
-          {/* </a> */}
           <CardHeader className="flex flex-col justify-between p-4 gap-2">
             <div className="flex justify-between items-start">
               <CardTitle className="text-lg">{post.title}</CardTitle>
-              {/* <Badge
-              variant={
-                post.status === "published" ? "default" : "secondary"
-              }
-            >
-              {post.status}
-            </Badge> */}
             </div>
             <CardDescription>{post.description}</CardDescription>
           </CardHeader>
@@ -242,13 +245,13 @@ const DashboardLayout = ({
           {mainContent}
         </TabsContent>
       </Tabs>
-      <div className="hidden lg:flex h-screen bg-zinc-100 dark:bg-zinc-900 prose dark:prose-invert w-full max-w-full rounded-lg">
+      <div className="hidden lg:flex min-h-[900px] bg-zinc-100 dark:bg-zinc-900 prose dark:prose-invert w-full max-w-full rounded-lg">
         {sideBar}
         {mainContent}
 
         {deleteConfirmationDialog}
       </div>
-      <Toaster />;
+      <Toaster />
     </>
   );
 };

@@ -10,6 +10,7 @@ export default async function seed() {
       id: "1",
       username: "author-1",
       name: "Author 1",
+      penName: null,
       bio: `
 I'm a passionate automobile enthusiast with a deep love for all things automotive. Ever since I was a kid, I've been fascinated by the roar of engines, the sleek lines of classic cars, and the thrill of hitting the open road.
 
@@ -34,6 +35,7 @@ Follow along on my automotive adventures on <a href="https://www.twitter.com/" t
       id: "2",
       username: "deemanth-poonacha",
       name: "Deemanth Poonacha",
+      penName: null,
       bio: `
 I'm a passionate software engineer and tech enthusiast. I've always been fascinated by the ever-evolving world of technology and love to stay updated on the latest trends and innovations in the industry. With a solid background in computer science and years of hands-on experience in software development, I bring a unique perspective to the realm of technology blogging.
 

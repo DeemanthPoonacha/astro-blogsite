@@ -12,8 +12,8 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
 import { MultiSelect } from "./ui/multi-select";
-import type { Post } from "./BlogDahboard";
 import { ResetDialog } from "./ui/ResetDialog";
+import type { DBPost } from "@/types";
 
 const tagList = [
   { value: "lifestyle", label: "Lifestyle" },
@@ -43,7 +43,7 @@ const PostEditor = ({
   post,
   onClose = () => {},
 }: {
-  post: Post;
+  post: DBPost;
   onClose?: () => void;
 }) => {
   const {
@@ -208,7 +208,10 @@ const PostEditor = ({
               return setShowPreview((prev) => !prev);
             }}
           >
-            <a href={`?previewId=${post?.id}`}>
+            <a
+              href={`?previewId=${post?.slug}`}
+              className="text-primary-foreground"
+            >
               <RiEyeLine size={18} />
             </a>
             <span className="hidden sm:block">Preview</span>

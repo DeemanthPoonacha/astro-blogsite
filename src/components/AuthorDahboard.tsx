@@ -14,7 +14,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../components/ui/card";
+} from "./ui/card";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,62 +24,105 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "../components/ui/alert-dialog";
-import { Badge } from "../components/ui/badge";
-import { Button } from "../components/ui/button";
+} from "./ui/alert-dialog";
+import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
 import PostEditor from "./PostEditor";
 import AboutEditor from "./AboutEditor";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-// Sample blog posts data
-const allPosts = [
-  {
-    id: "1",
-    title: "Getting Started with Astro",
-    description: "Learn how to build modern websites with Astro",
-    status: "published",
-    tags: ["travel", "lifestyle", "food"],
-    date: "2025-01-17",
-    content: "",
-  },
-  {
-    id: "2",
-    title: "React Best Practices",
-    description: "Essential tips for React development",
-    status: "draft",
-    tags: ["fitness", "health", "guide"],
-    date: "2025-01-16",
-    content: "",
-  },
-];
-export type Post = {
-  id: string;
-  title: string;
-  description: string;
-  status: string;
-  tags: string[];
-  date: string;
-  content: string;
-};
-
+import type { AuthorWithPosts, DBPost, PostType } from "@/types";
+import { getDateString } from "@/utils/helpers";
+import { Toaster } from "@/components/ui/toaster";
 const DashboardLayout = ({
-  user,
+  author,
   defaultEditingId,
 }: {
-  user: any;
+  author: AuthorWithPosts;
   defaultEditingId: string | null;
 }) => {
-  const posts = allPosts;
+  const posts = author.posts;
   const [activeSection, setActiveSection] = useState("posts");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showCreateEdit, setShowCreateEdit] = useState(!!defaultEditingId);
 
-  const [editingPost, setEditingPost] = useState<Post | null>(
+  const [editingPost, setEditingPost] = useState<DBPost | null>(
     defaultEditingId
       ? posts?.find((post) => post.id === defaultEditingId) || null
       : null,
   );
 
+  const postList = (
+    <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1 mb-24">
+      {posts.map((post) => (
+        <Card
+          className="@container relative flex flex-col overflow-hidden rounded-lg bg-white dark:bg-zinc-900 shadow shadow-cyan-500 hover:shadow-xl hover:shadow-cyan-500 dark:shadow hover:dark:shadow-xl hover:dark:shadow-cyan-500 dark:shadow-cyan-300"
+          key={post.id}
+        >
+          {/* <a
+              href={`/blog/${post.slug}`}
+              aria-label={`Read more about ${post.title}`}
+              className="overflow-hidden"
+            > */}
+          <img
+            loading={"lazy"}
+            src={post.image || "/images/logo.png"}
+            alt={post.title || "Post image"}
+            width={600}
+            height={350}
+            className="aspect-[600/350] rounded-t-rounded-lg duration-300 hover:scale-110 m-0"
+          />
+          {/* </a> */}
+          <CardHeader className="flex flex-col justify-between p-4 gap-2">
+            <div className="flex justify-between items-start">
+              <CardTitle className="text-lg">{post.title}</CardTitle>
+              {/* <Badge
+              variant={
+                post.status === "published" ? "default" : "secondary"
+              }
+            >
+              {post.status}
+            </Badge> */}
+            </div>
+            <CardDescription>{post.description}</CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-col justify-between px-4 pb-4 gap-2">
+            <div className="flex flex-wrap gap-2">
+              {post.tags.map((tag) => (
+                <Badge key={tag} variant="outline3">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          </CardContent>
+          <CardFooter className="flex justify-between items-center mt-auto gap-2 p-4 pt-0">
+            <span className="text-sm text-zinc-500 dark:text-zinc-500">
+              {getDateString(post.createdAt)}
+            </span>
+            <div className="flex gap-2 justify-between">
+              <Button
+                variant="destructive2"
+                className="@max-[23rem]:h-9 @max-[23rem]:w-9"
+                onClick={() => setShowDeleteDialog(true)}
+              >
+                <RiDeleteBinFill size={18} />
+                <span className="hidden @[23rem]:block">Delete</span>
+              </Button>
+              <Button
+                className="@max-[23rem]:h-9 @max-[23rem]:w-9"
+                onClick={() => {
+                  setEditingPost(post);
+                  setShowCreateEdit(true);
+                }}
+              >
+                <RiEditFill size={18} />
+                <span className="hidden @[23rem]:block">Edit</span>
+              </Button>
+            </div>
+          </CardFooter>
+        </Card>
+      ))}
+    </div>
+  );
   const postsContent = !showCreateEdit ? (
     <>
       <div className="flex justify-between items-center mb-6">
@@ -95,62 +138,11 @@ const DashboardLayout = ({
           Create New Post
         </Button>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {posts.map((post) => (
-          <Card key={post.id}>
-            <CardHeader>
-              <div className="flex justify-between items-start">
-                <CardTitle className="text-lg">{post.title}</CardTitle>
-                <Badge
-                  variant={
-                    post.status === "published" ? "default" : "secondary"
-                  }
-                >
-                  {post.status}
-                </Badge>
-              </div>
-              <CardDescription>{post.description}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-2">
-                {post.tags.map((tag) => (
-                  <Badge key={tag} variant="outline">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-            </CardContent>
-            <CardFooter className="flex justify-between">
-              <span className="text-sm text-zinc-500 dark:text-zinc-500">
-                {post.date}
-              </span>
-              <div className="flex gap-2">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => {
-                    setEditingPost(post);
-                    setShowCreateEdit(true);
-                  }}
-                >
-                  <RiEditFill size={18} />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setShowDeleteDialog(true)}
-                >
-                  <RiDeleteBinFill size={18} />
-                </Button>
-              </div>
-            </CardFooter>
-          </Card>
-        ))}
-      </div>
+      {postList}
     </>
   ) : (
     <PostEditor
-      post={editingPost as Post}
+      post={editingPost as DBPost}
       onClose={() => setShowCreateEdit(false)}
     />
   );
@@ -165,7 +157,7 @@ const DashboardLayout = ({
       id: "about",
       label: "About Me",
       icon: RiUser3Fill,
-      content: <AboutEditor />,
+      content: <AboutEditor author={author} />,
     },
     {
       id: "settings",
@@ -185,7 +177,7 @@ const DashboardLayout = ({
     <div className="xl:w-64 bg-zinc-200 dark:bg-zinc-800 p-4 rounded-lg rounded-r-none">
       <div className="mb-8">
         <h1 className="hidden xl:block text-xl font-bold text-zinc-800 dark:text-zinc-200">
-          {user?.firstName + " " + user?.lastName}
+          {author.name}
         </h1>
       </div>
       <nav>
@@ -256,6 +248,7 @@ const DashboardLayout = ({
 
         {deleteConfirmationDialog}
       </div>
+      <Toaster />;
     </>
   );
 };

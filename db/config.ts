@@ -23,6 +23,7 @@ const Author = defineTable({
     id: column.text({ primaryKey: true }),
     username: column.text({ unique: true }),
     name: column.text(),
+    penName: column.text({ optional: true }),
     title: column.text(),
     email: column.text({ unique: true }),
     image: column.text({ optional: true }),

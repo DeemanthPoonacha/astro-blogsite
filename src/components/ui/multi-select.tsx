@@ -214,6 +214,7 @@ export const MultiSelect = React.forwardRef<
                         className={cn(
                           isAnimating ? "animate-bounce" : "",
                           multiSelectVariants({ variant }),
+                          "border-primary",
                         )}
                         style={{ animationDuration: `${animation}s` }}
                       >
@@ -234,9 +235,10 @@ export const MultiSelect = React.forwardRef<
                   {selectedValues.length > maxCount && (
                     <Badge
                       className={cn(
-                        "bg-transparent text-foreground border-foreground/1 hover:bg-transparent",
+                        // "bg-transparent text-foreground border-foreground/1 hover:bg-transparent",
                         isAnimating ? "animate-bounce" : "",
                         multiSelectVariants({ variant }),
+                        "border-primary",
                       )}
                       style={{ animationDuration: `${animation}s` }}
                     >

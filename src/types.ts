@@ -7,8 +7,8 @@ export type PostType = {
   featured?: boolean;
   content: string;
   status: string;
-  image?: string; // Adjust type as needed (e.g., `string | null`)
-  tags: string[]; // Adjust type if your JSON array has a specific shape
+  image?: string;
+  tags: string[];
   author?: {
     id: string;
     username: string;
@@ -25,9 +25,9 @@ export type AuthorType = {
   name: string;
   title: string;
   email: string;
-  image?: string; // Adjust type as needed (e.g., `string | null`)
+  image?: string;
   bio: string;
-  socialLinks: SocialLink[]; // Adjust type if your JSON array has a specific shape
+  socialLinks: SocialLink[];
   createdAt: Date;
 };
 
@@ -35,3 +35,36 @@ export type SocialLink = {
   platform: string;
   link: string;
 };
+
+export type DBAuthor = {
+  id: string;
+  username: string;
+  name: string;
+  penName: string | null;
+  title: string;
+  email: string;
+  image: string | null;
+  bio: string;
+  socialLinks: SocialLink[];
+  createdAt: Date;
+};
+
+export type DBPost = {
+  title: string;
+  image: string | null;
+  id: string;
+  slug: string;
+  createdAt: Date;
+  description: string;
+  content: string;
+  status: string;
+  featured: boolean | null;
+  tags: string[];
+  authorId: string;
+  publishedAt: Date;
+  updatedAt: Date;
+};
+
+export interface AuthorWithPosts extends DBAuthor {
+  posts: DBPost[];
+}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { RiResetLeftFill, RiSave3Fill } from "react-icons/ri";
 import { Button } from "../components/ui/button";
@@ -14,35 +14,10 @@ import {
   SelectValue,
 } from "../components/ui/select";
 import { ResetDialog } from "./ui/ResetDialog";
+import type { DBAuthor } from "@/types";
+import { SOCIAL_LINKS } from "./SocialIcon";
 
-const platforms = [
-  {
-    value: "linkedin",
-    label: "LinkedIn",
-    link: "https://www.linkedin.com/",
-  },
-  {
-    value: "github",
-    label: "GitHub",
-    link: "https://github.com/",
-  },
-  {
-    value: "x",
-    label: "X",
-    link: "https://www.x.com/",
-  },
-  {
-    value: "instagram",
-    label: "Instagram",
-    link: "https://instagram.com/",
-  },
-  {
-    value: "other",
-    label: "Other",
-  },
-];
-
-const AboutEditor = () => {
+const AboutEditor = ({ author }: { author: DBAuthor }) => {
   const [showResetDialog, setShowResetDialog] = useState(false);
   const {
     control,
@@ -53,20 +28,10 @@ const AboutEditor = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      displayName: "",
-      subtitle: "",
-      content: "",
-      socials: [
-        {
-          platform: "linkedin",
-          link: "https://www.linkedin.com/",
-        },
-        { platform: "x", link: "https://www.x.com/" },
-        {
-          platform: "instagram",
-          link: "https://instagram.com/",
-        },
-      ],
+      penName: author.penName ?? author.name,
+      title: author.title,
+      bio: author.bio,
+      socials: author.socialLinks,
     },
   });
 
@@ -87,31 +52,31 @@ const AboutEditor = () => {
 
       <div className="space-y-4">
         <div>
-          <Label>Display Name</Label>
+          <Label>Pen Name</Label>
           <Controller
-            name="displayName"
+            name="penName"
             control={control}
             render={({ field }) => (
-              <Input {...field} placeholder="Enter your display name" />
+              <Input {...field} placeholder="Enter your pen name" />
             )}
           />
         </div>
 
         <div>
-          <Label>Subtitle</Label>
+          <Label>Title</Label>
           <Controller
-            name="subtitle"
+            name="title"
             control={control}
             render={({ field }) => (
-              <Input {...field} placeholder="Enter a brief subtitle" />
+              <Input {...field} placeholder="Enter a brief title" />
             )}
           />
         </div>
 
-        <div>
+        {/* <div>
           <Label>Profile Image</Label>
           <Input type="file" accept="image/*" />
-        </div>
+        </div> */}
 
         <div>
           <Label>Social Links</Label>
@@ -124,7 +89,7 @@ const AboutEditor = () => {
                   <Select
                     {...selectField}
                     onValueChange={(value) => {
-                      const selectedPlatform = platforms.find(
+                      const selectedPlatform = SOCIAL_LINKS.find(
                         (platform) => platform.value === value,
                       );
                       selectField.onChange(value);
@@ -139,9 +104,12 @@ const AboutEditor = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        {platforms.map(({ value, label }) => (
+                        {SOCIAL_LINKS.map(({ value, label, icon }) => (
                           <SelectItem key={value} value={value}>
-                            {label}
+                            <span className="flex items-center gap-2">
+                              {icon}
+                              {label}
+                            </span>
                           </SelectItem>
                         ))}
                       </SelectGroup>
@@ -179,7 +147,7 @@ const AboutEditor = () => {
         <div>
           <Label>My Bio</Label>
           <Controller
-            name="content"
+            name="bio"
             control={control}
             render={({ field }) => (
               <Textarea

@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import SocialIcon from "./SocialIcon";
 
 type Props = {
     social?: {
@@ -15,29 +16,25 @@ const { social, className } = Astro.props;
     class={`${className} flex flex-wrap divide-x divide-zinc-950 dark:divide-zinc-50`}
 >
     {
-        social?.map(({ platform, link }, _index, all) => (
-            <a
-                class="px-4 text-xl flex items-center"
-                href={link}
-                target="_blank"
-            >
-                <Image
-                    src={`/images/icons/${platform}.svg`}
-                    alt={platform}
-                    width={24}
-                    height={24}
-                    class="m-0 mr-1 dark:invert"
-                />
-                <span
-                    class={
-                        all.length > 3
-                            ? "hidden"
-                            : "hidden min-[460px]:max-[768px]:block xl:block"
-                    }
+        social?.map(({ platform, link }, _index, all) => {
+            return (
+                <a
+                    class="px-4 text-xl flex items-center"
+                    href={link}
+                    target="_blank"
+                    title={platform}
                 >
-                    {platform}
-                </span>
-            </a>
-        ))
+                    <SocialIcon
+                        platform={platform}
+                        className={
+                            all.length > 3
+                                ? "hidden"
+                                : "hidden min-[460px]:max-[768px]:block xl:block ml-1"
+                        }
+                        client:load
+                    />
+                </a>
+            );
+        })
     }
 </div>

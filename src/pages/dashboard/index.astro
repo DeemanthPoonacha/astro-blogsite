@@ -2,7 +2,7 @@
 import H1 from "@/components/H1.astro";
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/layouts/Main.astro";
-import BlogDashboard from "@/components/BlogDahboard";
+import BlogDashboard from "@/components/AuthorDahboard";
 import { Author, Post, db, eq } from "astro:db";
 import type { AuthorType } from "@/types";
 
@@ -41,17 +41,17 @@ const [author] = await db
         },
     })
     .returning();
+if (!author) return Astro.redirect("/404");
 
 // Fetch posts in parallel with the upsert
-const posts = await db.select().from(Post).where(eq(Post.authorId, user.id));
+const posts = await db.select().from(Post).where(eq(Post.authorId, author.id));
 
 // Combine user data with author and posts
-const enrichedUser = {
-    ...user,
-    author,
+const authorWithPosts = {
+    ...author,
     posts: posts ?? [],
 };
-console.log("🚀 ~ enrichedUser:", enrichedUser);
+console.log("🚀 ~ enrichedUser:", authorWithPosts);
 
 const previewId = Astro.url.searchParams.get("previewId");
 const editingId = Astro.url.searchParams.get("editingId");
@@ -65,7 +65,7 @@ console.log("🚀 ~ previewId:", previewId);
             !previewId ? (
                 <BlogDashboard
                     client:load
-                    user={user}
+                    author={authorWithPosts}
                     defaultEditingId={editingId}
                 />
             ) : (

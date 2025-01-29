@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import H1 from "./H1.astro";
 import SocialLinks from "./SocialLinks.astro";
 import type { AuthorType } from "../types";
@@ -10,7 +9,6 @@ type Props = {
     slug?: string;
 };
 const { authorData, slug } = Astro.props;
-const userImg = authorData.image ?? "/images/icons/user.svg";
 ---
 
 <div

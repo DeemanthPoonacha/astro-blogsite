@@ -80,10 +80,13 @@ const author = post.author;
             >
                 <span>
                     Last updated: {getDateString(post.updatedAt)}
-                </span>
-                <span>
-                    Published: {getDateString(post.publishedAt)}
-                </span>
+                </span>{
+                    post.publishedAt && (
+                        <span>
+                            Published: {getDateString(post.publishedAt)}
+                        </span>
+                    )
+                }
             </span>
             <hr />
             <article set:html={content} />

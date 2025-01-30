@@ -12,13 +12,32 @@ type Props = {
     }[];
     filtered: boolean;
     noOfPosts: number;
+    showAllTags?: boolean;
+    showAllAuthors?: boolean;
 };
-const { allTags, allAuthors, filtered, noOfPosts } = Astro.props;
+const {
+    allTags,
+    allAuthors,
+    filtered,
+    noOfPosts,
+    showAllTags,
+    showAllAuthors,
+} = Astro.props;
 ---
 
 <div class="flex flex-col justify-between lg:gap-4 mb-12">
-    <TagList field="tags" tags={allTags} title="Tags:" />
-    <TagList field="authors" tags={allAuthors} title="Authors:" />
+    <TagList
+        maxCount={showAllTags ? allTags.length : 10}
+        field="tags"
+        tags={allTags}
+        title="Tags:"
+    />
+    <TagList
+        maxCount={showAllAuthors ? allAuthors.length : 10}
+        field="authors"
+        tags={allAuthors}
+        title="Authors:"
+    />
     {
         (
             <div class="flex justify-between items-center">

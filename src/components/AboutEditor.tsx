@@ -70,7 +70,6 @@ const AboutEditor = ({ author }: { author: DBAuthor }) => {
         fbType: "success",
         title: "Success",
         description: "Your profile has been updated.",
-        variant: "default",
       });
     } catch (error) {
       console.error("Error updating profile:", error);

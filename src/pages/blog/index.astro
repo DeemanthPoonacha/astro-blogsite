@@ -15,6 +15,8 @@ const tags =
     Astro.url.searchParams.get("tags")?.split(",").filter(Boolean) || [];
 const authors =
     Astro.url.searchParams.get("authors")?.split(",").filter(Boolean) || [];
+const showAllTags = Astro.url.searchParams.get("showAllTags") === "true";
+const showAllAuthors = Astro.url.searchParams.get("showAllAuthors") === "true";
 
 // Build the where clause dynamically
 const whereConditions = [eq(Post.status, "published")];
@@ -108,12 +110,18 @@ const allAuthors = Array.from(
         }, new Map())
         .values(),
 );
+
+for (let index = 0; index < 30; index++) {
+    allAuthors.push({ value: "author" + index, label: "author" + index });
+}
 ---
 
 <Layout title="Blog | Bloggy">
     <Main>
         <H1 text="Bloggy Blog" />
         <Filter
+            showAllTags={showAllTags}
+            showAllAuthors={showAllAuthors}
             filtered={isFiltered}
             allAuthors={allAuthors}
             allTags={allTags}

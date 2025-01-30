@@ -12,7 +12,7 @@ const Post = defineTable({
     image: column.text({ optional: true }),
     tags: column.json(), // Store as JSON array
     authorId: column.text({ references: () => Author.columns.id }),
-    publishedAt: column.date(),
+    publishedAt: column.date({ optional: true }),
     createdAt: column.date(),
     updatedAt: column.date(),
   },

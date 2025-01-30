@@ -13,39 +13,28 @@ import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
 import { MultiSelect } from "./ui/multi-select";
 import { ResetDialog } from "./ui/ResetDialog";
-import type { DBPost } from "@/types";
-
-const tagList = [
-  { value: "lifestyle", label: "Lifestyle" },
-  { value: "food", label: "Food" },
-  { value: "travel", label: "Travel" },
-  { value: "health", label: "Health" },
-  { value: "fitness", label: "Fitness" },
-  { value: "music", label: "Music" },
-  { value: "books", label: "Books" },
-  { value: "movies", label: "Movies" },
-  { value: "tv-shows", label: "TV Shows" },
-  { value: "news", label: "News" },
-  { value: "sports", label: "Sports" },
-  { value: "gaming", label: "Gaming" },
-  { value: "art", label: "Art" },
-  { value: "science", label: "Science" },
-  { value: "technology", label: "Technology" },
-  { value: "history", label: "History" },
-  { value: "culture", label: "Culture" },
-  { value: "automobile", label: "Automobile" },
-  { value: "career", label: "Career" },
-  { value: "guide", label: "Guide" },
-  { value: "fashion", label: "Fashion" },
-];
+import type { DBPost, PostUpdate } from "@/types";
+import { ALL_TAGS } from "@/lib/constants";
+import { useToast } from "@/hooks/use-toast";
 
 const PostEditor = ({
+  authorId,
   post,
   onClose = () => {},
 }: {
-  post: DBPost;
+  authorId: string;
+  post: DBPost | null;
   onClose?: () => void;
 }) => {
+  const defaultValues: PostUpdate = {
+    authorId,
+    title: post?.title ?? "",
+    description: post?.description ?? "",
+    content: post?.content ?? "",
+    tags: post?.tags ?? [],
+    status: post?.status ?? "draft",
+  };
+
   const {
     control,
     handleSubmit,
@@ -53,26 +42,55 @@ const PostEditor = ({
     reset,
     formState: { errors },
   } = useForm({
-    defaultValues: post || {
-      title: "",
-      description: "",
-      content: "",
-      tags: [],
-      status: "draft",
-    },
+    defaultValues,
   });
 
   const [showResetDialog, setShowResetDialog] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const handleReset = () => reset();
 
-  const onSubmit = (data: any) => {
-    console.log("Form Submitted:", data);
-  };
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSaveToDraft = (data: any) => {
-    console.log("Draft Saved:", data);
+  const savePost = async (data: any, status: "draft" | "published") => {
+    try {
+      setIsSubmitting(true);
+      const url = post?.id ? `/api/posts/${post.id}` : `/api/posts`;
+      const method = post?.id ? "PATCH" : "POST";
+      const response = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...data,
+          status,
+        }),
+      });
+
+      if (!response.ok) throw new Error("Failed to save post");
+
+      toast({
+        fbType: "success",
+        title: "Success",
+        description:
+          status === "published"
+            ? "Post published successfully"
+            : "Draft saved successfully",
+      });
+
+      if (status === "published") onClose();
+    } catch (error) {
+      console.error("Error saving post:", error);
+      toast({
+        fbType: "error",
+        title: "Error",
+        description: "Failed to save post. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+  const handleSaveToDraft = (data: any) => savePost(data, "draft");
+  const onSubmit = (data: any) => savePost(data, "published");
 
   const errorTextClass = "absolute text-red-500 text-sm mt-0";
   const errorborderClass = "border-red-500";
@@ -145,7 +163,7 @@ const PostEditor = ({
               control={control}
               render={({ field }) => (
                 <MultiSelect
-                  options={tagList}
+                  options={ALL_TAGS}
                   onValueChange={(selectedTags) => field.onChange(selectedTags)}
                   defaultValue={field.value}
                   placeholder="Select tags"
@@ -187,7 +205,11 @@ const PostEditor = ({
               Submit
             </Button> */}
 
-            <Button variant="outline" onClick={() => setShowResetDialog(true)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setShowResetDialog(true)}
+            >
               <RiResetLeftFill size={18} />
               Reset
             </Button>
@@ -201,21 +223,29 @@ const PostEditor = ({
               </span>
             </Button>
           </div>
-
-          <Button
-            // variant="outline"
-            onClick={() => {
-              return setShowPreview((prev) => !prev);
-            }}
-          >
-            <a
-              href={`?previewId=${post?.slug}`}
-              className="text-primary-foreground"
+          <div className="flex gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                return setShowPreview((prev) => !prev);
+              }}
             >
               <RiEyeLine size={18} />
-            </a>
-            <span className="hidden sm:block">Preview</span>
-          </Button>
+              <span className="hidden sm:block">Preview</span>
+            </Button>
+
+            <Button
+              type="submit"
+              // variant="outline"
+              onClick={() => {
+                return setShowPreview((prev) => !prev);
+              }}
+            >
+              <RiSendPlaneFill size={18} />
+              <span className="hidden sm:block">Submit</span>
+            </Button>
+          </div>
         </div>
       </form>
       <ResetDialog {...{ showResetDialog, setShowResetDialog, handleReset }} />

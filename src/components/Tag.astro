@@ -7,15 +7,19 @@ type Props = {
         label: string;
     };
     field?: string;
+    defaultLink?: string;
 };
 const {
     tag: { value, label },
     field = "tags",
+    defaultLink,
 } = Astro.props;
+console.log("🚀 ~ value, label:", field, value, label);
+
 const selectedTags = Astro.url.searchParams
     .get(field as string)
     ?.split(",") as string[];
-const selected = selectedTags?.includes(value);
+const selected = field !== "showAllTags" && selectedTags?.includes(value);
 
 const query = Astro.url.search.replace(/page=\d+/, "page=1"); // Fallback to page1
 
@@ -26,8 +30,9 @@ const link = `/blog?${newQueryString}`;
 
 <a
     title={label}
-    href={link}
-    class=`prose ${selected?"text-white bg-cyan-500 dark:bg-cyan-600":"text-cyan-500  dark:text-cyan-600"} border-2 border-cyan-500 dark:border-cyan-600 rounded-3xl uppercase text-lg p-2 whitespace-nowrap`
+    href={defaultLink || link}
+    class=`transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 prose ${selected?"text-white bg-cyan-500 dark:bg-cyan-600":"text-cyan-500  dark:text-cyan-600"} border-2 border-cyan-500 dark:border-cyan-600 rounded-3xl uppercase text-lg p-2 whitespace-nowrap`
+    style={{ animationDuration: `1s`, animationRepeat: "false" }}
 >
     {label}
 </a>

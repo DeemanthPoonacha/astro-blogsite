@@ -147,7 +147,8 @@ const DashboardLayout = ({
     </>
   ) : (
     <PostEditor
-      post={editingPost as DBPost}
+      authorId={author.id}
+      post={editingPost}
       onClose={() => setShowCreateEdit(false)}
     />
   );

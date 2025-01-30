@@ -44,3 +44,15 @@ export function getDateString(date: Date) {
     day: "numeric",
   });
 }
+
+export const generateSlug = (title: string): string => {
+  return title
+    .toLowerCase()
+    .trim()
+    .replace(/[\s_]+/g, "-") // Replace spaces and underscores with hyphens
+    .replace(/[^\w-]/g, ""); // Remove special characters except hyphens
+};
+
+export const sentenceCase = (str: string): string => {
+  return `${str.slice(0, 1).toUpperCase()}${str.slice(1)}`;
+};

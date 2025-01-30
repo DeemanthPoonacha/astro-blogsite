@@ -1,6 +1,6 @@
 ---
-import type { CollectionEntry } from "astro:content";
 import Tag from "./Tag.astro";
+import { sentenceCase } from "@/utils/helpers";
 type Props = {
     tags: {
         value: string;
@@ -9,9 +9,18 @@ type Props = {
     title?: string;
     field?: string;
     justifyCenter?: boolean;
+    maxCount?: number;
+    defaultLink?: string;
 };
 
-const { tags, title, field = "tags", justifyCenter } = Astro.props;
+const {
+    tags,
+    title,
+    field = "tags",
+    justifyCenter,
+    maxCount,
+    defaultLink,
+} = Astro.props;
 ---
 
 <div
@@ -22,10 +31,31 @@ const { tags, title, field = "tags", justifyCenter } = Astro.props;
             <h4 class="font-bold text-3xl prose dark:prose-invert">{title}</h4>
         )
     }
-
     <div
         class={`flex gap-4 flex-wrap items-center ${!justifyCenter ? "justify-start" : "justify-center"}`}
     >
-        {tags?.map((tag) => <Tag field={field} tag={tag} />)}
+        {
+            !maxCount ? (
+                tags?.map((tag) => <Tag field={field} tag={tag} />)
+            ) : (
+                <>
+                    {tags.slice(0, maxCount).map((tag) => {
+                        return <Tag field={field} tag={tag} />;
+                    })}
+                    {tags.length > maxCount && (
+                        <>
+                            <Tag
+                                field={`showAll${sentenceCase(field)}`}
+                                tag={{
+                                    value: "true",
+                                    label: `+${tags.length - maxCount} more`,
+                                }}
+                                defaultLink={defaultLink}
+                            />
+                        </>
+                    )}
+                </>
+            )
+        }
     </div>
 </div>

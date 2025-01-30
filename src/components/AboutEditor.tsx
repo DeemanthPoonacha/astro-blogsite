@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "../components/ui/select";
 import { ResetDialog } from "./ui/ResetDialog";
-import type { DBAuthor } from "@/types";
+import type { AuthorUpdate, DBAuthor, SocialLink } from "@/types";
 import { SOCIAL_LINKS } from "./SocialIcon";
 
 const AboutEditor = ({ author }: { author: DBAuthor }) => {
@@ -35,18 +35,18 @@ const AboutEditor = ({ author }: { author: DBAuthor }) => {
       penName: author.penName ?? author.name,
       title: author.title,
       bio: author.bio,
-      socials: author.socialLinks,
+      socialLinks: author.socialLinks,
     },
   });
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "socials",
+    name: "socialLinks",
   });
 
   const handleReset = () => reset();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: AuthorUpdate) => {
     console.log("🚀 ~ onSubmit ~ data:", data);
     try {
       setIsSubmitting(true);
@@ -57,7 +57,6 @@ const AboutEditor = ({ author }: { author: DBAuthor }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: author.id,
           ...data,
         }),
       });
@@ -117,7 +116,7 @@ const AboutEditor = ({ author }: { author: DBAuthor }) => {
           {fields.map((field, index) => (
             <div key={field.id} className="mb-2 flex gap-2 items-center">
               <Controller
-                name={`socials.${index}.platform`}
+                name={`socialLinks.${index}.platform`}
                 control={control}
                 render={({ field: selectField }) => (
                   <Select
@@ -128,7 +127,7 @@ const AboutEditor = ({ author }: { author: DBAuthor }) => {
                       );
                       selectField.onChange(value);
                       setValue(
-                        `socials.${index}.link`,
+                        `socialLinks.${index}.link`,
                         selectedPlatform?.link || "",
                       );
                     }}
@@ -152,7 +151,7 @@ const AboutEditor = ({ author }: { author: DBAuthor }) => {
                 )}
               />
               <Controller
-                name={`socials.${index}.link`}
+                name={`socialLinks.${index}.link`}
                 control={control}
                 render={({ field }) => (
                   <Input {...field} placeholder="Link" className="flex-1" />

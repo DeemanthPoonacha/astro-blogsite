@@ -72,7 +72,7 @@ const DashboardLayout = ({
             target="_blank"
             aria-label={`Read more about ${post.title}`}
           >
-            <RiExternalLinkFill />
+            <RiExternalLinkFill className=" duration-300 hover:scale-150" />
           </a>
           <img
             loading={"lazy"}
@@ -80,19 +80,21 @@ const DashboardLayout = ({
             alt={post.title || "Post image"}
             width={600}
             height={350}
-            className="aspect-[600/350] rounded-t-rounded-lg duration-300 hover:scale-110 m-0"
+            className="aspect-[600/350] rounded-t-rounded-lg m-0"
           />
           <CardHeader className="flex flex-col justify-between p-4 gap-2">
             <div className="flex justify-between items-start">
               <CardTitle className="text-lg">{post.title}</CardTitle>
             </div>
-            <CardDescription>{post.description}</CardDescription>
+            <CardDescription className=" line-clamp-2">
+              {post.description}
+            </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col justify-between px-4 pb-4 gap-2">
             <div className="flex flex-wrap gap-2">
               {post.tags.map((tag) => (
                 <Badge key={tag} variant="outline3">
-                  {tag}
+                  {tag.toUpperCase()}
                 </Badge>
               ))}
             </div>

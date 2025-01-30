@@ -7,7 +7,7 @@ const Post = defineTable({
     slug: column.text({ unique: true }),
     description: column.text(),
     content: column.text(),
-    status: column.text(),
+    status: column.text({ default: "draft" }),
     featured: column.boolean({ optional: true }),
     image: column.text({ optional: true }),
     tags: column.json(), // Store as JSON array

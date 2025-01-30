@@ -19,11 +19,19 @@ const authorsWithPosts = await db
 
 if (authorsWithPosts.length === 0) return Astro.redirect("/404");
 
+const user = await Astro.locals.currentUser();
+
 console.log("🚀 ~ authorsWithPosts:", authorsWithPosts);
 const author = {
     ...authorsWithPosts[0].Author, // Take author details from the first row
     posts: authorsWithPosts
-        .map((row) => row.Post) // Extract posts
+        .map(({ Post }) => {
+            return Post?.authorId === user?.id
+                ? Post
+                : Post?.status === "draft"
+                  ? null
+                  : Post;
+        }) // Extract posts
         .filter(Boolean), // Remove null entries (in case there are no posts)
 };
 
@@ -44,11 +52,11 @@ if (!author) return Astro.redirect("/404");
             <hr />
 
             <article set:html={content} />
+            <hr />
         </div>
         {
             author.posts?.length > 0 && (
                 <>
-                    <hr />
                     <p class="sm:text-6xl text-4xl mb-16 font-bold">
                         {`Posts by ${author.name}`}
                     </p>

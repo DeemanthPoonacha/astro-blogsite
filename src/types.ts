@@ -9,6 +9,7 @@ export type PostType = {
   status: string;
   image?: string;
   tags: string[];
+  authorId?: string;
   author?: {
     id: string;
     username: string;
@@ -29,6 +30,13 @@ export type AuthorType = {
   bio: string;
   socialLinks: SocialLink[];
   createdAt: Date;
+};
+
+export type AuthorUpdate = {
+  penName: string;
+  title: string;
+  bio: string;
+  socialLinks: SocialLink[];
 };
 
 export type SocialLink = {

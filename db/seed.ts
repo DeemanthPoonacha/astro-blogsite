@@ -305,7 +305,7 @@ Navigating the process of buying a new or used car can be daunting, but with the
       title: "Crafting a Winning Resume: Your Ticket to Career Success",
       slug: "crafting-a-winning-resume-your-ticket-to-career-success",
       authorId: "2",
-      tags: ["carrer advice", "guide"],
+      tags: ["carrer", "guide"],
       publishedAt: new Date("2025-01-01"),
       createdAt: new Date("2025-01-01"),
       updatedAt: new Date("2025-01-01"),

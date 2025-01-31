@@ -26,14 +26,14 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Upload to Cloudinary with optimization settings
     const result = await cloudinary.uploader.upload(dataUri, {
-      folder: "blog",
+      folder: "bloggy",
       transformation: [
         { quality: "auto:best" },
         { fetch_format: "auto" },
-        { crop: "limit", width: 2000 }, // Max width
+        { crop: "limit", width: 1200 }, // Max width
       ],
       // Optional: Add tags or custom metadata
-      tags: ["blog_post"],
+      tags: ["blog_cover"],
       // Optional: Add context metadata
       context: {
         alt: file.name,

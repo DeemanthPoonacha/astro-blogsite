@@ -34,6 +34,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { AuthorWithPosts, DBPost, PostType } from "@/types";
 import { getDateString } from "@/utils/helpers";
 import { Toaster } from "@/components/ui/toaster";
+import { useToast } from "@/hooks/use-toast";
 
 const DashboardLayout = ({
   author,
@@ -44,7 +45,7 @@ const DashboardLayout = ({
 }) => {
   const posts = author.posts;
   const [activeSection, setActiveSection] = useState("posts");
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [postToDelete, setPostToDelete] = useState<string | null>(null);
   const [showCreateEdit, setShowCreateEdit] = useState(!!defaultEditingId);
 
   const [editingPost, setEditingPost] = useState<DBPost | null>(
@@ -107,7 +108,7 @@ const DashboardLayout = ({
               <Button
                 variant="destructive2"
                 className="@max-[23rem]:h-9 @max-[23rem]:w-9"
-                onClick={() => setShowDeleteDialog(true)}
+                onClick={() => setPostToDelete(post.id)}
               >
                 <RiDeleteBinFill size={18} />
                 <span className="hidden @[23rem]:block">Delete</span>
@@ -149,7 +150,10 @@ const DashboardLayout = ({
     <PostEditor
       authorId={author.id}
       post={editingPost}
-      onClose={() => setShowCreateEdit(false)}
+      onClose={() => {
+        setShowCreateEdit(false);
+        window.location.reload();
+      }}
     />
   );
   const navItems = [
@@ -205,9 +209,38 @@ const DashboardLayout = ({
       </nav>
     </div>
   );
+  const { toast } = useToast();
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`/api/posts/${postToDelete}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to delete post");
+      }
+
+      toast({
+        fbType: "success",
+        title: "Success",
+        description: "Post deleted successfully",
+      });
+
+      window.location.reload();
+    } catch (error) {
+      console.error("Error deleting post:", error);
+      toast({
+        fbType: "error",
+        title: "Error",
+        description: "Failed to delete post",
+      });
+    }
+  };
 
   const deleteConfirmationDialog = (
-    <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+    <AlertDialog
+      open={!!postToDelete}
+      onOpenChange={(open) => setPostToDelete(open ? postToDelete : null)}
+    >
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Delete Post</AlertDialogTitle>
@@ -218,7 +251,10 @@ const DashboardLayout = ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className="bg-red-600 hover:bg-red-700">
+          <AlertDialogAction
+            className="bg-red-600 hover:bg-red-700"
+            onClick={() => handleDelete()}
+          >
             Delete
           </AlertDialogAction>
         </AlertDialogFooter>

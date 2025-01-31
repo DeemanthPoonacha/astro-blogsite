@@ -36,6 +36,11 @@ const PostEditor = ({
     content: post?.content ?? "",
     tags: post?.tags ?? [],
     status: post?.status ?? "draft",
+    image: {
+      thumbnail: post?.image?.thumbnail ?? "",
+      url: post?.image?.url ?? "",
+      hero: post?.image?.hero ?? "",
+    },
   };
 
   const {
@@ -44,7 +49,6 @@ const PostEditor = ({
     watch,
     reset,
     getValues,
-    setValue,
     formState: { errors },
   } = useForm({
     defaultValues,
@@ -99,72 +103,6 @@ const PostEditor = ({
 
   const [isUploading, setIsUploading] = useState(false);
 
-  const handleImageUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    // Validate file type and size
-    const validTypes = ["image/jpeg", "image/png", "image/webp"];
-    if (!validTypes.includes(file.type)) {
-      toast({
-        fbType: "error",
-        title: "Invalid file type",
-        description: "Please upload a JPEG, PNG, or WebP image",
-      });
-      return;
-    }
-
-    const MAX_SIZE = 10 * 1024 * 1024; // 10MB
-    if (file.size > MAX_SIZE) {
-      toast({
-        fbType: "error",
-        title: "File too large",
-        description: "Image must be less than 10MB",
-      });
-      return;
-    }
-
-    try {
-      setIsUploading(true);
-      const formData = new FormData();
-      formData.append("image", file);
-
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to upload image");
-      }
-
-      const { url, thumbnail, hero } = await response.json();
-
-      // Store all URLs in your form
-      setValue("image", {
-        url,
-        thumbnail,
-        hero,
-      });
-
-      toast({
-        fbType: "success",
-        title: "Success",
-        description: "Image uploaded successfully",
-      });
-    } catch (error) {
-      console.error("Error uploading image:", error);
-      toast({
-        fbType: "error",
-        title: "Error",
-        description: "Failed to upload image. Please try again.",
-      });
-    } finally {
-      setIsUploading(false);
-    }
-  };
   const errorTextClass = "absolute text-red-500 text-sm mt-0";
   const errorborderClass = "border-red-500";
   return (
@@ -376,6 +314,7 @@ const PostEditor = ({
                 control={control}
                 render={({ field }) => (
                   <MultiSelect
+                    showSelectAll={false}
                     options={ALL_TAGS}
                     onValueChange={(selectedTags) =>
                       field.onChange(selectedTags)

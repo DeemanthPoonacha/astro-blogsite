@@ -7,7 +7,7 @@ import AuthorData from "../../components/AuthorData.astro";
 import H1 from "../../components/H1.astro";
 import Layout from "../../layouts/Layout.astro";
 import Main from "../../layouts/Main.astro";
-import type { AuthorType, CldImage, PostType } from "../../types";
+import type { AuthorType, CldImageType, PostType } from "../../types";
 import { getDateString } from "../../utils/helpers";
 import CategoryList from "../../components/TagList.astro";
 
@@ -62,12 +62,10 @@ const author = post.author;
             </a>
             <H1 text={post.title} />
             {
-                post.image && (
+                !!(post.image as CldImageType)?.url && (
                     <Image
-                        src={(post.image as CldImage).url}
-                        inferSize={true}
-                        width={1024}
-                        height={683}
+                        src={(post.image as CldImageType).url}
+                        inferSize
                         alt={"Post image"}
                         format="webp"
                         class="w-full rounded-2xl shadow-xl mb-6 object-top"

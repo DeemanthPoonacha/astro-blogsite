@@ -35,3 +35,30 @@ export const PATCH: APIRoute = async ({ request, params }) => {
     });
   }
 };
+
+export const DELETE: APIRoute = async ({ params }) => {
+  try {
+    const id = params.id;
+
+    if (!id) {
+      return new Response(JSON.stringify({ error: "Post ID is required" }), {
+        status: 400,
+      });
+    }
+
+    const result = await db.delete(Post).where(eq(Post.id, id));
+
+    if (!result.rowsAffected) {
+      throw new Error(`No post with ID (${id}) found`);
+    }
+
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200,
+    });
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    return new Response(JSON.stringify({ error: "Failed to delete post" }), {
+      status: 500,
+    });
+  }
+};

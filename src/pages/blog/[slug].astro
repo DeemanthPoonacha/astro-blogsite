@@ -7,7 +7,7 @@ import AuthorData from "../../components/AuthorData.astro";
 import H1 from "../../components/H1.astro";
 import Layout from "../../layouts/Layout.astro";
 import Main from "../../layouts/Main.astro";
-import type { AuthorType, PostType } from "../../types";
+import type { AuthorType, CldImage, PostType } from "../../types";
 import { getDateString } from "../../utils/helpers";
 import CategoryList from "../../components/TagList.astro";
 
@@ -64,7 +64,7 @@ const author = post.author;
             {
                 post.image && (
                     <Image
-                        src={post.image as string}
+                        src={(post.image as CldImage).url}
                         inferSize={true}
                         width={1024}
                         height={683}

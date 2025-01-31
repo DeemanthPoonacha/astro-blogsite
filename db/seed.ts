@@ -2,8 +2,8 @@ import { Author, db, Post } from "astro:db";
 
 // https://astro.build/db/seed
 export default async function seed() {
-  await db.delete(Post);
-  await db.delete(Author);
+  // await db.delete(Post);
+  // await db.delete(Author);
 
   await db.insert(Author).values([
     {
@@ -171,7 +171,7 @@ In conclusion, regular car maintenance is not just a chore; it's a responsibilit
         "Discover a handy checklist, seasonal tips, and easy DIY tutorials to tackle basic maintenance tasks and ensure smooth driving year-round!",
       status: "published",
       featured: true,
-      image: "/images/blog_cover/car-maintenance.jpg",
+      // image: "/images/blog_cover/car-maintenance.jpg",
     },
     {
       id: "2",
@@ -281,7 +281,7 @@ Navigating the process of buying a new or used car can be daunting, but with the
         "Detailed buying guide tailored for both new and used cars to equip you with the knowledge needed to make savvy car purchasing decisions!",
       status: "published",
       featured: true,
-      image: "/images/blog_cover/new-car.jpg",
+      // image: "/images/blog_cover/new-car.jpg",
     },
     {
       id: "3",
@@ -298,7 +298,7 @@ Navigating the process of buying a new or used car can be daunting, but with the
         "Unlock the potential of modern technology to enhance safety in cars, from advanced sensors to advanced safety features.",
       status: "published",
       featured: true,
-      image: "/images/blog_cover/car-tech.jpg",
+      // image: "/images/blog_cover/car-tech.jpg",
     },
     {
       id: "4",
@@ -315,7 +315,7 @@ Navigating the process of buying a new or used car can be daunting, but with the
         "Explore the essential elements of crafting a winning resume, offering valuable tips and strategies to help you create a resume that gets noticed and gets results.",
       status: "published",
       featured: true,
-      image: "/images/blog_cover/resume.jpg",
+      // image: "/images/blog_cover/resume.jpg",
     },
   ]);
 }

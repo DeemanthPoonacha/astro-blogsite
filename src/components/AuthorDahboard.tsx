@@ -76,7 +76,7 @@ const DashboardLayout = ({
           </a>
           <img
             loading={"lazy"}
-            src={post.image || "/images/logo.png"}
+            src={post.image?.thumbnail || "/images/logo.png"}
             alt={post.title || "Post image"}
             width={600}
             height={350}

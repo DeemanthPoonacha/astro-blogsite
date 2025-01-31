@@ -9,7 +9,7 @@ const Post = defineTable({
     content: column.text(),
     status: column.text({ default: "draft" }),
     featured: column.boolean({ optional: true }),
-    image: column.text({ optional: true }),
+    image: column.json({ optional: true }), // Updated to JSON
     tags: column.json(), // Store as JSON array
     authorId: column.text({ references: () => Author.columns.id }),
     publishedAt: column.date({ optional: true }),

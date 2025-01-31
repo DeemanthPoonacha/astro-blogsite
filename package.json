@@ -33,6 +33,7 @@
     "@vercel/speed-insights": "^1.0.10",
     "astro": "^5.1.7",
     "class-variance-authority": "^0.7.1",
+    "cloudinary": "^2.5.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.4",
     "framer-motion": "^11.0.22",

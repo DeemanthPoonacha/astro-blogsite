@@ -3,9 +3,14 @@ export type SocialLink = {
   link: string;
 };
 
+export type CldImage = {
+  url: string;
+  thumbnail: string;
+  hero: string;
+};
 export type DBPost = {
   title: string;
-  image: string | null;
+  image: CldImage | null;
   id: string;
   slug: string;
   createdAt: Date;
@@ -27,7 +32,7 @@ export type PostType = {
   featured?: boolean;
   content: string;
   status: string;
-  image?: string;
+  image?: CldImage;
   tags: string[];
   authorId?: string;
   author?: {
@@ -46,7 +51,7 @@ export type PostUpdate = {
   content: string;
   tags: string[];
   status: string;
-  image?: string;
+  image?: CldImage;
   authorId: string;
 };
 

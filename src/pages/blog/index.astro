@@ -42,7 +42,7 @@ const [allPosts, filteredPosts] = await Promise.all([
             author: {
                 id: Author.id,
                 username: Author.username,
-                name: Author.name,
+                name: Author.penName ?? Author.name,
             },
         })
         .from(Post)
@@ -65,7 +65,7 @@ const [allPosts, filteredPosts] = await Promise.all([
             updatedAt: Post.updatedAt,
             author: {
                 id: Author.id,
-                name: Author.name,
+                name: Author.penName ?? Author.name,
                 username: Author.username,
             },
         })
@@ -110,10 +110,6 @@ const allAuthors = Array.from(
         }, new Map())
         .values(),
 );
-
-for (let index = 0; index < 30; index++) {
-    allAuthors.push({ value: "author" + index, label: "author" + index });
-}
 ---
 
 <Layout title="Blog | Bloggy">

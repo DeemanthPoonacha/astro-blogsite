@@ -13,16 +13,17 @@ const { author } = Astro.props;
 >
     <a
         href={`/authors/${author.username}`}
-        aria-label={`Read more about ${author.name}`}
+        title={`Read more about ${author.penName || author.name}`}
     >
         <Avatar author={author} />
     </a>
 
     <a
         href={`/authors/${author.username}`}
+        title={`Read more about ${author.penName || author.name}`}
         class="text-4xl text-center prose dark:prose-invert mb-2 font-semibold inline-block"
     >
-        {author.name}
+        {author.penName || author.name}
     </a>
 
     <p class="prose dark:prose-invert mb-6 text-center text-2xl line-clamp-2">

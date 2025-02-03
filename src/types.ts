@@ -71,6 +71,7 @@ export type AuthorType = {
   id: string;
   username: string;
   name: string;
+  penName?: string;
   title: string;
   email: string;
   image?: string;

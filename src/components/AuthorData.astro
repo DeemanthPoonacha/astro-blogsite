@@ -20,15 +20,18 @@ const { authorData, slug } = Astro.props;
                 <a
                     class="text-cyan-500 dark:text-cyan"
                     href={`/authors/${slug}`}
-                    aria-label={`Read more about ${authorData.name}`}
+                    aria-label={`Read more about ${authorData.penName || authorData.name}`}
                 >
                     <H1
                         className="max-md:text-center text-cyan-500 dark:text-cyan"
-                        text={authorData.name}
+                        text={authorData.penName || authorData.name}
                     />
                 </a>
             ) : (
-                <H1 className="max-md:text-center" text={authorData.name} />
+                <H1
+                    className="max-md:text-center"
+                    text={authorData.penName || authorData.name}
+                />
             )
         }
 

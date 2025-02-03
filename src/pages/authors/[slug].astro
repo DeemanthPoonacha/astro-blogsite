@@ -40,7 +40,7 @@ const content = await marked.parse(author.bio);
 if (!author) return Astro.redirect("/404");
 ---
 
-<Layout title={author.name}>
+<Layout title={author.penName || author.name}>
     <Main>
         <a href={`/authors`} class="font-bold no-underline">
             &laquo; <span class="prose dark:prose-invert prose-xl underline">
@@ -58,7 +58,7 @@ if (!author) return Astro.redirect("/404");
             author.posts?.length > 0 && (
                 <>
                     <p class="sm:text-6xl text-4xl mb-16 font-bold">
-                        {`Posts by ${author.name}`}
+                        {`Posts by ${author.penName || author.name}`}
                     </p>
                     <div class="mb-60">
                         <PostList posts={author.posts as PostType[]} />

@@ -152,7 +152,7 @@ const DashboardLayout = ({
       post={editingPost}
       onClose={() => {
         setShowCreateEdit(false);
-        window.location.reload();
+        window.location.replace("/dashboard");
       }}
     />
   );

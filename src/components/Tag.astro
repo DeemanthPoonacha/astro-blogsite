@@ -14,7 +14,6 @@ const {
     field = "tags",
     defaultLink,
 } = Astro.props;
-console.log("🚀 ~ value, label:", field, value, label);
 
 const selectedTags = Astro.url.searchParams
     .get(field as string)

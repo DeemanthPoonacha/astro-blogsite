@@ -39,6 +39,7 @@ export type PostType = {
     id: string;
     username: string;
     name: string;
+    penName?: string;
   };
   publishedAt: Date;
   createdAt: Date;

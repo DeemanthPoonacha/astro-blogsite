@@ -53,24 +53,16 @@ const authorWithPosts = {
 };
 console.log("🚀 ~ enrichedUser:", authorWithPosts);
 
-const previewId = Astro.url.searchParams.get("previewId");
 const editingId = Astro.url.searchParams.get("editingId");
-console.log("🚀 ~ previewId:", previewId);
 ---
 
 <Layout title="Dashboard | Bloggy">
     <Main className="w-full">
         <H1 text="Dashboard" />
-        {
-            !previewId ? (
-                <BlogDashboard
-                    client:load
-                    author={authorWithPosts as AuthorWithPosts}
-                    defaultEditingId={editingId}
-                />
-            ) : (
-                <a href={`?editingId=${previewId}`}>{previewId}</a>
-            )
-        }
+        <BlogDashboard
+            client:load
+            author={authorWithPosts as AuthorWithPosts}
+            defaultEditingId={editingId}
+        />
     </Main>
 </Layout>

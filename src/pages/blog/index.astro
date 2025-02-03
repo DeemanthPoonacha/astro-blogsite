@@ -42,7 +42,8 @@ const [allPosts, filteredPosts] = await Promise.all([
             author: {
                 id: Author.id,
                 username: Author.username,
-                name: Author.penName ?? Author.name,
+                name: Author.name,
+                penName: Author.penName,
             },
         })
         .from(Post)
@@ -65,8 +66,9 @@ const [allPosts, filteredPosts] = await Promise.all([
             updatedAt: Post.updatedAt,
             author: {
                 id: Author.id,
-                name: Author.penName ?? Author.name,
                 username: Author.username,
+                name: Author.name,
+                penName: Author.penName,
             },
         })
         .from(Post)

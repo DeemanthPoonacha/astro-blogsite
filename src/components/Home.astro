@@ -21,8 +21,9 @@ const allPosts = await db
         updatedAt: Post.updatedAt,
         author: {
             id: Author.id,
-            name: Author.penName ?? Author.name,
+            name: Author.name,
             username: Author.username,
+            penName: Author.penName,
         },
     })
     .from(Post)

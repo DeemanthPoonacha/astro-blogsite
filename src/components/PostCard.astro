@@ -84,11 +84,11 @@ const queryTags =
             {
                 !!post.author ? (
                     <a
-                        title={post.author.name}
+                        title={post.author.penName || post.author.name}
                         href={`/authors/${post.author.username}`}
                         class="primaryColor"
                     >
-                        {post.author.name}
+                        {post.author.penName || post.author.name}
                     </a>
                 ) : null
             }{

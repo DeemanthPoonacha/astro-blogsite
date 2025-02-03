@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
   RiArrowRightSLine,
+  RiDeleteBinFill,
   RiEyeLine,
   RiEyeOffLine,
   RiResetLeftFill,
@@ -13,12 +14,13 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
 import { MultiSelect } from "./ui/multi-select";
-import { ResetDialog } from "./ui/ResetDialog";
+import { ResetDialog } from "./ui/reset-dialog";
 import type { DBPost, PostUpdate } from "@/types";
 import { ALL_TAGS } from "@/lib/constants";
 import { useToast } from "@/hooks/use-toast";
 import { marked } from "marked";
 import { getDateString } from "@/utils/helpers";
+import DeleteDialog from "./ui/delete-dialog";
 
 const PostEditor = ({
   authorId,
@@ -55,6 +57,7 @@ const PostEditor = ({
   });
 
   const [showResetDialog, setShowResetDialog] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const handleReset = () => reset();
 
@@ -101,6 +104,33 @@ const PostEditor = ({
   const handleSaveToDraft = (data: any) => savePost(data, "draft");
   const onSubmit = (data: any) => savePost(data, "published");
 
+  const handleDelete = async () => {
+    if (!post?.id) return;
+    try {
+      const response = await fetch(`/api/posts/${post.id}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to delete post");
+      }
+
+      toast({
+        fbType: "success",
+        title: "Success",
+        description: "Post deleted successfully",
+      });
+
+      window.location.reload();
+    } catch (error) {
+      console.error("Error deleting post:", error);
+      toast({
+        fbType: "error",
+        title: "Error",
+        description: "Failed to delete post",
+      });
+    }
+  };
+
   const [isUploading, setIsUploading] = useState(false);
 
   const errorTextClass = "absolute text-red-500 text-sm mt-0";
@@ -136,7 +166,7 @@ const PostEditor = ({
         {showPreview ? (
           <>
             <h1>{getValues("title")}</h1>
-            {getValues("image") && (
+            {!!getValues("image")?.hero && (
               <img
                 src={getValues("image")?.hero}
                 width={1024}
@@ -146,7 +176,7 @@ const PostEditor = ({
               />
             )}
             <p>{getValues("description")}</p>
-            <span className="flex justify-between max-w-full prose dark:prose-invert">
+            <span className="flex justify-between">
               <span>Last updated: {getDateString(new Date())}</span>
               <span>Published: {getDateString(new Date())}</span>
             </span>
@@ -359,27 +389,43 @@ const PostEditor = ({
               onClick={() => setShowResetDialog(true)}
             >
               <RiResetLeftFill size={18} />
-              Reset
+              <span className="hidden sm:block">Reset</span>
             </Button>
-            <Button variant="default" onClick={handleSubmit(handleSaveToDraft)}>
+            {!!post?.id && (
+              <Button
+                type="button"
+                variant="destructive2"
+                className="@max-[23rem]:h-9 @max-[23rem]:w-9"
+                onClick={() => setShowDeleteDialog(true)}
+              >
+                <RiDeleteBinFill size={18} />
+                <span className="hidden sm:block">Delete</span>
+              </Button>
+            )}
+          </div>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={handleSubmit(handleSaveToDraft)}>
               <RiSave3Fill size={18} />
               <span className="flex items-center gap-1">
                 <span className="hidden sm:block">Save to</span>Draft
               </span>
             </Button>
+            <Button
+              type="submit"
+              onClick={() => {
+                return setShowPreview((prev) => !prev);
+              }}
+            >
+              <RiSendPlaneFill size={18} />
+              <span className="hidden sm:block">Submit</span>
+            </Button>
           </div>
-          <Button
-            type="submit"
-            onClick={() => {
-              return setShowPreview((prev) => !prev);
-            }}
-          >
-            <RiSendPlaneFill size={18} />
-            <span className="hidden sm:block">Submit</span>
-          </Button>
         </div>
       </form>
       <ResetDialog {...{ showResetDialog, setShowResetDialog, handleReset }} />
+      <DeleteDialog
+        {...{ showDeleteDialog, setShowDeleteDialog, handleDelete }}
+      />
     </div>
   );
 };

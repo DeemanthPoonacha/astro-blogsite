@@ -105,7 +105,7 @@ const allAuthors = Array.from(
                 if (uniqueAuthors.has(post.author.id)) return uniqueAuthors;
                 uniqueAuthors.set(post.author.id, {
                     value: post.author.id,
-                    label: post.author.name,
+                    label: post.author.penName || post.author.name,
                 });
             }
             return uniqueAuthors;

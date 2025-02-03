@@ -10,6 +10,7 @@ import Main from "../../layouts/Main.astro";
 import type { AuthorType, CldImageType, PostType } from "../../types";
 import { getDateString } from "../../utils/helpers";
 import CategoryList from "../../components/TagList.astro";
+import { RiEditFill } from "react-icons/ri";
 
 const { slug } = Astro.params;
 if (slug === undefined) return Astro.redirect("/404");
@@ -46,6 +47,8 @@ console.log("🚀 ~ post:", post);
 
 const content = marked.parse(post.content);
 const author = post.author;
+const user = await Astro.locals.currentUser();
+const isAuthUser = user?.id === author?.id;
 
 // const relatedPosts = await getEntries(post.data.relatedPosts);
 // console.log("🚀 ~ relatedPosts:", relatedPosts);
@@ -53,7 +56,7 @@ const author = post.author;
 
 <Layout title={post.title}>
     <Main>
-        <div class="max-w-full prose prose-2xl dark:prose-invert">
+        <div class="mb-12 flex justify-between">
             <a href={`/blog`} class="font-bold no-underline">
                 &laquo; <span
                     class="prose dark:prose-invert prose-xl underline"
@@ -61,6 +64,19 @@ const author = post.author;
                     All Posts
                 </span>
             </a>
+            {
+                isAuthUser && (
+                    <a
+                        class="flex gap-1 items-center no-underline bg-primary py-1 px-1.5 rounded-md"
+                        href={`/dashboard?postId=${post.id}`}
+                    >
+                        <RiEditFill client:load size={18} />
+                        Edit
+                    </a>
+                )
+            }
+        </div>
+        <div class="max-w-full prose prose-2xl dark:prose-invert">
             <H1 text={post.title} />
             {
                 !!(post.image as CldImageType)?.url && (

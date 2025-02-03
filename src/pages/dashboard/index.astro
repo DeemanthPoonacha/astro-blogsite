@@ -51,9 +51,10 @@ const authorWithPosts = {
     ...author,
     posts: posts ?? [],
 };
-console.log("🚀 ~ enrichedUser:", authorWithPosts);
 
-const editingId = Astro.url.searchParams.get("editingId");
+const editingPostId = Astro.url.searchParams.get("postId");
+const editingUser = Astro.url.searchParams.get("editingUser") === "true";
+console.log("🚀 ~ editingUser:", editingUser);
 ---
 
 <Layout title="Dashboard | Bloggy">
@@ -62,7 +63,8 @@ const editingId = Astro.url.searchParams.get("editingId");
         <BlogDashboard
             client:load
             author={authorWithPosts as AuthorWithPosts}
-            defaultEditingId={editingId}
+            defaultEditingId={editingPostId}
+            editingUser={editingUser}
         />
     </Main>
 </Layout>

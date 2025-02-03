@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   RiAddFill,
-  RiDeleteBinFill,
   RiEditFill,
   RiExternalLinkFill,
   RiFileTextFill,
@@ -16,36 +15,28 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "./ui/alert-dialog";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import PostEditor from "./PostEditor";
 import AboutEditor from "./AboutEditor";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import type { AuthorWithPosts, DBPost, PostType } from "@/types";
+import type { AuthorWithPosts, DBPost } from "@/types";
 import { getDateString } from "@/utils/helpers";
 import { Toaster } from "@/components/ui/toaster";
-import { useToast } from "@/hooks/use-toast";
 
 const DashboardLayout = ({
   author,
   defaultEditingId,
+  editingUser,
 }: {
   author: AuthorWithPosts;
   defaultEditingId: string | null;
+  editingUser?: boolean;
 }) => {
   const posts = author.posts;
-  const [activeSection, setActiveSection] = useState("posts");
-  const [postToDelete, setPostToDelete] = useState<string | null>(null);
+  const [activeSection, setActiveSection] = useState(
+    editingUser ? "about" : "posts",
+  );
   const [showCreateEdit, setShowCreateEdit] = useState(!!defaultEditingId);
 
   const [editingPost, setEditingPost] = useState<DBPost | null>(
@@ -68,12 +59,12 @@ const DashboardLayout = ({
             {post.status.toUpperCase()}
           </Badge>
           <a
-            className="absolute right-0 z-10 m-4 bg-primary p-1.5 rounded-md"
+            className="absolute right-0 z-10 m-4 text-primary-foreground bg-primary p-1.5 rounded-md"
             href={`/blog/${post.slug}`}
             target="_blank"
             aria-label={`Read more about ${post.title}`}
           >
-            <RiExternalLinkFill className=" duration-300 hover:scale-150" />
+            <RiExternalLinkFill className="duration-300 hover:scale-150" />
           </a>
           <img
             loading={"lazy"}
@@ -105,14 +96,14 @@ const DashboardLayout = ({
               {getDateString(post.createdAt)}
             </span>
             <div className="flex gap-2 justify-between">
-              <Button
+              {/* <Button
                 variant="destructive2"
                 className="@max-[23rem]:h-9 @max-[23rem]:w-9"
                 onClick={() => setPostToDelete(post.id)}
               >
                 <RiDeleteBinFill size={18} />
                 <span className="hidden @[23rem]:block">Delete</span>
-              </Button>
+              </Button> */}
               <Button
                 className="@max-[23rem]:h-9 @max-[23rem]:w-9"
                 onClick={() => {
@@ -209,64 +200,12 @@ const DashboardLayout = ({
       </nav>
     </div>
   );
-  const { toast } = useToast();
-  const handleDelete = async () => {
-    try {
-      const response = await fetch(`/api/posts/${postToDelete}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) {
-        throw new Error("Failed to delete post");
-      }
-
-      toast({
-        fbType: "success",
-        title: "Success",
-        description: "Post deleted successfully",
-      });
-
-      window.location.reload();
-    } catch (error) {
-      console.error("Error deleting post:", error);
-      toast({
-        fbType: "error",
-        title: "Error",
-        description: "Failed to delete post",
-      });
-    }
-  };
-
-  const deleteConfirmationDialog = (
-    <AlertDialog
-      open={!!postToDelete}
-      onOpenChange={(open) => setPostToDelete(open ? postToDelete : null)}
-    >
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Delete Post</AlertDialogTitle>
-          <AlertDialogDescription>
-            Are you sure you want to delete this post? This action cannot be
-            undone.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction
-            className="bg-red-600 hover:bg-red-700"
-            onClick={() => handleDelete()}
-          >
-            Delete
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  );
 
   return (
     <>
       <Tabs
         defaultValue="posts"
-        className="lg:hidden"
+        className="lg:hidden prose dark:prose-invert w-full max-w-full rounded-lg"
         onValueChange={setActiveSection}
       >
         <TabsList className="rounded-b-none">
@@ -287,8 +226,6 @@ const DashboardLayout = ({
       <div className="hidden lg:flex min-h-[900px] bg-zinc-100 dark:bg-zinc-900 prose dark:prose-invert w-full max-w-full rounded-lg">
         {sideBar}
         {mainContent}
-
-        {deleteConfirmationDialog}
       </div>
       <Toaster />
     </>

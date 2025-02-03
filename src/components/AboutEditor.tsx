@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../components/ui/select";
-import { ResetDialog } from "./ui/ResetDialog";
+import { ResetDialog } from "./ui/reset-dialog";
 import type { AuthorUpdate, DBAuthor, SocialLink } from "@/types";
 import { SOCIAL_LINKS } from "./SocialIcon";
 

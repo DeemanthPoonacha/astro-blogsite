@@ -95,7 +95,7 @@ const queryTags =
                 user && user.id === post.authorId && (
                     <a
                         class="absolute right-0 z-10 m-4 flex gap-1 items-center no-underline bg-primary py-1 px-1.5 rounded-md"
-                        href={`/dashboard?editingId=${post.id}`}
+                        href={`/dashboard?postId=${post.id}`}
                     >
                         <RiEditFill client:load size={18} />
                         Edit

@@ -7,6 +7,7 @@ import PostList from "../../components/PostList.astro";
 import Main from "../../layouts/Main.astro";
 import AuthorData from "../../components/AuthorData.astro";
 import type { AuthorType, PostType } from "../../types";
+import { RiEditFill } from "react-icons/ri";
 
 const { slug } = Astro.params;
 if (slug === undefined) return Astro.redirect("/404");
@@ -38,15 +39,31 @@ const author = {
 const content = await marked.parse(author.bio);
 
 if (!author) return Astro.redirect("/404");
+
+const isAuthUser = user?.id === author.id;
 ---
 
 <Layout title={author.penName || author.name}>
     <Main>
-        <a href={`/authors`} class="font-bold no-underline">
-            &laquo; <span class="prose dark:prose-invert prose-xl underline">
-                All Authors
-            </span>
-        </a>
+        <div class="mb-12 flex justify-between">
+            <a href={`/authors`} class="font-bold no-underline">
+                &laquo;{" "}
+                <span class="prose dark:prose-invert prose-xl underline">
+                    All Authors
+                </span>
+            </a>
+            {
+                isAuthUser && (
+                    <a
+                        class="flex gap-1 items-center no-underline bg-primary py-1 px-1.5 rounded-md"
+                        href={`/dashboard?editingUser=true`}
+                    >
+                        <RiEditFill client:load size={18} />
+                        Edit
+                    </a>
+                )
+            }
+        </div>
         <div class="mb-12 max-w-full prose prose-2xl dark:prose-invert">
             <AuthorData authorData={author as AuthorType} />
             <hr />

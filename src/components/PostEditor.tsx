@@ -102,7 +102,7 @@ const PostEditor = ({
     }
   };
   const handleSaveToDraft = (data: any) => savePost(data, "draft");
-  const onSubmit = (data: any) => savePost(data, "published");
+  const handleSubmitPost = (data: any) => savePost(data, "published");
 
   const handleDelete = async () => {
     if (!post?.id) return;
@@ -162,7 +162,7 @@ const PostEditor = ({
       </div>
 
       {/* Form */}
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(handleSubmitPost)} className="space-y-6">
         {showPreview ? (
           <>
             <h1>{getValues("title")}</h1>
@@ -410,12 +410,7 @@ const PostEditor = ({
                 <span className="hidden sm:block">Save to</span>Draft
               </span>
             </Button>
-            <Button
-              type="submit"
-              onClick={() => {
-                return setShowPreview((prev) => !prev);
-              }}
-            >
+            <Button>
               <RiSendPlaneFill size={18} />
               <span className="hidden sm:block">Submit</span>
             </Button>

@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useTransform, useSpring, MotionValue } from "framer-motion";
 
-const HeroBanner = () => {
+const HeroBanner = ({
+  isAuthenticated,
+  scrollYProgress,
+}: {
+  isAuthenticated: boolean;
+  scrollYProgress: MotionValue<number>;
+}) => {
   const [diff, setDiff] = useState([0, 0, 0]);
   const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
 
@@ -24,34 +30,7 @@ const HeroBanner = () => {
     console.log(posRef, posMain, posTags);
   }, []);
 
-  const { scrollYProgress } = useScroll({});
-  // const zIndex = useSpring(
-  //   useTransform(scrollYProgress, [0, 0.2], [10, -5990]),
-  //   springConfig,
-  // );
-
-  const scale = useSpring(
-    useTransform(scrollYProgress, [0.3, 0.6], [1, 2.77]),
-    springConfig,
-  );
-  const ctaMt = useSpring(
-    useTransform(scrollYProgress, [0.3, 0.6], [12, 150]),
-    springConfig,
-  );
-
-  const textWidth = useSpring(
-    useTransform(scrollYProgress, [0.3, 0.6], [350, 140]),
-    springConfig,
-  );
-  const translateYSubTitle = useSpring(
-    useTransform(
-      scrollYProgress,
-      [0, 0.2, 0.6, 0.7],
-      [0, -diff[1], -diff[1], -17 * diff[1]],
-    ),
-    springConfig,
-  );
-
+  // Logo
   const width = useSpring(
     useTransform(scrollYProgress, [0.1, 0.2], [250, diff[2]]),
     springConfig,
@@ -65,6 +44,7 @@ const HeroBanner = () => {
     springConfig,
   );
 
+  // Title
   const xOffset = diff[2] > 56 ? 70 : -7;
   const translateXTitle = useSpring(
     useTransform(scrollYProgress, [0.1, 0.3], [0, -diff[0] + xOffset]),
@@ -73,6 +53,29 @@ const HeroBanner = () => {
   const yOffset = diff[2] > 56 ? 14 : 20;
   const translateYTitle = useSpring(
     useTransform(scrollYProgress, [0, 0.2], [0, -diff[1] - 360 + yOffset]),
+    springConfig,
+  );
+
+  // Subtitle and cta
+  const scale = useSpring(
+    useTransform(scrollYProgress, [0.5, 0.9], [1, 2.77]),
+    springConfig,
+  );
+  const ctaMt = useSpring(
+    useTransform(scrollYProgress, [0.5, 0.9], [12, 150]),
+    springConfig,
+  );
+
+  const textWidth = useSpring(
+    useTransform(scrollYProgress, [0.5, 0.9], [350, 140]),
+    springConfig,
+  );
+  const translateYSubTitle = useSpring(
+    useTransform(
+      scrollYProgress,
+      [0, 0.5, 0.9, 1],
+      [0, -diff[1], -diff[1], -17 * diff[1]],
+    ),
     springConfig,
   );
 
@@ -119,8 +122,8 @@ const HeroBanner = () => {
 
         <motion.a
           style={{ marginTop: ctaMt }}
-          className="z-50 w-64 prose prose-xl bg-primary text-primary-foreground rounded-full p-4 text-center cursor-pointer font-bold px-5 py-2.5 overflow-hidden group bg-cyan-500 relative hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-cyan-400 transition-all ease-out duration-300"
-          href="/dashboard"
+          className="z-50 w-72 prose prose-xl bg-primary text-primary-foreground rounded-full p-4 text-center cursor-pointer font-bold px-5 py-2.5 overflow-hidden group bg-cyan-500 relative hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-cyan-400 transition-all ease-out duration-300"
+          href="/dashboard?postId=new"
         >
           <span className="absolute right-0 flex items-center justify-start w-10 h-10 duration-300 transform translate-x-full group-hover:translate-x-0 ease">
             <svg
@@ -131,15 +134,18 @@ const HeroBanner = () => {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M14 5l7 7m0 0l-7 7m7-7H3"
               ></path>
             </svg>
           </span>
-          <span className="absolute right-0 w-8 h-32 -mt-20 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
-          Let's get started!
+          <span className="absolute right-0 w-8 h-32 -mt-20 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-64 ease"></span>
+          {(!isAuthenticated
+            ? "Let's get started!"
+            : "Create new post"
+          ).toUpperCase()}
         </motion.a>
       </motion.div>
     </div>

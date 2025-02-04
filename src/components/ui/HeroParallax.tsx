@@ -1,16 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import InfiniteMovingCards from "./InfiniteMovingCards";
 import HeroBanner from "./HeroBanner";
 
 const HeroParallax = ({
   items,
+  isAuthenticated,
 }: {
   items: {
     title: string;
     link: string;
     thumbnail: string;
   }[];
+  isAuthenticated: boolean;
 }) => {
   const firstRow = items.slice(0, 5);
   const secondRow = items.slice(5, 10);
@@ -38,26 +40,12 @@ const HeroParallax = ({
     useTransform(scrollYProgress, [0, 0.2], [-700, 500]),
     springConfig,
   );
-  const [refHeight, setRefHeight] = useState(
-    ref.current?.getBoundingClientRect().height || 1200,
-  );
-  console.log("🚀 ~ refHeight:", refHeight);
-  useEffect(() => {
-    console.log("🚀 ~ window:", window.innerHeight);
-
-    if (ref.current)
-      setRefHeight(
-        (ref.current.getBoundingClientRect().height / window.innerHeight) *
-          1000,
-      );
-  }, [ref.current]);
 
   return (
     <div
+      id="home-parallax"
       ref={ref}
-      // className="min-h-[380svh] [@media(max-height:953px)]:min-h-[500svh] [@media(max-height:953px)]:mb-[100svh]  [@media(max-height:800px)]:min-h-[600svh] mb-12 [@media(max-height:800px)]:mb-[240svh] -mt-8 overflow-hidden  antialiased relative flex flex-col self-auto l[perspective:1000px] l[transform-style:preserve-3d]"
-      className="-mt-8 overflow-hidden antialiased relative flex flex-col self-auto"
-      style={{ marginBottom: refHeight + 56 }}
+      className="-mt-8 overflow-hidden antialiased relative flex flex-col self-auto pb-[100svh] mb-[60svh] [@media(min-height:953px)]:mb-[40svh]"
     >
       <motion.div
         style={{
@@ -82,7 +70,10 @@ const HeroParallax = ({
           <InfiniteMovingCards items={thirdRow} speed="slow" />
         </motion.div>
       </motion.div>
-      <HeroBanner />
+      <HeroBanner
+        isAuthenticated={isAuthenticated}
+        scrollYProgress={scrollYProgress}
+      />
     </div>
   );
 };

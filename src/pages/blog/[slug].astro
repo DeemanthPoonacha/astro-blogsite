@@ -43,7 +43,6 @@ const [post] = await db
     .orderBy(desc(Post.createdAt))
     .leftJoin(Author, eq(Author.id, Post.authorId));
 if (!post) return Astro.redirect("/404");
-console.log("🚀 ~ post:", post);
 
 const content = marked.parse(post.content);
 const author = post.author;

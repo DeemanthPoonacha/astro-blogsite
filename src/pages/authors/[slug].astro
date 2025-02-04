@@ -22,7 +22,6 @@ if (authorsWithPosts.length === 0) return Astro.redirect("/404");
 
 const user = await Astro.locals.currentUser();
 
-console.log("🚀 ~ authorsWithPosts:", authorsWithPosts);
 const author = {
     ...authorsWithPosts[0].Author, // Take author details from the first row
     posts: authorsWithPosts

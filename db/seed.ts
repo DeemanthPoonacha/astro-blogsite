@@ -317,5 +317,20 @@ Navigating the process of buying a new or used car can be daunting, but with the
       featured: true,
       // image: "/images/blog_cover/resume.jpg",
     },
+    {
+      id: "5",
+      title: "Mastering Safe Driving: Tips and Techniques",
+      slug: "mastering-safe-driving-tips-and-techniques",
+      authorId: "2",
+      tags: ["automobile", "guide"],
+      publishedAt: new Date("2025-01-01"),
+      createdAt: new Date("2025-01-01"),
+      updatedAt: new Date("2025-01-01"),
+      content: `
+# Mastering Safe Driving: Tips and Techniques`,
+      description:
+        "Learn essential tips and techniques for mastering safe driving, from avoiding distractions to staying alert on the road.",
+      status: "published",
+    },
   ]);
 }

@@ -66,7 +66,7 @@ const isAuthUser = user?.id === author?.id;
             {
                 isAuthUser && (
                     <a
-                        class="flex gap-1 items-center no-underline bg-primary py-1 px-1.5 rounded-md"
+                        class="flex gap-1 items-center no-underline bg-primary text-primary-foreground py-1 px-1.5 rounded-md"
                         href={`/dashboard?postId=${post.id}`}
                     >
                         <FaPenToSquare client:load size={18} />

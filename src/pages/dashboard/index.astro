@@ -2,7 +2,7 @@
 import H1 from "@/components/H1.astro";
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/layouts/Main.astro";
-import BlogDashboard from "@/components/AuthorDahboard";
+import AuthorDahboard from "@/components/AuthorDahboard";
 import { Author, Post, db, eq } from "astro:db";
 import type { AuthorType, AuthorWithPosts } from "@/types";
 
@@ -59,7 +59,7 @@ const editingUser = Astro.url.searchParams.get("editingUser") === "true";
 <Layout title="Dashboard | Bloggy">
     <Main className="w-full">
         <H1 text="Dashboard" />
-        <BlogDashboard
+        <AuthorDahboard
             client:load
             author={authorWithPosts as AuthorWithPosts}
             defaultEditingId={editingPostId}

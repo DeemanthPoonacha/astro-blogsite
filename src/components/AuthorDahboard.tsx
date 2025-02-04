@@ -24,7 +24,7 @@ import type { AuthorWithPosts, DBPost } from "@/types";
 import { getDateString } from "@/utils/helpers";
 import { Toaster } from "@/components/ui/toaster";
 
-const DashboardLayout = ({
+const AuthorDahboard = ({
   author,
   defaultEditingId,
   editingUser,
@@ -160,12 +160,12 @@ const DashboardLayout = ({
       icon: FaUserPen,
       content: <AboutEditor author={author} />,
     },
-    {
-      id: "settings",
-      label: "Settings",
-      icon: FaGear,
-      content: <div>Settings</div>,
-    },
+    // {
+    //   id: "settings",
+    //   label: "Settings",
+    //   icon: FaGear,
+    //   content: <div>Settings</div>,
+    // },
   ];
 
   const mainContent = (
@@ -210,7 +210,12 @@ const DashboardLayout = ({
       >
         <TabsList className="rounded-b-none">
           {navItems.map((item) => (
-            <TabsTrigger key={item.id} value={item.id}>
+            <TabsTrigger
+              key={item.id}
+              value={item.id}
+              className="flex gap-1 items-center"
+            >
+              <item.icon />
               {item.label}
             </TabsTrigger>
           ))}
@@ -232,4 +237,4 @@ const DashboardLayout = ({
   );
 };
 
-export default DashboardLayout;
+export default AuthorDahboard;

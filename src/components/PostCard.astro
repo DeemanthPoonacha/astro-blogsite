@@ -3,7 +3,7 @@ import { Image } from "astro:assets";
 import CategoryList from "./TagList.astro";
 import type { PostType } from "../types";
 import { getDateString } from "../utils/helpers";
-import { RiEditFill, RiSparkling2Fill } from "react-icons/ri";
+import { FaPenToSquare } from "react-icons/fa6";
 
 type Props = {
     post: PostType;
@@ -23,13 +23,23 @@ const queryTags =
 >
     {
         post.status === "draft" ? (
-            <span class="absolute top-4 right-0 rounded-s-lg p-2 z-20 bg-cyan-400 dark:bg-cyan-600 flex gap-1 items-center">
+            <span class="absolute prose top-4 right-0 rounded-s-lg p-2 z-20 bg-primary text-white flex gap-1 items-center">
                 Draft
             </span>
         ) : (
             post.featured && (
-                <span class="absolute top-4 right-0 rounded-s-lg p-2 z-20 bg-cyan-400 dark:bg-cyan-600 flex gap-1 items-center">
-                    <RiSparkling2Fill client:load />
+                <span class="absolute prose top-4 right-0 rounded-s-lg p-2 z-20 bg-primary text-white flex gap-1 items-center">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        x="0px"
+                        y="0px"
+                        fill="white"
+                        color="white"
+                        class="w-6 h-6 text-white"
+                        viewBox="0 0 48 48"
+                    >
+                        <path d="M 11.923828 3.0019531 A 1.50015 1.50015 0 0 0 10.576172 4.0253906 L 8.6894531 9.6894531 L 3.0253906 11.576172 A 1.50015 1.50015 0 0 0 3.0253906 14.423828 L 8.6875 16.3125 L 10.576172 21.974609 A 1.50015 1.50015 0 0 0 13.423828 21.974609 L 15.310547 16.310547 L 20.974609 14.423828 A 1.50015 1.50015 0 0 0 20.974609 11.576172 L 15.310547 9.6894531 L 13.423828 4.0253906 A 1.50015 1.50015 0 0 0 11.923828 3.0019531 z M 12 9.2460938 L 12.701172 11.349609 A 1.50015 1.50015 0 0 0 13.650391 12.298828 L 15.753906 13 L 13.650391 13.701172 A 1.50015 1.50015 0 0 0 12.701172 14.650391 L 12 16.753906 L 11.298828 14.650391 A 1.50015 1.50015 0 0 0 10.349609 13.701172 L 8.2460938 13 L 10.349609 12.298828 A 1.50015 1.50015 0 0 0 11.298828 11.349609 L 12 9.2460938 z M 31.439453 12.001953 A 1.50015 1.50015 0 0 0 30.072266 13.041016 L 27.146484 22.146484 L 18.041016 25.072266 A 1.50015 1.50015 0 0 0 18.041016 27.927734 L 27.146484 30.853516 L 30.072266 39.958984 A 1.50015 1.50015 0 0 0 32.927734 39.958984 L 35.853516 30.853516 L 44.958984 27.927734 A 1.50015 1.50015 0 0 0 44.958984 25.072266 L 35.853516 22.146484 L 32.927734 13.041016 A 1.50015 1.50015 0 0 0 31.439453 12.001953 z M 31.5 18.400391 L 33.234375 23.796875 A 1.50015 1.50015 0 0 0 34.203125 24.765625 L 39.599609 26.5 L 34.203125 28.234375 A 1.50015 1.50015 0 0 0 33.234375 29.203125 L 31.5 34.599609 L 29.765625 29.203125 A 1.50015 1.50015 0 0 0 28.796875 28.234375 L 23.400391 26.5 L 28.796875 24.765625 A 1.50015 1.50015 0 0 0 29.765625 23.796875 L 31.5 18.400391 z M 10.423828 28.001953 A 1.50015 1.50015 0 0 0 9.0761719 29.025391 L 7.5625 33.564453 L 3.0253906 35.076172 A 1.50015 1.50015 0 0 0 3.0253906 37.923828 L 7.5625 39.435547 L 9.0761719 43.974609 A 1.50015 1.50015 0 0 0 11.923828 43.974609 L 13.435547 39.435547 L 17.974609 37.923828 A 1.50015 1.50015 0 0 0 17.974609 35.076172 L 13.4375 33.5625 L 11.923828 29.025391 A 1.50015 1.50015 0 0 0 10.423828 28.001953 z M 10.5 34.244141 L 10.826172 35.224609 A 1.50015 1.50015 0 0 0 11.775391 36.173828 L 12.753906 36.5 L 11.775391 36.826172 A 1.50015 1.50015 0 0 0 10.826172 37.775391 L 10.5 38.755859 L 10.171875 37.775391 A 1.50015 1.50015 0 0 0 9.2226562 36.826172 L 8.2441406 36.5 L 9.2226562 36.173828 A 1.50015 1.50015 0 0 0 10.171875 35.224609 L 10.5 34.244141 z" />
+                    </svg>
                     Featured
                 </span>
             )
@@ -97,7 +107,7 @@ const queryTags =
                         class="absolute right-0 z-10 m-4 flex gap-1 items-center no-underline bg-primary py-1 px-1.5 rounded-md"
                         href={`/dashboard?postId=${post.id}`}
                     >
-                        <RiEditFill client:load size={18} />
+                        <FaPenToSquare client:load size={18} />
                         Edit
                     </a>
                 )

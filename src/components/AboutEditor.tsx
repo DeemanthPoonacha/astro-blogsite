@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
-import { RiResetLeftFill, RiSave3Fill } from "react-icons/ri";
+import { FaRotateLeft, FaFloppyDisk } from "react-icons/fa6";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
@@ -202,11 +202,11 @@ const AboutEditor = ({ author }: { author: DBAuthor }) => {
           onClick={() => setShowResetDialog(true)}
           disabled={isSubmitting}
         >
-          <RiResetLeftFill size={18} className="mr-2" />
+          <FaRotateLeft size={18} className="mr-2" />
           Reset
         </Button>
         <Button type="submit" disabled={isSubmitting}>
-          <RiSave3Fill size={18} className="mr-2" />
+          <FaFloppyDisk size={18} className="mr-2" />
           {isSubmitting ? "Saving..." : "Save Changes"}
         </Button>
       </div>

@@ -3,7 +3,7 @@ import * as ToastPrimitives from "@radix-ui/react-toast";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
-import { RiCloseLine } from "react-icons/ri";
+import { FaXmark } from "react-icons/fa6";
 
 const ToastProvider = ToastPrimitives.Provider;
 
@@ -81,7 +81,7 @@ const ToastClose = React.forwardRef<
     toast-close=""
     {...props}
   >
-    <RiCloseLine className="h-4 w-4" />
+    <FaXmark className="h-4 w-4" />
   </ToastPrimitives.Close>
 ));
 ToastClose.displayName = ToastPrimitives.Close.displayName;

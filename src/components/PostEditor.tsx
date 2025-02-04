@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
-  RiArrowRightSLine,
-  RiDeleteBinFill,
-  RiEyeLine,
-  RiEyeOffLine,
-  RiResetLeftFill,
-  RiSave3Fill,
-  RiSendPlaneFill,
-} from "react-icons/ri";
+  FaAngleRight,
+  FaRegTrashCan,
+  FaEye,
+  FaEyeSlash,
+  FaRotateLeft,
+  FaRegFloppyDisk,
+  FaPaperPlane,
+} from "react-icons/fa6";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
@@ -141,7 +141,7 @@ const PostEditor = ({
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-gray-400">
           <button onClick={onClose}>My Posts</button>
-          <RiArrowRightSLine size={16} />
+          <FaAngleRight size={16} />
           <span className="primaryColor">
             {watch("title") || "Create New Post"}
           </span>
@@ -154,7 +154,7 @@ const PostEditor = ({
             return setShowPreview((prev) => !prev);
           }}
         >
-          {showPreview ? <RiEyeOffLine size={18} /> : <RiEyeLine size={18} />}
+          {showPreview ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
           <span className="hidden sm:block">
             {showPreview ? "Close Preview" : "Preview"}
           </span>
@@ -388,7 +388,7 @@ const PostEditor = ({
               variant="outline"
               onClick={() => setShowResetDialog(true)}
             >
-              <RiResetLeftFill size={18} />
+              <FaRotateLeft size={18} />
               <span className="hidden sm:block">Reset</span>
             </Button>
             {!!post?.id && (
@@ -398,20 +398,20 @@ const PostEditor = ({
                 className="@max-[23rem]:h-9 @max-[23rem]:w-9"
                 onClick={() => setShowDeleteDialog(true)}
               >
-                <RiDeleteBinFill size={18} />
+                <FaRegTrashCan size={18} />
                 <span className="hidden sm:block">Delete</span>
               </Button>
             )}
           </div>
           <div className="flex gap-2">
             <Button variant="outline" onClick={handleSubmit(handleSaveToDraft)}>
-              <RiSave3Fill size={18} />
+              <FaRegFloppyDisk size={18} />
               <span className="flex items-center gap-1">
                 <span className="hidden sm:block">Save to</span>Draft
               </span>
             </Button>
             <Button>
-              <RiSendPlaneFill size={18} />
+              <FaPaperPlane size={18} />
               <span className="hidden sm:block">Submit</span>
             </Button>
           </div>

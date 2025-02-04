@@ -10,7 +10,7 @@ import Main from "../../layouts/Main.astro";
 import type { AuthorType, CldImageType, PostType } from "../../types";
 import { getDateString } from "../../utils/helpers";
 import CategoryList from "../../components/TagList.astro";
-import { RiEditFill } from "react-icons/ri";
+import { FaPenToSquare } from "react-icons/fa6";
 
 const { slug } = Astro.params;
 if (slug === undefined) return Astro.redirect("/404");
@@ -69,7 +69,7 @@ const isAuthUser = user?.id === author?.id;
                         class="flex gap-1 items-center no-underline bg-primary py-1 px-1.5 rounded-md"
                         href={`/dashboard?postId=${post.id}`}
                     >
-                        <RiEditFill client:load size={18} />
+                        <FaPenToSquare client:load size={18} />
                         Edit
                     </a>
                 )

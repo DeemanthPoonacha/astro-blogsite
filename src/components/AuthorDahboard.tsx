@@ -1,12 +1,12 @@
 import { useState } from "react";
 import {
-  RiAddFill,
-  RiEditFill,
-  RiExternalLinkFill,
-  RiFileTextFill,
-  RiSettings3Fill,
-  RiUser3Fill,
-} from "react-icons/ri";
+  FaPlus,
+  FaPenToSquare,
+  FaArrowUpRightFromSquare,
+  FaGripVertical,
+  FaGear,
+  FaUserPen,
+} from "react-icons/fa6";
 import {
   Card,
   CardContent,
@@ -64,7 +64,7 @@ const DashboardLayout = ({
             target="_blank"
             aria-label={`Read more about ${post.title}`}
           >
-            <RiExternalLinkFill className="duration-300 hover:scale-150" />
+            <FaArrowUpRightFromSquare className="duration-300 hover:scale-150" />
           </a>
           <img
             loading={"lazy"}
@@ -111,7 +111,7 @@ const DashboardLayout = ({
                   setShowCreateEdit(true);
                 }}
               >
-                <RiEditFill size={18} />
+                <FaPenToSquare size={18} />
                 <span className="hidden @[23rem]:block">Edit</span>
               </Button>
             </div>
@@ -131,7 +131,7 @@ const DashboardLayout = ({
           }}
           className="flex items-center gap-2"
         >
-          <RiAddFill size={20} />
+          <FaPlus size={20} />
           Create New Post
         </Button>
       </div>
@@ -151,19 +151,19 @@ const DashboardLayout = ({
     {
       id: "posts",
       label: "My Posts",
-      icon: RiFileTextFill,
+      icon: FaGripVertical,
       content: postsContent,
     },
     {
       id: "about",
       label: "About Me",
-      icon: RiUser3Fill,
+      icon: FaUserPen,
       content: <AboutEditor author={author} />,
     },
     {
       id: "settings",
       label: "Settings",
-      icon: RiSettings3Fill,
+      icon: FaGear,
       content: <div>Settings</div>,
     },
   ];
